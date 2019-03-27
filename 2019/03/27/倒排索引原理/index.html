@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="倒排索引,">
 
 
 
@@ -79,16 +79,29 @@
 
 
 
-<meta name="description" content="blog meichaofan">
-<meta property="og:type" content="website">
-<meta property="og:title" content="meichaofan">
-<meta property="og:url" content="https://meichaofan.github.io/index.html">
+<meta name="description" content="关于ElasticSearch为什么搜索这么快，大家应该有所了解，主要是利用倒排索引数据结构，下面简单介绍一下倒排索引。 正向索引任何事物都是相对的，有倒排索引(inverted index)，当然也会有正向索引(forward index)。 正向索引结构在搜索引擎中，每个文件(document)对应一个文件id(document id)，文件内容可以看作是一些列关键词的集合(实际上，在搜索引擎">
+<meta name="keywords" content="倒排索引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="倒排索引原理">
+<meta property="og:url" content="https://meichaofan.github.io/2019/03/27/倒排索引原理/index.html">
 <meta property="og:site_name" content="meichaofan">
-<meta property="og:description" content="blog meichaofan">
+<meta property="og:description" content="关于ElasticSearch为什么搜索这么快，大家应该有所了解，主要是利用倒排索引数据结构，下面简单介绍一下倒排索引。 正向索引任何事物都是相对的，有倒排索引(inverted index)，当然也会有正向索引(forward index)。 正向索引结构在搜索引擎中，每个文件(document)对应一个文件id(document id)，文件内容可以看作是一些列关键词的集合(实际上，在搜索引擎">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/meichaofan/static-file/master/forward_index.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/meichaofan/static-file/master/reverted-index.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/meichaofan/static-file/master/%E5%8D%95%E8%AF%8D%E6%96%87%E6%A1%A3%E7%9F%A9%E9%98%B5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/meichaofan/static-file/master/%E5%80%92%E6%8E%92%E5%88%97%E8%A1%A8%E6%A6%82%E5%BF%B5%E5%9B%BE.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/meichaofan/static-file/master/%E6%96%87%E6%A1%A3%E9%9B%86%E5%90%88.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/meichaofan/static-file/master/%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/meichaofan/static-file/master/%E5%B8%A6%E6%9C%89%E8%AF%8D%E9%A2%91%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/meichaofan/static-file/master/%E5%93%88%E5%B8%8C%E5%8A%A0%E9%93%BE%E8%A1%A8.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/meichaofan/static-file/master/content.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/meichaofan/static-file/master/content2.png">
+<meta property="og:updated_time" content="2019-03-26T18:40:07.690Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="meichaofan">
-<meta name="twitter:description" content="blog meichaofan">
+<meta name="twitter:title" content="倒排索引原理">
+<meta name="twitter:description" content="关于ElasticSearch为什么搜索这么快，大家应该有所了解，主要是利用倒排索引数据结构，下面简单介绍一下倒排索引。 正向索引任何事物都是相对的，有倒排索引(inverted index)，当然也会有正向索引(forward index)。 正向索引结构在搜索引擎中，每个文件(document)对应一个文件id(document id)，文件内容可以看作是一些列关键词的集合(实际上，在搜索引擎">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/meichaofan/static-file/master/forward_index.png">
 
 
 
@@ -118,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/03/27/倒排索引原理/">
 
 
 
 
 
-  <title>meichaofan</title>
+  <title>倒排索引原理 | meichaofan</title>
   
 
 
@@ -143,8 +156,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -267,9 +279,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -299,9 +311,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/27/倒排索引原理/" itemprop="url">倒排索引原理</a></h1>
+          <h1 class="post-title" itemprop="name headline">倒排索引原理</h1>
         
 
         <div class="post-meta">
@@ -351,9 +361,7 @@
       
 
       
-        
-          
-            <p>关于<a href="https://www.elastic.co/" target="_blank" rel="noopener">ElasticSearch</a>为什么搜索这么快，大家应该有所了解，主要是利用倒排索引数据结构，下面简单介绍一下倒排索引。</p>
+        <p>关于<a href="https://www.elastic.co/" target="_blank" rel="noopener">ElasticSearch</a>为什么搜索这么快，大家应该有所了解，主要是利用倒排索引数据结构，下面简单介绍一下倒排索引。</p>
 <h2 id="正向索引"><a href="#正向索引" class="headerlink" title="正向索引"></a>正向索引</h2><p>任何事物都是相对的，有倒排索引(inverted index)，当然也会有正向索引(forward index)。</p>
 <h3 id="正向索引结构"><a href="#正向索引结构" class="headerlink" title="正向索引结构"></a>正向索引结构</h3><p>在搜索引擎中，每个文件(document)对应一个文件id(document id)，文件内容可以看作是一些列关键词的集合(实际上，在搜索引擎库中，关键词也转化为关键词id)。例如“文档1”经过分词，提取了20个关键词，每个关键词都会记录它在文档中的出现次数和出现位置。</p>
 <p>得到正向索引结构如下：</p>
@@ -426,8 +434,6 @@
 <p>以单词“加盟”为例，其单词编号为6，文档频率为3，代表整个文档集合中有三个文档包含这个单词，对应的倒排列表为{(2;1;<4>),(3;1;<7>),(5;1;<5>)}，含义是在文档2，3，5出现过这个单词，在每个文档的出现过1次，单词“加盟”在第一个文档的POS是4，即文档的第四个单词是“加盟”，其他的类似。</5></7></4></p>
 <p>这个倒排索引已经是一个非常完备的索引系统，实际搜索系统的索引结构基本如此。</p>
 
-          
-        
       
     </div>
     
@@ -442,274 +448,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/03/26/倒排索引/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meichaofan">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/26/倒排索引/" itemprop="url">倒排索引</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-26T20:12:17+08:00">
-                2019-03-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tec/" itemprop="url" rel="index">
-                    <span itemprop="name">Tec</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/倒排索引/" rel="tag"># 倒排索引</a>
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/03/25/test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meichaofan">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/25/test/" itemprop="url">test</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+              <a href="/2019/03/26/倒排索引/" rel="next" title="倒排索引">
+                <i class="fa fa-chevron-left"></i> 倒排索引
+              </a>
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T13:28:32+08:00">
-                2019-03-25
-              </time>
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -719,138 +487,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/03/25/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="meichaofan">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/25/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T12:59:38+08:00">
-                2019-03-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -858,6 +499,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -878,8 +523,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -939,6 +593,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正向索引"><span class="nav-number">1.</span> <span class="nav-text">正向索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正向索引结构"><span class="nav-number">1.1.</span> <span class="nav-text">正向索引结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正向索引查找过程"><span class="nav-number">1.2.</span> <span class="nav-text">正向索引查找过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#倒排索引"><span class="nav-number">2.</span> <span class="nav-text">倒排索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#倒排索引结构"><span class="nav-number">2.1.</span> <span class="nav-text">倒排索引结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单词-文档矩阵"><span class="nav-number">2.2.</span> <span class="nav-text">单词-文档矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#倒排索引基本概念"><span class="nav-number">2.3.</span> <span class="nav-text">倒排索引基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#倒排索引简单实例"><span class="nav-number">2.4.</span> <span class="nav-text">倒排索引简单实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单词词典"><span class="nav-number">3.</span> <span class="nav-text">单词词典</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希加链表"><span class="nav-number">3.1.</span> <span class="nav-text">哈希加链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树形结构"><span class="nav-number">3.2.</span> <span class="nav-text">树形结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1072,6 +742,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
