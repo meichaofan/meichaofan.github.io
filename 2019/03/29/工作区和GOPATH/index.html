@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="go,">
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="切勿浮沙筑高台！  数据结构 常用算法 操作系统 设计模式 运维 中间件 网络 数据库 搜索引擎基础知识 倒排索引 倒排索引原理 倒排索引实现     大数据 安全 分布式设计 设计思想 &amp;amp; 开发模式 编程语言GoLangGo基础 数据类型 基本数据类型 高级数据类型   流程控制 错误处理 并发处理 常用包 与os相关  Go源码阅读 Go string 实现原理剖析  Go语言核心36">
-<meta property="og:type" content="website">
-<meta property="og:title" content="content">
-<meta property="og:url" content="https://meichaofan.github.io/categories/index.html">
+<meta name="description" content="我们学习Go语言时，第一件要做的是，就是根据自己电脑的操作系统和计算架构，从Go语言官网下载对应的二进制包，也就是拿来即用的安装包。 随后，解压安装包、放置到某个目录、配置环境变量，并在命令行输入 go version 来验证是否安装成功。 1234567891011121314151617# 解压[root@www package]# ls go1.12.1.linux-amd64.tar.gz">
+<meta name="keywords" content="go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工作区和GOPATH">
+<meta property="og:url" content="https://meichaofan.github.io/2019/03/29/工作区和GOPATH/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="切勿浮沙筑高台！  数据结构 常用算法 操作系统 设计模式 运维 中间件 网络 数据库 搜索引擎基础知识 倒排索引 倒排索引原理 倒排索引实现     大数据 安全 分布式设计 设计思想 &amp;amp; 开发模式 编程语言GoLangGo基础 数据类型 基本数据类型 高级数据类型   流程控制 错误处理 并发处理 常用包 与os相关  Go源码阅读 Go string 实现原理剖析  Go语言核心36">
+<meta property="og:description" content="我们学习Go语言时，第一件要做的是，就是根据自己电脑的操作系统和计算架构，从Go语言官网下载对应的二进制包，也就是拿来即用的安装包。 随后，解压安装包、放置到某个目录、配置环境变量，并在命令行输入 go version 来验证是否安装成功。 1234567891011121314151617# 解压[root@www package]# ls go1.12.1.linux-amd64.tar.gz">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-29T06:00:03.375Z">
+<meta property="og:updated_time" content="2019-03-29T07:18:28.665Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="content">
-<meta name="twitter:description" content="切勿浮沙筑高台！  数据结构 常用算法 操作系统 设计模式 运维 中间件 网络 数据库 搜索引擎基础知识 倒排索引 倒排索引原理 倒排索引实现     大数据 安全 分布式设计 设计思想 &amp;amp; 开发模式 编程语言GoLangGo基础 数据类型 基本数据类型 高级数据类型   流程控制 错误处理 并发处理 常用包 与os相关  Go源码阅读 Go string 实现原理剖析  Go语言核心36">
+<meta name="twitter:title" content="工作区和GOPATH">
+<meta name="twitter:description" content="我们学习Go语言时，第一件要做的是，就是根据自己电脑的操作系统和计算架构，从Go语言官网下载对应的二进制包，也就是拿来即用的安装包。 随后，解压安装包、放置到某个目录、配置环境变量，并在命令行输入 go version 来验证是否安装成功。 1234567891011121314151617# 解压[root@www package]# ls go1.12.1.linux-amd64.tar.gz">
 
 
 
@@ -121,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/categories/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/03/29/工作区和GOPATH/">
 
 
 
 
 
-  <title>content | huany</title>
+  <title>工作区和GOPATH | huany</title>
   
 
 
@@ -294,73 +295,200 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/03/29/工作区和GOPATH/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="meichaofan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/huany.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="huany">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">content</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>切勿浮沙筑高台！</p>
-<hr>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><hr>
-<h2 id="常用算法"><a href="#常用算法" class="headerlink" title="常用算法"></a>常用算法</h2><hr>
-<h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><hr>
-<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><hr>
-<h2 id="运维"><a href="#运维" class="headerlink" title="运维"></a>运维</h2><hr>
-<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><hr>
-<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><hr>
-<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><hr>
-<h2 id="搜索引擎"><a href="#搜索引擎" class="headerlink" title="搜索引擎"></a>搜索引擎</h2><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><ul>
-<li>倒排索引<ul>
-<li><a href="/2019/03/27/倒排索引原理/">倒排索引原理</a></li>
-<li>倒排索引实现</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h2><hr>
-<h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><hr>
-<h2 id="分布式设计"><a href="#分布式设计" class="headerlink" title="分布式设计"></a>分布式设计</h2><hr>
-<h2 id="设计思想-amp-开发模式"><a href="#设计思想-amp-开发模式" class="headerlink" title="设计思想 &amp; 开发模式"></a>设计思想 &amp; 开发模式</h2><hr>
-<h2 id="编程语言"><a href="#编程语言" class="headerlink" title="编程语言"></a>编程语言</h2><h3 id="GoLang"><a href="#GoLang" class="headerlink" title="GoLang"></a>GoLang</h3><h4 id="Go基础"><a href="#Go基础" class="headerlink" title="Go基础"></a>Go基础</h4><ul>
-<li>数据类型<ul>
-<li>基本数据类型</li>
-<li>高级数据类型</li>
-</ul>
-</li>
-<li>流程控制</li>
-<li>错误处理</li>
-<li>并发处理</li>
-<li>常用包</li>
-<li>与os相关</li>
-</ul>
-<h4 id="Go源码阅读"><a href="#Go源码阅读" class="headerlink" title="Go源码阅读"></a>Go源码阅读</h4><ul>
-<li><a href="/2019/03/28/Go-string-实现原理剖析/">Go string 实现原理剖析</a></li>
-</ul>
-<h4 id="Go语言核心36讲-读书笔记"><a href="#Go语言核心36讲-读书笔记" class="headerlink" title="Go语言核心36讲[读书笔记]"></a>Go语言核心36讲[读书笔记]</h4><ul>
-<li><a href="/2019/03/29/工作区和GOPATH/">工作区和GOPATH</a></li>
-</ul>
-<h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><h3 id="HTML-amp-CSS"><a href="#HTML-amp-CSS" class="headerlink" title="HTML &amp; CSS"></a>HTML &amp; CSS</h3>
+          <h1 class="post-title" itemprop="name headline">工作区和GOPATH</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-29T13:56:32+08:00">
+                2019-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/29/工作区和GOPATH/" class="leancloud_visitors" data-flag-title="工作区和GOPATH">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>我们学习Go语言时，第一件要做的是，就是根据自己电脑的操作系统和计算架构，从<a href="https://golang.google.cn" target="_blank" rel="noopener">Go语言官网</a>下载对应的二进制包，也就是拿来即用的安装包。</p>
+<p>随后，<strong>解压安装包</strong>、<strong>放置到某个目录</strong>、<strong>配置环境变量</strong>，并在命令行输入 <code>go version</code> 来验证是否安装成功。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 解压</span><br><span class="line">[root@www package]# ls go1.12.1.linux-amd64.tar.gz </span><br><span class="line">go1.12.1.linux-amd64.tar.gz</span><br><span class="line">[root@www package]# tar zxvf go1.12.1.linux-amd64.tar.gz -C /usr/local/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 设置GOROOT、GOPATH、GOBIN环境变量</span><br><span class="line">[root@www ~]# vim .bash_profile</span><br><span class="line"></span><br><span class="line">PATH=$PATH:$HOME/bin:/usr/local/php/bin:/usr/local/go/bin</span><br><span class="line">export PATH</span><br><span class="line"></span><br><span class="line">export GOROOT=/usr/local/go</span><br><span class="line">export GOPATH=/root/peek-a-bow</span><br><span class="line">export GOBIN=/root/peek-a-bow/bin</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 创建工作目录</span><br><span class="line">mkdir -p /root/peek-a-bow/&#123;src,bin,pkg&#125;</span><br></pre></td></tr></table></figure>
+<p>在整个安装过程中，需要配置3个环境变量，简单介绍一下:</p>
+<ul>
+<li>GOROOT: Go语言的安装目录</li>
+<li>GOPATH: 自定义的工作目录</li>
+<li>GOBIN: Go语言生成的可执行文件的目录</li>
+</ul>
+<p>可以把GOPATH简单理解成Go语言的工作目录，它的值是一个目录的路径，也可以是多个目录的路径，每个目录都代表Go语言的一个工作区（workspace）。</p>
+<p>我们需要利于这些工作区，去放置 Go 语言的源码文件（source file）,以及安装(install)后的归档文件（archive file）和可执行文件（executable file）。</p>
+<p>事实上，由于Go语言项目在其生命周期内的所有操作（编码依赖管理、构建、测试、安装等）基本上都是围绕着GOPATH和工作区进行的。它的背后有3个知识点需要注意:</p>
+<ul>
+<li>1.Go语言源码的组织是怎样的；</li>
+<li>2.你是否了解源码安装后的结果；</li>
+<li>3.你是否理解构建和安装Go程序的过程。</li>
+</ul>
+<h3 id="1-Go语言源码组织方式"><a href="#1-Go语言源码组织方式" class="headerlink" title="1.Go语言源码组织方式"></a>1.Go语言源码组织方式</h3><p>Go语言是以代码包为基本组织单位的。所以说，Go语言源码的组织方式就是以环境变量GOPATH、工作区、src目录和代码包为主线的。</p>
+<h3 id="2-了解源码安装后的结果"><a href="#2-了解源码安装后的结果" class="headerlink" title="2.了解源码安装后的结果"></a>2.了解源码安装后的结果</h3><p>源码文件在安装过程中，如果产生了归档文件，就会放进该工作区的pkg子目录；如果产生了可执行文件，就会放进该工作区的bin子目录。</p>
+<h3 id="3-理解构建和安装Go程序的过程"><a href="#3-理解构建和安装Go程序的过程" class="headerlink" title="3.理解构建和安装Go程序的过程"></a>3.理解构建和安装Go程序的过程</h3><p>构建使用 <code>go build</code>,安装使用命令 <code>go install</code>。构建和安装代码包的时候都会执行编译、打包等操作。并且，这些操作产生的任何文件都会先被保存到某个临时的目录中。</p>
+<p>如果构建的是<strong>库源码</strong>文件,那么操作结果只会保存在临时目录中，安装<strong>库源码</strong>文件，那么它的结果会被搬运到它所在工作区的pkg目录下的某个子目录中。</p>
+<p>如果构建的是<strong>命令源码</strong>文件，那么它的操作结果文件会被搬运到源码文件所在的目录中。如果安装的是<strong>命令源码</strong>文件，那么结果文件会被搬运到它所在工作区的bin目录中，或者环境变量GOBIN指向的目录中。</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat-pay.png" alt="meichaofan 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/go/" rel="tag"># go</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/28/Go-string-实现原理剖析/" rel="next" title="Go string 实现原理剖析">
+                <i class="fa fa-chevron-left"></i> Go string 实现原理剖析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -483,7 +611,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-number">1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用算法"><span class="nav-number">2.</span> <span class="nav-text">常用算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作系统"><span class="nav-number">3.</span> <span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式"><span class="nav-number">4.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运维"><span class="nav-number">5.</span> <span class="nav-text">运维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间件"><span class="nav-number">6.</span> <span class="nav-text">中间件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络"><span class="nav-number">7.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库"><span class="nav-number">8.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索引擎"><span class="nav-number">9.</span> <span class="nav-text">搜索引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础知识"><span class="nav-number">9.1.</span> <span class="nav-text">基础知识</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大数据"><span class="nav-number">10.</span> <span class="nav-text">大数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全"><span class="nav-number">11.</span> <span class="nav-text">安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式设计"><span class="nav-number">12.</span> <span class="nav-text">分布式设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计思想-amp-开发模式"><span class="nav-number">13.</span> <span class="nav-text">设计思想 &amp; 开发模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编程语言"><span class="nav-number">14.</span> <span class="nav-text">编程语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GoLang"><span class="nav-number">14.1.</span> <span class="nav-text">GoLang</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Go基础"><span class="nav-number">14.1.1.</span> <span class="nav-text">Go基础</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Go源码阅读"><span class="nav-number">14.1.2.</span> <span class="nav-text">Go源码阅读</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Go语言核心36讲-读书笔记"><span class="nav-number">14.1.3.</span> <span class="nav-text">Go语言核心36讲[读书笔记]</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP"><span class="nav-number">14.2.</span> <span class="nav-text">PHP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java"><span class="nav-number">14.3.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python"><span class="nav-number">14.4.</span> <span class="nav-text">Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript"><span class="nav-number">14.5.</span> <span class="nav-text">JavaScript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-amp-CSS"><span class="nav-number">14.6.</span> <span class="nav-text">HTML &amp; CSS</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Go语言源码组织方式"><span class="nav-number">1.</span> <span class="nav-text">1.Go语言源码组织方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-了解源码安装后的结果"><span class="nav-number">2.</span> <span class="nav-text">2.了解源码安装后的结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-理解构建和安装Go程序的过程"><span class="nav-number">3.</span> <span class="nav-text">3.理解构建和安装Go程序的过程</span></a></li></ol></div>
             
 
           </div>

@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="切勿浮沙筑高台！  数据结构 常用算法 操作系统 设计模式 运维 中间件 网络 数据库 搜索引擎基础知识 倒排索引 倒排索引原理 倒排索引实现     大数据 安全 分布式设计 设计思想 &amp;amp; 开发模式 编程语言GoLangGo基础 数据类型 基本数据类型 高级数据类型   流程控制 错误处理 并发处理 常用包 与os相关  Go源码阅读 Go string 实现原理剖析  Go语言核心36">
-<meta property="og:type" content="website">
-<meta property="og:title" content="content">
-<meta property="og:url" content="https://meichaofan.github.io/categories/index.html">
+<meta name="description" content="一如当年">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go string 实现原理剖析">
+<meta property="og:url" content="https://meichaofan.github.io/2019/03/28/Go-string-实现原理剖析/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="切勿浮沙筑高台！  数据结构 常用算法 操作系统 设计模式 运维 中间件 网络 数据库 搜索引擎基础知识 倒排索引 倒排索引原理 倒排索引实现     大数据 安全 分布式设计 设计思想 &amp;amp; 开发模式 编程语言GoLangGo基础 数据类型 基本数据类型 高级数据类型   流程控制 错误处理 并发处理 常用包 与os相关  Go源码阅读 Go string 实现原理剖析  Go语言核心36">
+<meta property="og:description" content="一如当年">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-29T06:00:03.375Z">
+<meta property="og:updated_time" content="2019-03-27T16:18:04.145Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="content">
-<meta name="twitter:description" content="切勿浮沙筑高台！  数据结构 常用算法 操作系统 设计模式 运维 中间件 网络 数据库 搜索引擎基础知识 倒排索引 倒排索引原理 倒排索引实现     大数据 安全 分布式设计 设计思想 &amp;amp; 开发模式 编程语言GoLangGo基础 数据类型 基本数据类型 高级数据类型   流程控制 错误处理 并发处理 常用包 与os相关  Go源码阅读 Go string 实现原理剖析  Go语言核心36">
+<meta name="twitter:title" content="Go string 实现原理剖析">
+<meta name="twitter:description" content="一如当年">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/categories/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/03/28/Go-string-实现原理剖析/">
 
 
 
 
 
-  <title>content | huany</title>
+  <title>Go string 实现原理剖析 | huany</title>
   
 
 
@@ -294,73 +294,176 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/03/28/Go-string-实现原理剖析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="meichaofan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/huany.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="huany">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">content</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>切勿浮沙筑高台！</p>
-<hr>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><hr>
-<h2 id="常用算法"><a href="#常用算法" class="headerlink" title="常用算法"></a>常用算法</h2><hr>
-<h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><hr>
-<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><hr>
-<h2 id="运维"><a href="#运维" class="headerlink" title="运维"></a>运维</h2><hr>
-<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><hr>
-<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><hr>
-<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><hr>
-<h2 id="搜索引擎"><a href="#搜索引擎" class="headerlink" title="搜索引擎"></a>搜索引擎</h2><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><ul>
-<li>倒排索引<ul>
-<li><a href="/2019/03/27/倒排索引原理/">倒排索引原理</a></li>
-<li>倒排索引实现</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h2><hr>
-<h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><hr>
-<h2 id="分布式设计"><a href="#分布式设计" class="headerlink" title="分布式设计"></a>分布式设计</h2><hr>
-<h2 id="设计思想-amp-开发模式"><a href="#设计思想-amp-开发模式" class="headerlink" title="设计思想 &amp; 开发模式"></a>设计思想 &amp; 开发模式</h2><hr>
-<h2 id="编程语言"><a href="#编程语言" class="headerlink" title="编程语言"></a>编程语言</h2><h3 id="GoLang"><a href="#GoLang" class="headerlink" title="GoLang"></a>GoLang</h3><h4 id="Go基础"><a href="#Go基础" class="headerlink" title="Go基础"></a>Go基础</h4><ul>
-<li>数据类型<ul>
-<li>基本数据类型</li>
-<li>高级数据类型</li>
-</ul>
-</li>
-<li>流程控制</li>
-<li>错误处理</li>
-<li>并发处理</li>
-<li>常用包</li>
-<li>与os相关</li>
-</ul>
-<h4 id="Go源码阅读"><a href="#Go源码阅读" class="headerlink" title="Go源码阅读"></a>Go源码阅读</h4><ul>
-<li><a href="/2019/03/28/Go-string-实现原理剖析/">Go string 实现原理剖析</a></li>
-</ul>
-<h4 id="Go语言核心36讲-读书笔记"><a href="#Go语言核心36讲-读书笔记" class="headerlink" title="Go语言核心36讲[读书笔记]"></a>Go语言核心36讲[读书笔记]</h4><ul>
-<li><a href="/2019/03/29/工作区和GOPATH/">工作区和GOPATH</a></li>
-</ul>
-<h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><h3 id="HTML-amp-CSS"><a href="#HTML-amp-CSS" class="headerlink" title="HTML &amp; CSS"></a>HTML &amp; CSS</h3>
+          <h1 class="post-title" itemprop="name headline">Go string 实现原理剖析</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T00:18:04+08:00">
+                2019-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/28/Go-string-实现原理剖析/" class="leancloud_visitors" data-flag-title="Go string 实现原理剖析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        
       
     </div>
     
     
     
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat-pay.png" alt="meichaofan 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/27/倒排索引原理/" rel="next" title="倒排索引原理">
+                <i class="fa fa-chevron-left"></i> 倒排索引原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/29/工作区和GOPATH/" rel="prev" title="工作区和GOPATH">
+                工作区和GOPATH <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -393,17 +496,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -473,22 +567,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-number">1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用算法"><span class="nav-number">2.</span> <span class="nav-text">常用算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作系统"><span class="nav-number">3.</span> <span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式"><span class="nav-number">4.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运维"><span class="nav-number">5.</span> <span class="nav-text">运维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间件"><span class="nav-number">6.</span> <span class="nav-text">中间件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络"><span class="nav-number">7.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库"><span class="nav-number">8.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索引擎"><span class="nav-number">9.</span> <span class="nav-text">搜索引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础知识"><span class="nav-number">9.1.</span> <span class="nav-text">基础知识</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大数据"><span class="nav-number">10.</span> <span class="nav-text">大数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全"><span class="nav-number">11.</span> <span class="nav-text">安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式设计"><span class="nav-number">12.</span> <span class="nav-text">分布式设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计思想-amp-开发模式"><span class="nav-number">13.</span> <span class="nav-text">设计思想 &amp; 开发模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编程语言"><span class="nav-number">14.</span> <span class="nav-text">编程语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GoLang"><span class="nav-number">14.1.</span> <span class="nav-text">GoLang</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Go基础"><span class="nav-number">14.1.1.</span> <span class="nav-text">Go基础</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Go源码阅读"><span class="nav-number">14.1.2.</span> <span class="nav-text">Go源码阅读</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Go语言核心36讲-读书笔记"><span class="nav-number">14.1.3.</span> <span class="nav-text">Go语言核心36讲[读书笔记]</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP"><span class="nav-number">14.2.</span> <span class="nav-text">PHP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java"><span class="nav-number">14.3.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python"><span class="nav-number">14.4.</span> <span class="nav-text">Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript"><span class="nav-number">14.5.</span> <span class="nav-text">JavaScript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-amp-CSS"><span class="nav-number">14.6.</span> <span class="nav-text">HTML &amp; CSS</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
