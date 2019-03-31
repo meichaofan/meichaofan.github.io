@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-03-29T07:18:28.665Z</updated>
+  <updated>2019-03-29T08:54:52.225Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>源码文件</title>
+    <link href="https://meichaofan.github.io/2019/03/29/%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6/"/>
+    <id>https://meichaofan.github.io/2019/03/29/源码文件/</id>
+    <published>2019-03-29T07:23:08.000Z</published>
+    <updated>2019-03-29T08:54:52.225Z</updated>
+    
+    <content type="html"><![CDATA[<p>go文件主要分为下面3类:</p><p><img src alt="go文件分类"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;go文件主要分为下面3类:&lt;/p&gt;
+&lt;p&gt;&lt;img src alt=&quot;go文件分类&quot;&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="go" scheme="https://meichaofan.github.io/tags/go/"/>
+    
+  </entry>
   
   <entry>
     <title>工作区和GOPATH</title>
