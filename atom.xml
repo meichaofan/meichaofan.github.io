@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-04-03T15:52:34.577Z</updated>
+  <updated>2019-04-08T18:14:40.009Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -15,6 +15,72 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用make</title>
+    <link href="https://meichaofan.github.io/2019/04/09/02-use-make/"/>
+    <id>https://meichaofan.github.io/2019/04/09/02-use-make/</id>
+    <published>2019-04-08T18:12:59.000Z</published>
+    <updated>2019-04-08T18:14:40.009Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="C" scheme="https://meichaofan.github.io/tags/C/"/>
+    
+      <category term="Makefile" scheme="https://meichaofan.github.io/tags/Makefile/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>启用编译器</title>
+    <link href="https://meichaofan.github.io/2019/04/09/01-dust-off-that-compiler/"/>
+    <id>https://meichaofan.github.io/2019/04/09/01-dust-off-that-compiler/</id>
+    <published>2019-04-08T17:39:05.000Z</published>
+    <updated>2019-04-08T18:03:38.997Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是一个最简单的C程序,hello-world.c：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char *argv[])&#123;</span><br><span class="line">    puts("Hello world.");</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在Linux终端输入：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> make hello-world</span><br><span class="line">cc hello-world.c -o hello-world</span><br></pre></td></tr></table></figure><p>现在，你可以运行并可以看到程序输出。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">$</span> ./hello-world</span><br><span class="line">Hello World.</span><br></pre></td></tr></table></figure><p>思考：</p><ul><li>1.make指令的运行原理和流程</li><li>2.puts函数的作用<br> C 库函数 int puts(const char *str) 把一个字符串写入到标准输出 stdout，直到空字符，但不包括空字符。换行符会被追加到输出中。</li><li><p>3.C语言中的空字符<br> 在C语言中空字符用’\0’表示;<br> ‘\0’对应的整数值是0，所以给一个字符变量赋值为空字符时，以下两种都是可以的：</p> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char ch=&apos;\0&apos;;</span><br><span class="line">char ch=0;</span><br></pre></td></tr></table></figure></li><li><p>4.字符串<br> 字符串就是一串零个或多个字符，并且以位模式为全0的NUL字节即空字符(‘\0’)结尾。C语言中字符串没有显示的数据类型，字符串通常存储在字符数组或动态分配的内存中，在编码操作中通常将整个字符串作为操作对象，常用操作包括复制、查找、比较等。</p></li><li>5.空字符与字符串<ul><li>1、空字符是字符串的终止符。注：空字符本身不是字符串的一部分，所以字符串的长度并不包含空字符； </li><li>2、操作字符串时，必须保证字符串以空字符结尾(注：不以空字符结尾的字符序列，不是字符串)。</li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这是一个最简单的C程序,hello-world.c：&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span cl
+      
+    
+    </summary>
+    
+    
+      <category term="C" scheme="https://meichaofan.github.io/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>笨方法学C</title>
+    <link href="https://meichaofan.github.io/2019/04/09/learn-c-the-hard-way/"/>
+    <id>https://meichaofan.github.io/2019/04/09/learn-c-the-hard-way/</id>
+    <published>2019-04-08T16:55:42.000Z</published>
+    <updated>2019-04-08T17:22:47.803Z</updated>
+    
+    <content type="html"><![CDATA[<p>这几年，我一直在学习编程语言，从JAVA、PHP、JS到Go，其实我一直想学好的是C语言，C即是基础。这个《笨方法学C》的读书系列，希望自己一定要坚持下来，好好学习，好好总结。</p><p>这本书的目的是让你足够熟悉C语言，并能够使用它编写自己的软件，或者修改其他人的代码。你需要学习下面这些东西来达到这一阶段：</p><ul><li>C的基本语法和编写习惯;</li><li>编译,make文件和链接;</li><li>寻找和预防bug;</li><li>防御性编程实战;</li><li>使C的代码崩溃;</li><li>编写基本的Unix系统软件。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这几年，我一直在学习编程语言，从JAVA、PHP、JS到Go，其实我一直想学好的是C语言，C即是基础。这个《笨方法学C》的读书系列，希望自己一定要坚持下来，好好学习，好好总结。&lt;/p&gt;
+&lt;p&gt;这本书的目的是让你足够熟悉C语言，并能够使用它编写自己的软件，或者修改其他人的代码
+      
+    
+    </summary>
+    
+    
+      <category term="C" scheme="https://meichaofan.github.io/tags/C/"/>
+    
+  </entry>
   
   <entry>
     <title>Redis源码从哪里读起?</title>

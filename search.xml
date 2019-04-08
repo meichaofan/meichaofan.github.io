@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[使用make]]></title>
+    <url>%2F2019%2F04%2F09%2F02-use-make%2F</url>
+    <content type="text"></content>
+      <tags>
+        <tag>C</tag>
+        <tag>Makefile</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[启用编译器]]></title>
+    <url>%2F2019%2F04%2F09%2F01-dust-off-that-compiler%2F</url>
+    <content type="text"><![CDATA[这是一个最简单的C程序,hello-world.c： 1234int main(int argc, char *argv[])&#123; puts("Hello world."); return 0;&#125; 在Linux终端输入： 12$ make hello-worldcc hello-world.c -o hello-world 现在，你可以运行并可以看到程序输出。 123$ ./hello-worldHello World. 思考： 1.make指令的运行原理和流程 2.puts函数的作用 C 库函数 int puts(const char *str) 把一个字符串写入到标准输出 stdout，直到空字符，但不包括空字符。换行符会被追加到输出中。 3.C语言中的空字符 在C语言中空字符用’\0’表示; ‘\0’对应的整数值是0，所以给一个字符变量赋值为空字符时，以下两种都是可以的： 12char ch=&apos;\0&apos;;char ch=0; 4.字符串 字符串就是一串零个或多个字符，并且以位模式为全0的NUL字节即空字符(‘\0’)结尾。C语言中字符串没有显示的数据类型，字符串通常存储在字符数组或动态分配的内存中，在编码操作中通常将整个字符串作为操作对象，常用操作包括复制、查找、比较等。 5.空字符与字符串 1、空字符是字符串的终止符。注：空字符本身不是字符串的一部分，所以字符串的长度并不包含空字符； 2、操作字符串时，必须保证字符串以空字符结尾(注：不以空字符结尾的字符序列，不是字符串)。]]></content>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[笨方法学C]]></title>
+    <url>%2F2019%2F04%2F09%2Flearn-c-the-hard-way%2F</url>
+    <content type="text"><![CDATA[这几年，我一直在学习编程语言，从JAVA、PHP、JS到Go，其实我一直想学好的是C语言，C即是基础。这个《笨方法学C》的读书系列，希望自己一定要坚持下来，好好学习，好好总结。 这本书的目的是让你足够熟悉C语言，并能够使用它编写自己的软件，或者修改其他人的代码。你需要学习下面这些东西来达到这一阶段： C的基本语法和编写习惯; 编译,make文件和链接; 寻找和预防bug; 防御性编程实战; 使C的代码崩溃; 编写基本的Unix系统软件。]]></content>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Redis源码从哪里读起?]]></title>
     <url>%2F2019%2F04%2F03%2FRedis%E6%BA%90%E7%A0%81%E4%BB%8E%E5%93%AA%E9%87%8C%E8%AF%BB%E8%B5%B7%2F</url>
     <content type="text"></content>
