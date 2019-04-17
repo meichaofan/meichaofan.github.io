@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="huany">
 <meta property="og:description" content="使用make使用make的第一个阶段，就是用它已知的方法来构建程序。make预置了一些知识，来从其它文件构建多种文件。在上一个练习中，有如下操作： 12$ make hello-world$ CFLAG=&amp;quot;-Wall&amp;quot; make hello-world 第一条命令中你告诉make，“我想创建名为hello-word的文件”。于是，make执行了下面的动作：  文件hello-w">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-17T16:08:15.556Z">
+<meta property="og:updated_time" content="2019-04-17T16:09:30.459Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用make">
 <meta name="twitter:description" content="使用make使用make的第一个阶段，就是用它已知的方法来构建程序。make预置了一些知识，来从其它文件构建多种文件。在上一个练习中，有如下操作： 12$ make hello-world$ CFLAG=&amp;quot;-Wall&amp;quot; make hello-world 第一条命令中你告诉make，“我想创建名为hello-word的文件”。于是，make执行了下面的动作：  文件hello-w">
@@ -408,7 +408,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@www practice02]# make clean</span><br><span class="line">rm -f hello-world</span><br><span class="line">[root@www practice02]# make hello-world</span><br><span class="line">cc -Wall -g    hello-world.c   -o hello-world</span><br><span class="line">hello-world.c: In function ‘main’:</span><br><span class="line">hello-world.c:2:5: warning: implicit declaration of function ‘puts’ [-Wimplicit-function-declaration]</span><br><span class="line">     puts(&quot;Hello world.\nnice to see you!&quot;);</span><br><span class="line">     ^</span><br></pre></td></tr></table></figure>
 <p>你可以看出来,我执行了<code>make clean</code>，它告诉make执行我们的<code>clean</code>目标。在看makefile，发现<code>clean</code>下面有一些shell命令。你可以在此处输入任意多的命令，所以它是一个非常棒的自动化工具。</p>
 <blockquote>
-<p>注:<br>如果你修改了 ex1.c ，添加了 #include\&lt;stdio> ，输出中的关于 puts 的<br>警告就会消失（这其实应该算作一个错误） 。我这里有警告是因为我并没有去<br>掉它</p>
+<p>注:<br>如果你修改了 ex1.c ，添加了 #include\&lt;stdio> ，输出中的关于 puts 的警告就会消失（这其实应该算作一个错误） 。我这里有警告是因为我并没有去掉它</p>
 </blockquote>
 <h2 id="附加题"><a href="#附加题" class="headerlink" title="附加题"></a>附加题</h2><ul>
 <li><p>创建目标 all:hello-world,可以用单个命令make构建hello-world</p>
@@ -416,8 +416,7 @@
 </li>
 <li><p>阅读 man make 来了解关于他的更多信息。</p>
 </li>
-<li><p>阅读 man cc 来了解关于 -Wall 和 -g 行为的更多信息。</p>
-</li>
+<li>阅读 man cc 来了解关于 -Wall 和 -g 行为的更多信息。</li>
 </ul>
 
       
