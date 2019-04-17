@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="C,">
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="一如当年">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://meichaofan.github.io/about/index.html">
+<meta name="description" content="printf格式化函数许多编程语言都使用了C风格格式化输出，所以让我们也尝试一下,编写format-output.c，代码如下： 1234567891011#include&amp;lt;stdio.h&amp;gt;int main()&amp;#123;    int age = 10;    int height = 72;    printf(&amp;quot;I am %d years old.\n&amp;quot;,ag">
+<meta name="keywords" content="C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="格式化输出">
+<meta property="og:url" content="https://meichaofan.github.io/2019/04/18/03-format-print/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="一如当年">
+<meta property="og:description" content="printf格式化函数许多编程语言都使用了C风格格式化输出，所以让我们也尝试一下,编写format-output.c，代码如下： 1234567891011#include&amp;lt;stdio.h&amp;gt;int main()&amp;#123;    int age = 10;    int height = 72;    printf(&amp;quot;I am %d years old.\n&amp;quot;,ag">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-27T11:27:48.957Z">
+<meta property="og:updated_time" content="2019-04-17T16:44:06.505Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="一如当年">
+<meta name="twitter:title" content="格式化输出">
+<meta name="twitter:description" content="printf格式化函数许多编程语言都使用了C风格格式化输出，所以让我们也尝试一下,编写format-output.c，代码如下： 1234567891011#include&amp;lt;stdio.h&amp;gt;int main()&amp;#123;    int age = 10;    int height = 72;    printf(&amp;quot;I am %d years old.\n&amp;quot;,ag">
 
 
 
@@ -121,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/about/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/04/18/03-format-print/">
 
 
 
 
 
-  <title>about | huany</title>
+  <title>格式化输出 | huany</title>
   
 
 
@@ -294,33 +295,228 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/18/03-format-print/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="meichaofan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/huany.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="huany">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">格式化输出</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-18T00:10:06+08:00">
+                2019-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-      </div>
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/18/03-format-print/" class="leancloud_visitors" data-flag-title="格式化输出">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h2 id="printf格式化函数"><a href="#printf格式化函数" class="headerlink" title="printf格式化函数"></a>printf格式化函数</h2><p>许多编程语言都使用了C风格格式化输出，所以让我们也尝试一下,编写format-output.c，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int age = 10;</span><br><span class="line">    int height = 72;</span><br><span class="line"></span><br><span class="line">    printf(&quot;I am %d years old.\n&quot;,age);</span><br><span class="line">    printf(&quot;I am %d inches tall.\n&quot;,height);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Makefile文件如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS=-Wall -g</span><br><span class="line"></span><br><span class="line">all: format-output</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">    rm -rf format-output</span><br></pre></td></tr></table></figure></p>
+<p>执行<code>make</code>，将看到如下内容:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@www practice03]# make</span><br><span class="line">make format-output</span><br><span class="line">make[1]: Entering directory `/root/LCTHW/practice03&apos;</span><br><span class="line">cc -Wall -g    format-output.c   -o format-output</span><br><span class="line">make[1]: Leaving directory `/root/LCTHW/practice03&apos;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码量很小，我们逐行分析一下：</p>
+<ul>
+<li>首先你包含了一个叫做 <code>stdio.h</code> 的头文件。这告诉你的编译器要使用“标准的输入/输出函数”。他们之一就是下面的<code>printf</code>。</li>
+<li>然后你声明了一个int类型的age变量，并赋值为10。</li>
+<li>接着你又声明了一个int类型的height变量，并赋值为72。</li>
+<li>再然后用<code>printf</code>函数来打印你的年龄和身高</li>
+<li>在<code>printf</code>中你会注意到你传入了一个字符串，这就是格式字符串，和其它语言中一样。</li>
+<li>在格式化字符串后面，你传入了一些变量，他们应该被<code>printf</code>“替换”进格式化字符串中。</li>
+</ul>
+<h2 id="附加题"><a href="#附加题" class="headerlink" title="附加题"></a>附加题</h2><ul>
+<li>执行 man 3 printf 来阅读它更多可用的“%”格式的占位符。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>控制符</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%d</td>
+<td style="text-align:center">按十进制整型数据的实际长度输出。</td>
+</tr>
+<tr>
+<td>%ld</td>
+<td style="text-align:center">输出长整型数据。</td>
+</tr>
+<tr>
+<td>%md</td>
+<td style="text-align:center">m为指定的输出字段的宽度。如果数据的位数小于 m，则左端补以空格，若大于 m，则按实际位数输出。</td>
+</tr>
+<tr>
+<td>%u</td>
+<td style="text-align:center">输出无符号整型（unsigned）。输出无符号整型时也可以用 %d，这时是将无符号转换成有符号数，然后输出。但编程的时候最好不要这么写，因为这样要进行一次转换，使 CPU 多做一次无用功。</td>
+</tr>
+<tr>
+<td>%c</td>
+<td style="text-align:center">输出一个字符</td>
+</tr>
+<tr>
+<td>%f</td>
+<td style="text-align:center">用来输出实数，包括单精度和双精度，以小数形式输出。不指定字段宽度，由系统自动指定，整数部分全部输出，小数部分输出 6 位，超过 6 位的四舍五入。</td>
+</tr>
+<tr>
+<td>%.mf</td>
+<td style="text-align:center">输出实数时小数点后保留 m 位，注意 m 前面有个点。</td>
+</tr>
+<tr>
+<td>%o</td>
+<td style="text-align:center">以八进制整数形式输出，这个就用得很少了，了解一下就行了。</td>
+</tr>
+<tr>
+<td>%s</td>
+<td style="text-align:center">用来输出字符串。用 %s 输出字符串同前面直接输出字符串是一样的。但是此时要先定义字符数组或字符指针存储或指向字符串。</td>
+</tr>
+<tr>
+<td>%x（或 %X 或 %#x 或 %#X）</td>
+<td style="text-align:center">以十六进制形式输出整数，这个很重要。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>%x、%X、%#x、%#X 的区别</li>
+</ul>
+<p>一定要掌握 %x（或 %X 或 %#x 或 %#X），因为调试的时候经常要将内存中的二进制代码全部输出，然后用十六进制显示出来。下面写一个程序看看它们四个有什么区别：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># include &lt;stdio.h&gt;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    int i = 47;</span><br><span class="line">    printf(&quot;%x\n&quot;, i);   </span><br><span class="line">    printf(&quot;%X\n&quot;, i);   </span><br><span class="line">    printf(&quot;%#x\n&quot;, i);   </span><br><span class="line">    printf(&quot;%#X\n&quot;, i);   </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 VC++ 6.0 中的输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2f</span><br><span class="line">2F</span><br><span class="line">0x2f</span><br><span class="line">0X2F</span><br></pre></td></tr></table></figure></p>
+<p>从输出结果可以看出：如果是小写的<code>x</code>，输出的字母就是小写的；如果是大写的<code>X</code>，输出的字母就是大写的；如果加一个<code>#</code>，就以标准的十六进制形式输出。</p>
+<p>最好是加一个#，否则如果输出的十六进制数正好没有字母的话会误认为是一个十进制数呢！</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/12/docker-process/" rel="next" title="Docker:从进程说起">
+                <i class="fa fa-chevron-left"></i> Docker:从进程说起
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -353,8 +549,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -424,6 +629,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#printf格式化函数"><span class="nav-number">1.</span> <span class="nav-text">printf格式化函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附加题"><span class="nav-number">2.</span> <span class="nav-text">附加题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

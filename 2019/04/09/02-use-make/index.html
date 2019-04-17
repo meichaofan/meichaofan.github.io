@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="huany">
 <meta property="og:description" content="使用make使用make的第一个阶段，就是用它已知的方法来构建程序。make预置了一些知识，来从其它文件构建多种文件。在上一个练习中，有如下操作： 12$ make hello-world$ CFLAG=&amp;quot;-Wall&amp;quot; make hello-world 第一条命令中你告诉make，“我想创建名为hello-word的文件”。于是，make执行了下面的动作：  文件hello-w">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-17T16:09:30.459Z">
+<meta property="og:updated_time" content="2019-04-17T16:43:49.710Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用make">
 <meta name="twitter:description" content="使用make使用make的第一个阶段，就是用它已知的方法来构建程序。make预置了一些知识，来从其它文件构建多种文件。在上一个练习中，有如下操作： 12$ make hello-world$ CFLAG=&amp;quot;-Wall&amp;quot; make hello-world 第一条命令中你告诉make，“我想创建名为hello-word的文件”。于是，make执行了下面的动作：  文件hello-w">
@@ -412,7 +412,7 @@
 </blockquote>
 <h2 id="附加题"><a href="#附加题" class="headerlink" title="附加题"></a>附加题</h2><ul>
 <li><p>创建目标 all:hello-world,可以用单个命令make构建hello-world</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS=-Wall -g</span><br><span class="line"></span><br><span class="line">default: all</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">    rm -f hello-world</span><br><span class="line"></span><br><span class="line">all:</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS=-Wall -g</span><br><span class="line"></span><br><span class="line">all: hello-world</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">    rm -f hello-world</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>阅读 man make 来了解关于他的更多信息。</p>
 </li>
@@ -541,7 +541,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
