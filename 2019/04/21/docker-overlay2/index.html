@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="docker,overlay2,">
 
 
 
@@ -81,17 +81,20 @@
 
 
 
-<meta name="description" content="一如当年">
+<meta name="description" content="overlay2中镜像和容器的磁盘结构docker pull ubuntu:14.04下载了包含4层的镜像，12345678[root@www ~]# docker pull ubuntu:14.0414.04: Pulling from library/ubuntue082d4499130: Pull complete 371450624c9e: Pull complete c8a555b3a5">
+<meta name="keywords" content="docker,overlay2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go string 实现原理剖析">
-<meta property="og:url" content="https://meichaofan.github.io/2019/03/28/Go-string-实现原理剖析/index.html">
+<meta property="og:title" content="Docker 存储驱动之 overlay2">
+<meta property="og:url" content="https://meichaofan.github.io/2019/04/21/docker-overlay2/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="一如当年">
+<meta property="og:description" content="overlay2中镜像和容器的磁盘结构docker pull ubuntu:14.04下载了包含4层的镜像，12345678[root@www ~]# docker pull ubuntu:14.0414.04: Pulling from library/ubuntue082d4499130: Pull complete 371450624c9e: Pull complete c8a555b3a5">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-27T16:18:04.145Z">
+<meta property="og:image" content="https://github.com/meichaofan/static-file/blob/master/docker/overlay_constructs.jpg?raw=true">
+<meta property="og:updated_time" content="2019-04-20T18:09:47.389Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go string 实现原理剖析">
-<meta name="twitter:description" content="一如当年">
+<meta name="twitter:title" content="Docker 存储驱动之 overlay2">
+<meta name="twitter:description" content="overlay2中镜像和容器的磁盘结构docker pull ubuntu:14.04下载了包含4层的镜像，12345678[root@www ~]# docker pull ubuntu:14.0414.04: Pulling from library/ubuntue082d4499130: Pull complete 371450624c9e: Pull complete c8a555b3a5">
+<meta name="twitter:image" content="https://github.com/meichaofan/static-file/blob/master/docker/overlay_constructs.jpg?raw=true">
 
 
 
@@ -121,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/2019/03/28/Go-string-实现原理剖析/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/04/21/docker-overlay2/">
 
 
 
 
 
-  <title>Go string 实现原理剖析 | huany</title>
+  <title>Docker 存储驱动之 overlay2 | huany</title>
   
 
 
@@ -306,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/03/28/Go-string-实现原理剖析/">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/21/docker-overlay2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="meichaofan">
@@ -323,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Go string 实现原理剖析</h1>
+          <h1 class="post-title" itemprop="name headline">Docker 存储驱动之 overlay2</h1>
         
 
         <div class="post-meta">
@@ -335,8 +338,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T00:18:04+08:00">
-                2019-03-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-21T01:05:59+08:00">
+                2019-04-21
               </time>
             
 
@@ -353,7 +356,7 @@
 
           
           
-             <span id="/2019/03/28/Go-string-实现原理剖析/" class="leancloud_visitors" data-flag-title="Go string 实现原理剖析">
+             <span id="/2019/04/21/docker-overlay2/" class="leancloud_visitors" data-flag-title="Docker 存储驱动之 overlay2">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -384,7 +387,23 @@
       
 
       
-        
+        <h3 id="overlay2中镜像和容器的磁盘结构"><a href="#overlay2中镜像和容器的磁盘结构" class="headerlink" title="overlay2中镜像和容器的磁盘结构"></a>overlay2中镜像和容器的磁盘结构</h3><p>docker pull ubuntu:14.04下载了包含4层的镜像，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# docker pull ubuntu:14.04</span><br><span class="line">14.04: Pulling from library/ubuntu</span><br><span class="line">e082d4499130: Pull complete </span><br><span class="line">371450624c9e: Pull complete </span><br><span class="line">c8a555b3a57c: Pull complete </span><br><span class="line">1456d810d42e: Pull complete </span><br><span class="line">Digest: sha256:6612de24437f6f01d6a2988ed9a36b3603df06e8d2c0493678f3ee696bc4bb2d</span><br><span class="line">Status: Downloaded newer image for ubuntu:14.04</span><br></pre></td></tr></table></figure></p>
+<p>可以在/var/lib/docker/overlay2中看到，有5个目录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@www overlay2]# ll -h</span><br><span class="line">total 28K</span><br><span class="line">drwx------ 4 root root 4.0K Apr 21 00:32 0734cd8060d194cf3db93162b421e4f245151920f0b9acda5313ec9f671bc5cc</span><br><span class="line">drwx------ 3 root root 4.0K Apr 21 00:32 153f0c95b638414d41bb07b9d45243a0219719e468dd9dcb097b80f837b4d8b3</span><br><span class="line">drwx------ 4 root root 4.0K Apr 21 00:32 658b3e84761843f58ecaf82e1f987bf32d498b7bd54a9cf40bf6bf635fff8ac3</span><br><span class="line">drwx------ 4 root root 4.0K Apr 21 00:32 9ff7c96e688b25a7353c83904d791eae357c2e16315ecbe602009678965ce761</span><br><span class="line">drwx------ 2 root root 4.0K Apr 21 00:33 l</span><br></pre></td></tr></table></figure></p>
+<h3 id="l目录的内容"><a href="#l目录的内容" class="headerlink" title="l目录的内容"></a><strong>l</strong>目录的内容</h3><p>其中<strong>l</strong>目录中包含了很多软连接，使用短名称指向了其它层。短名称用于避免mount参数时达到页面大小的限制。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www overlay2]# ll l/</span><br><span class="line">total 24</span><br><span class="line">lrwxrwxrwx 1 root root 72 Apr 21 00:32 2AQ2F7X67IL4TATXIIYO62CM67 -&gt; ../153f0c95b638414d41bb07b9d45243a0219719e468dd9dcb097b80f837b4d8b3/diff</span><br><span class="line">lrwxrwxrwx 1 root root 72 Apr 21 00:32 HMOMCX3OAMM4K6KUZORQ7NTIG4 -&gt; ../9ff7c96e688b25a7353c83904d791eae357c2e16315ecbe602009678965ce761/diff</span><br><span class="line">lrwxrwxrwx 1 root root 72 Apr 21 00:32 JZPHZPG7ZLX7GTKCFVHQZDEF43 -&gt; ../658b3e84761843f58ecaf82e1f987bf32d498b7bd54a9cf40bf6bf635fff8ac3/diff</span><br><span class="line">lrwxrwxrwx 1 root root 72 Apr 21 00:32 OJ5PMEVISSBQ4X4N2U66YEE6IH -&gt; ../0734cd8060d194cf3db93162b421e4f245151920f0b9acda5313ec9f671bc5cc/diff</span><br></pre></td></tr></table></figure></p>
+<h3 id="mount-查看容器-镜像的层次关系"><a href="#mount-查看容器-镜像的层次关系" class="headerlink" title="mount 查看容器/镜像的层次关系"></a>mount 查看容器/镜像的层次关系</h3><p><strong>现在起一个容器，它会在rootfs层上，加上init层（环境相关）和容器层（读写）</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu:14.04 /bin/bash</span><br></pre></td></tr></table></figure></p>
+<p>查看mount相关信息，可以看出层级关系<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# mount -l | grep overlay2</span><br><span class="line">/dev/vda1 on /var/lib/docker/overlay2 type ext3 (rw,relatime,data=ordered)</span><br><span class="line">overlay on /var/lib/docker/overlay2/bda1eaf86f4c4a500aac2418bc45956531e81de6fff829b67452174c891f5f15/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/MXQORLOJXLIRFVZ3R26TNWWURM:/var/lib/docker/overlay2/l/HMOMCX3OAMM4K6KUZORQ7NTIG4:/var/lib/docker/overlay2/l/OJ5PMEVISSBQ4X4N2U66YEE6IH:/var/lib/docker/overlay2/l/JZPHZPG7ZLX7GTKCFVHQZDEF43:/var/lib/docker/overlay2/l/2AQ2F7X67IL4TATXIIYO62CM67,upperdir=/var/lib/docker/overlay2/bda1eaf86f4c4a500aac2418bc45956531e81de6fff829b67452174c891f5f15/diff,workdir=/var/lib/docker/overlay2/bda1eaf86f4c4a500aac2418bc45956531e81de6fff829b67452174c891f5f15/work)</span><br></pre></td></tr></table></figure></p>
+<p>整理mount信息,如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">merged:</span><br><span class="line">    /var/lib/docker/overlay2/bda1eaf86f4c4a500aac2418bc45956531e81de6fff829b67452174c891f5f15/merged (联合挂载到此目录下)</span><br><span class="line"></span><br><span class="line">workdir:</span><br><span class="line">    /var/lib/docker/overlay2/bda1eaf86f4c4a500aac2418bc45956531e81de6fff829b67452174c891f5f15/work </span><br><span class="line"></span><br><span class="line">upperdir:</span><br><span class="line">    /var/lib/docker/overlay2/bda1eaf86f4c4a500aac2418bc45956531e81de6fff829b67452174c891f5f15/diff (第六层 rw)</span><br><span class="line"></span><br><span class="line">lowerdir:</span><br><span class="line">    /var/lib/docker/overlay2/l/MXQORLOJXLIRFVZ3R26TNWWURM (第5层 init层 ro)</span><br><span class="line">    /var/lib/docker/overlay2/l/HMOMCX3OAMM4K6KUZORQ7NTIG4 (第四层 ro)</span><br><span class="line">    /var/lib/docker/overlay2/l/OJ5PMEVISSBQ4X4N2U66YEE6IH (第三层 ro)</span><br><span class="line">    /var/lib/docker/overlay2/l/JZPHZPG7ZLX7GTKCFVHQZDEF43 (第二层 ro)</span><br><span class="line">    /var/lib/docker/overlay2/l/2AQ2F7X67IL4TATXIIYO62CM67 (rootfs 第一层 ro)</span><br></pre></td></tr></table></figure></p>
+<h3 id="各个rootfs层文件内容介绍"><a href="#各个rootfs层文件内容介绍" class="headerlink" title="各个rootfs层文件内容介绍"></a>各个rootfs层文件内容介绍</h3><p>查看rootfs第一层的目录信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# ll /var/lib/docker/overlay2/l/2AQ2F7X67IL4TATXIIYO62CM67</span><br><span class="line">lrwxrwxrwx 1 root root 72 Apr 21 00:32 /var/lib/docker/overlay2/l/2AQ2F7X67IL4TATXIIYO62CM67 -&gt; ../153f0c95b638414d41bb07b9d45243a0219719e468dd9dcb097b80f837b4d8b3/diff</span><br><span class="line"></span><br><span class="line">[root@www ~]# ll /var/lib/docker/overlay2/153f0c95b638414d41bb07b9d45243a0219719e468dd9dcb097b80f837b4d8b3/</span><br><span class="line">total 8</span><br><span class="line">drwxr-xr-x 21 root root 4096 Apr 21 00:32 diff</span><br><span class="line">-rw-r--r--  1 root root   26 Apr 21 00:32 link</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，最低层只有两个文件，一个是diff，存放当前层的文件和目录，link则和<code>l</code>目录的软链接向对应<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# ll /var/lib/docker/overlay2/153f0c95b638414d41bb07b9d45243a0219719e468dd9dcb097b80f837b4d8b3/diff</span><br><span class="line">total 76</span><br><span class="line">drwxr-xr-x  2 root root 4096 Mar  5 12:46 bin</span><br><span class="line">drwxr-xr-x  2 root root 4096 Apr 11  2014 boot</span><br><span class="line">drwxr-xr-x  3 root root 4096 Mar  5 12:45 dev</span><br><span class="line">drwxr-xr-x 61 root root 4096 Mar  5 12:46 etc</span><br><span class="line">drwxr-xr-x  2 root root 4096 Apr 11  2014 home</span><br><span class="line">drwxr-xr-x 12 root root 4096 Mar  5 12:46 lib</span><br><span class="line">drwxr-xr-x  2 root root 4096 Mar  5 12:45 lib64</span><br><span class="line">drwxr-xr-x  2 root root 4096 Mar  5 12:45 media</span><br><span class="line">drwxr-xr-x  2 root root 4096 Apr 11  2014 mnt</span><br><span class="line">drwxr-xr-x  2 root root 4096 Mar  5 12:45 opt</span><br><span class="line">drwxr-xr-x  2 root root 4096 Apr 11  2014 proc</span><br><span class="line">drwx------  2 root root 4096 Mar  5 12:46 root</span><br><span class="line">drwxr-xr-x  7 root root 4096 Mar  5 12:46 run</span><br><span class="line">drwxr-xr-x  2 root root 4096 Mar  5 12:46 sbin</span><br><span class="line">drwxr-xr-x  2 root root 4096 Mar  5 12:45 srv</span><br><span class="line">drwxr-xr-x  2 root root 4096 Mar 13  2014 sys</span><br><span class="line">drwxrwxrwt  2 root root 4096 Mar  5 12:46 tmp</span><br><span class="line">drwxr-xr-x 10 root root 4096 Mar  5 12:45 usr</span><br><span class="line">drwxr-xr-x 11 root root 4096 Mar  5 12:46 var</span><br><span class="line"></span><br><span class="line">[root@www ~]# cat /var/lib/docker/overlay2/153f0c95b638414d41bb07b9d45243a0219719e468dd9dcb097b80f837b4d8b3/link </span><br><span class="line">2AQ2F7X67IL4TATXIIYO62CM67</span><br></pre></td></tr></table></figure></p>
+<p>查看rootfs第二层信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# ll /var/lib/docker/overlay2/l/JZPHZPG7ZLX7GTKCFVHQZDEF43</span><br><span class="line">lrwxrwxrwx 1 root root 72 Apr 21 00:32 /var/lib/docker/overlay2/l/JZPHZPG7ZLX7GTKCFVHQZDEF43 -&gt; ../658b3e84761843f58ecaf82e1f987bf32d498b7bd54a9cf40bf6bf635fff8ac3/diff</span><br><span class="line">[root@www ~]# ll /var/lib/docker/overlay2/658b3e84761843f58ecaf82e1f987bf32d498b7bd54a9cf40bf6bf635fff8ac3</span><br><span class="line">total 16</span><br><span class="line">drwxr-xr-x 6 root root 4096 Apr 21 00:32 diff</span><br><span class="line">-rw-r--r-- 1 root root   26 Apr 21 00:32 link</span><br><span class="line">-rw-r--r-- 1 root root   28 Apr 21 00:32 lower</span><br><span class="line">drwx------ 2 root root 4096 Apr 21 00:32 work</span><br></pre></td></tr></table></figure></p>
+<p>第二层有四个文件，diff 和 link如上所序一样。lower文件的内容是当前层下面的rootfs的软连接名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 第二层rootfs的lower内容</span><br><span class="line">[root@www ~]# cat /var/lib/docker/overlay2/658b3e84761843f58ecaf82e1f987bf32d498b7bd54a9cf40bf6bf635fff8ac3/lower </span><br><span class="line">l/2AQ2F7X67IL4TATXIIYO62CM67</span><br><span class="line"></span><br><span class="line">#第三层rootfs的lower内容</span><br><span class="line">[root@www ~]# cat /var/lib/docker/overlay2/0734cd8060d194cf3db93162b421e4f245151920f0b9acda5313ec9f671bc5cc/lower </span><br><span class="line">l/JZPHZPG7ZLX7GTKCFVHQZDEF43:l/2AQ2F7X67IL4TATXIIYO62CM67</span><br><span class="line"></span><br><span class="line">#第四层rootfs的lower内容</span><br><span class="line">[root@www ~]# cat /var/lib/docker/overlay2/9ff7c96e688b25a7353c83904d791eae357c2e16315ecbe602009678965ce761/lower </span><br><span class="line">l/OJ5PMEVISSBQ4X4N2U66YEE6IH:l/JZPHZPG7ZLX7GTKCFVHQZDEF43:l/2AQ2F7X67IL4TATXIIYO62CM67</span><br></pre></td></tr></table></figure></p>
+<p>最顶层，也就是upperdir层，看一下它的文件目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@www bda1eaf86f4c4a500aac2418bc45956531e81de6fff829b67452174c891f5f15]# ls</span><br><span class="line">diff  link  lower  merged  work</span><br></pre></td></tr></table></figure></p>
+<p>upperdir是容器层，是可读写的。在容器中所有修改文件操作最后都在upperdir的<code>diff</code>目录体现，并合并到<code>merged</code>目录下。<code>merged</code>目录是联合后挂载的目录，也是容器的文件系统。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 假如我docker run -it ubuntu:14.04 /bin/bash 启动了一个容器，然后再其/(根目录)下创建一个Test目录,并在/root目录下新建了一个aa文件，并删除了/bin/ss文件。我们现在看一下upperdir的`diff`目录</span><br><span class="line"></span><br><span class="line">[root@www bda1eaf86f4c4a500aac2418bc45956531e81de6fff829b67452174c891f5f15]# tree diff/</span><br><span class="line">diff/</span><br><span class="line">├── bin</span><br><span class="line">│   └── ss</span><br><span class="line">├── root</span><br><span class="line">│   └── aa</span><br><span class="line">└── Test</span><br><span class="line"></span><br><span class="line">3 directories, 2 files</span><br><span class="line"></span><br><span class="line"># 在看一个merged目录，它是叠加后一个完整的文件系统目录结构</span><br><span class="line">[root@www bda1eaf86f4c4a500aac2418bc45956531e81de6fff829b67452174c891f5f15]# ls merged/</span><br><span class="line">bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  Test  tmp  usr  var</span><br></pre></td></tr></table></figure></p>
+<h3 id="OverlayFS-constructs"><a href="#OverlayFS-constructs" class="headerlink" title="OverlayFS constructs"></a>OverlayFS constructs</h3><p>OverlayFS将单个Linux主机上的两个目录合并成一个目录。这些目录被称为层，统一过程被称为联合挂载。OverlayFS底层目录称为lowerdir， 高层目录称为upperdir。合并统一视图称为merged。当需要修改一个文件时，使用CoW将文件从只读的Lower复制到可写的Upper进行修改，结果也保存在Upper层。在Docker中，底下的只读层就是image，可写层就是Container</p>
+<p>下图分层图，镜像层是lowdir，容器层是upperdir，统一的视图层是merged层</p>
+<div align="center"><img src="https://github.com/meichaofan/static-file/blob/master/docker/overlay_constructs.jpg?raw=true" width="50%" height="50%"></div><br><div align="center">OverlayFs constructs</div>
+
+
       
     </div>
     
@@ -399,6 +418,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+            <a href="/tags/overlay2/" rel="tag"># overlay2</a>
+          
+        </div>
+      
 
       
       
@@ -408,8 +435,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/27/倒排索引原理/" rel="next" title="倒排索引原理">
-                <i class="fa fa-chevron-left"></i> 倒排索引原理
+              <a href="/2019/04/20/install-docker/" rel="next" title="安装Docker CE">
+                <i class="fa fa-chevron-left"></i> 安装Docker CE
               </a>
             
           </div>
@@ -417,10 +444,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/29/工作区和GOPATH/" rel="prev" title="工作区和GOPATH">
-                工作区和GOPATH <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -472,8 +495,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -543,6 +575,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#overlay2中镜像和容器的磁盘结构"><span class="nav-number">1.</span> <span class="nav-text">overlay2中镜像和容器的磁盘结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#l目录的内容"><span class="nav-number">2.</span> <span class="nav-text">l目录的内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mount-查看容器-镜像的层次关系"><span class="nav-number">3.</span> <span class="nav-text">mount 查看容器/镜像的层次关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#各个rootfs层文件内容介绍"><span class="nav-number">4.</span> <span class="nav-text">各个rootfs层文件内容介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OverlayFS-constructs"><span class="nav-number">5.</span> <span class="nav-text">OverlayFS constructs</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
