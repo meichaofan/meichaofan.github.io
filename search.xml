@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Docker运维相关]]></title>
+    <url>%2F2019%2F04%2F20%2Fabout-use-docker%2F</url>
+    <content type="text"><![CDATA[记录Docker在日常学习和工作中的相关积累 Docker运维 Docker安装 Image相关]]></content>
+      <tags>
+        <tag>docker</tag>
+        <tag>DevOps</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[自己动手写docker]]></title>
     <url>%2F2019%2F04%2F20%2Fwrite-docker-self%2F</url>
     <content type="text"><![CDATA[Docker目前是后端服务中最火的技术之一，读这本书《自己动手写docker》，对自己来说，主要是从原理上熟悉docker，顺便复习go语言 容器技术的发展 docker VS 虚拟机 基础技术 docker namespace UTS USER docker cgroup aufs 构建容器 构建实现run命令的容器]]></content>

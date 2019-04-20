@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-04-20T10:55:54.453Z</updated>
+  <updated>2019-04-20T13:38:18.426Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker运维相关</title>
+    <link href="https://meichaofan.github.io/2019/04/20/about-use-docker/"/>
+    <id>https://meichaofan.github.io/2019/04/20/about-use-docker/</id>
+    <published>2019-04-20T13:34:52.000Z</published>
+    <updated>2019-04-20T13:38:18.426Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录Docker在日常学习和工作中的相关积累</p><hr><ul><li><p>Docker运维</p><ul><li>Docker安装</li></ul></li><li><p>Image相关</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;记录Docker在日常学习和工作中的相关积累&lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Docker运维&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Docker安装&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Image相关&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="docker" scheme="https://meichaofan.github.io/tags/docker/"/>
+    
+      <category term="DevOps" scheme="https://meichaofan.github.io/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>自己动手写docker</title>
