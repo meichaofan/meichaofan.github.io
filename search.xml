@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[安装Docker]]></title>
+    <url>%2F2019%2F04%2F20%2Finstall-docker%2F</url>
+    <content type="text"></content>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Docker运维相关]]></title>
     <url>%2F2019%2F04%2F20%2Fabout-use-docker%2F</url>
-    <content type="text"><![CDATA[记录Docker在日常学习和工作中的相关积累 Docker运维 Docker安装 Image相关]]></content>
+    <content type="text"><![CDATA[记录Docker在日常学习和工作中的相关积累 Docker运维 安装Docker Image相关]]></content>
       <tags>
         <tag>docker</tag>
         <tag>DevOps</tag>
