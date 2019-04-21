@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="1.下载samba镜像1docker pull dperson/samba 2.启动镜像，具体配置看文档，但重要的配置是一下的注释12345678docker run --name samba \-it -p 139:139 -p 445:445 \-v /root:/root \ #共享目录-v /etc/passwd:/etc/passwd \-v /etc/group:/etc/group">
+<meta name="description" content="1.下载samba镜像1docker pull dperson/samba 2.启动镜像，具体配置看文档，但重要的配置是一下的注释12345678docker run --name samba \-it -p 139:139 -p 445:445 \-v /root:/root \-v /etc/passwd:/etc/passwd \-v /etc/group:/etc/group \-d dp">
 <meta name="keywords" content="docker,samba">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用docker搭建samba目录共享">
 <meta property="og:url" content="https://meichaofan.github.io/2019/04/22/docker-run-samba/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="1.下载samba镜像1docker pull dperson/samba 2.启动镜像，具体配置看文档，但重要的配置是一下的注释12345678docker run --name samba \-it -p 139:139 -p 445:445 \-v /root:/root \ #共享目录-v /etc/passwd:/etc/passwd \-v /etc/group:/etc/group">
+<meta property="og:description" content="1.下载samba镜像1docker pull dperson/samba 2.启动镜像，具体配置看文档，但重要的配置是一下的注释12345678docker run --name samba \-it -p 139:139 -p 445:445 \-v /root:/root \-v /etc/passwd:/etc/passwd \-v /etc/group:/etc/group \-d dp">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-21T17:58:41.565Z">
+<meta property="og:updated_time" content="2019-04-21T18:32:43.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用docker搭建samba目录共享">
-<meta name="twitter:description" content="1.下载samba镜像1docker pull dperson/samba 2.启动镜像，具体配置看文档，但重要的配置是一下的注释12345678docker run --name samba \-it -p 139:139 -p 445:445 \-v /root:/root \ #共享目录-v /etc/passwd:/etc/passwd \-v /etc/group:/etc/group">
+<meta name="twitter:description" content="1.下载samba镜像1docker pull dperson/samba 2.启动镜像，具体配置看文档，但重要的配置是一下的注释12345678docker run --name samba \-it -p 139:139 -p 445:445 \-v /root:/root \-v /etc/passwd:/etc/passwd \-v /etc/group:/etc/group \-d dp">
 
 
 
@@ -386,8 +386,9 @@
 
       
         <p>1.下载samba镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull dperson/samba</span><br></pre></td></tr></table></figure></p>
-<p>2.启动镜像，具体配置看文档，但重要的配置是一下的注释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run --name samba \</span><br><span class="line">-it -p 139:139 -p 445:445 \</span><br><span class="line">-v /root:/root \ #共享目录</span><br><span class="line">-v /etc/passwd:/etc/passwd \</span><br><span class="line">-v /etc/group:/etc/group \</span><br><span class="line">-d dperson/samba \</span><br><span class="line">-u &quot;root;ylZSX!&quot; \ #访问用户</span><br><span class="line">-s &quot;root home;/root;yes;no;no;all;none&quot; #共享配置</span><br></pre></td></tr></table></figure></p>
-<p>3.替换samba的启动组，与权限相关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it samba sed -i &apos;s/force group = user/force group = root/g&apos; /etc/samba/smb.conf</span><br></pre></td></tr></table></figure></p>
+<p>2.启动镜像，具体配置看文档，但重要的配置是一下的注释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run --name samba \</span><br><span class="line">-it -p 139:139 -p 445:445 \</span><br><span class="line">-v /root:/root \</span><br><span class="line">-v /etc/passwd:/etc/passwd \</span><br><span class="line">-v /etc/group:/etc/group \</span><br><span class="line">-d dperson/samba \</span><br><span class="line">-u &quot;meichaofan;huanhuan0921&quot; \</span><br><span class="line">-s &quot;meichaofan home;/root;yes;no;no;all;none&quot;</span><br></pre></td></tr></table></figure></p>
+<p>3.替换samba的启动用户，与权限相关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it samba sed -i &apos;s/force user = smbuser/force user = meichaofan/g&apos; /etc/samba/smb.conf</span><br></pre></td></tr></table></figure></p>
+<p>3.替换samba的启动组，与权限相关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it samba sed -i &apos;s/force group = users/force group = meichaofan/g&apos; /etc/samba/smb.conf</span><br></pre></td></tr></table></figure></p>
 <p>4.重启samba<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart samba</span><br></pre></td></tr></table></figure></p>
 
       
