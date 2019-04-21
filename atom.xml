@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-04-21T17:40:04.409Z</updated>
+  <updated>2019-04-21T17:54:48.577Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://meichaofan.github.io/2019/04/22/docker-run-samba/"/>
     <id>https://meichaofan.github.io/2019/04/22/docker-run-samba/</id>
     <published>2019-04-21T17:20:04.000Z</published>
-    <updated>2019-04-21T17:40:04.409Z</updated>
+    <updated>2019-04-21T17:54:48.577Z</updated>
     
-    <content type="html"><![CDATA[<p>1.下载samba镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull dperson/samba</span><br></pre></td></tr></table></figure></p><p>2.启动镜像，具体配置看文档，但重要的配置是一下的注释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run -name samba \</span><br><span class="line">-it -p 139:139 -p 445:445 \</span><br><span class="line">-v /root:/root \ #共享目录</span><br><span class="line">-v /etc/passwd:/etc/passwd \</span><br><span class="line">-v /etc/group:/etc/group \</span><br><span class="line">-d person/samba \</span><br><span class="line">-u &quot;root:ylZSX!&quot; \ #访问用户</span><br><span class="line">-s &quot;root home;/root;yes;no;no;all;none&quot; #共享配置</span><br></pre></td></tr></table></figure></p><p>3.替换samba的启动组，与权限相关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it samba sed -i &apos;s/force group = user/force group = root/g&apos; /etc/samba/smb.conf</span><br></pre></td></tr></table></figure></p><p>4.重启samba<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart samba</span><br></pre></td></tr></table></figure></p>]]></content>
+    <content type="html"><![CDATA[<p>1.下载samba镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull dperson/samba</span><br></pre></td></tr></table></figure></p><p>2.启动镜像，具体配置看文档，但重要的配置是一下的注释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run --name samba \</span><br><span class="line">-it -p 139:139 -p 445:445 \</span><br><span class="line">-v /root:/root \ #共享目录</span><br><span class="line">-v /etc/passwd:/etc/passwd \</span><br><span class="line">-v /etc/group:/etc/group \</span><br><span class="line">-d person/samba \</span><br><span class="line">-u &quot;root:ylZSX!&quot; \ #访问用户</span><br><span class="line">-s &quot;root home;/root;yes;no;no;all;none&quot; #共享配置</span><br></pre></td></tr></table></figure></p><p>3.替换samba的启动组，与权限相关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it samba sed -i &apos;s/force group = user/force group = root/g&apos; /etc/samba/smb.conf</span><br></pre></td></tr></table></figure></p><p>4.重启samba<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart samba</span><br></pre></td></tr></table></figure></p>]]></content>
     
     <summary type="html">
     
