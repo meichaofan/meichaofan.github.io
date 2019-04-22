@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ubuntu系统修改网卡ip]]></title>
+    <url>%2F2019%2F04%2F22%2Fchange-ip-on-ubuntu%2F</url>
+    <content type="text"><![CDATA[需求：将ubuntu系统ens33网卡ip修改为192.168.244.140 1.编辑/etc/network/interfaces文件 1234567891011meichaofan@ubuntu:~$ cat /etc/network/interfaces# interfaces(5) file used by ifup(8) and ifdown(8)auto loiface lo inet loopback# 新增内容auto ens33iface ens33 inet staticaddress 192.168.244.140netmask 255.255.255.0gateway 192.168.244.2 2.重启网卡 1sudo /etc/init.d/networking restart]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[利用docker搭建samba目录共享]]></title>
     <url>%2F2019%2F04%2F22%2Fdocker-run-samba%2F</url>
     <content type="text"><![CDATA[1.下载samba镜像1docker pull dperson/samba 2.启动镜像，具体配置看文档，但重要的配置是一下的注释12345678docker run --name samba \-it -p 139:139 -p 445:445 \-v /root:/root \-v /etc/passwd:/etc/passwd \-v /etc/group:/etc/group \-d dperson/samba \-u &quot;meichaofan;huanhuan0921&quot; \-s &quot;meichaofan home;/root;yes;no;no;all;none&quot; 3.替换samba的启动用户，与权限相关1docker exec -it samba sed -i &apos;s/force user = smbuser/force user = meichaofan/g&apos; /etc/samba/smb.conf 3.替换samba的启动组，与权限相关1docker exec -it samba sed -i &apos;s/force group = users/force group = meichaofan/g&apos; /etc/samba/smb.conf 4.重启samba1docker restart samba]]></content>
