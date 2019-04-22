@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-04-22T10:45:12.530Z</updated>
+  <updated>2019-04-22T11:26:03.134Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://meichaofan.github.io/2019/04/22/tranfer-in-linux/"/>
     <id>https://meichaofan.github.io/2019/04/22/tranfer-in-linux/</id>
     <published>2019-04-22T10:43:23.000Z</published>
-    <updated>2019-04-22T10:45:12.530Z</updated>
+    <updated>2019-04-22T11:26:03.134Z</updated>
     
-    <content type="html"><![CDATA[<p>当我们需要在类UNIX主机间，互传文件，下面几个命令可以排上用场了</p><hr><ol><li>rsync<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz user@src_host:/path/to/file ./ --delete</span><br></pre></td></tr></table></figure></li></ol><p>2.scp</p><p>3.</p>]]></content>
+    <content type="html"><![CDATA[<p>当我们需要在类UNIX主机间，互传文件，下面几个命令可以排上用场了</p><hr><ol><li><p>rsync</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz user@src_host:/path/to/file ./ --delete</span><br></pre></td></tr></table></figure></li><li><p>scp</p></li><li></li></ol>]]></content>
     
     <summary type="html">
     
@@ -32,7 +32,8 @@
         &lt;p&gt;当我们需要在类UNIX主机间，互传文件，下面几个命令可以排上用场了&lt;/p&gt;
 &lt;hr&gt;
 &lt;ol&gt;
-&lt;li&gt;rsync&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;
+&lt;li&gt;&lt;p&gt;rsync&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
       
     
     </summary>
