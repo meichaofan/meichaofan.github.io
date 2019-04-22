@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ubuntu]]></title>
+    <url>%2F2019%2F04%2F22%2Fabout-ubuntu%2F</url>
+    <content type="text"><![CDATA[这是关于Ubuntu系统运维的 ubuntu系统修改网卡ip]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ubuntu系统修改网卡ip]]></title>
     <url>%2F2019%2F04%2F22%2Fchange-ip-on-ubuntu%2F</url>
     <content type="text"><![CDATA[需求：将ubuntu系统ens33网卡ip修改为192.168.244.140 1.编辑/etc/network/interfaces文件 1234567891011meichaofan@ubuntu:~$ cat /etc/network/interfaces# interfaces(5) file used by ifup(8) and ifdown(8)auto loiface lo inet loopback# 新增内容auto ens33iface ens33 inet staticaddress 192.168.244.140netmask 255.255.255.0gateway 192.168.244.2 2.重启网卡 1sudo /etc/init.d/networking restart]]></content>
