@@ -12,7 +12,7 @@
   <entry>
     <title><![CDATA[利用docker搭建samba目录共享]]></title>
     <url>%2F2019%2F04%2F22%2Fdocker-run-samba%2F</url>
-    <content type="text"><![CDATA[1.下载samba镜像1docker pull dperson/samba 2.启动镜像，具体配置看文档，但重要的配置是一下的注释12345678docker run --name samba \-it -p 139:139 -p 445:445 \-v /home/meichaofan:/home/meichaofan \-v /etc/passwd:/etc/passwd \-v /etc/group:/etc/group \-d dperson/samba \-u &quot;meichaofan;huanhuan0921&quot; \-s &quot;meichaofan home;/root;yes;no;no;all;none&quot; 3.替换samba的启动用户，与权限相关1docker exec -it samba sed -i &apos;s/force user = smbuser/force user = meichaofan/g&apos; /etc/samba/smb.conf 3.替换samba的启动组，与权限相关1docker exec -it samba sed -i &apos;s/force group = users/force group = meichaofan/g&apos; /etc/samba/smb.conf 4.重启samba1docker restart samba]]></content>
+    <content type="text"><![CDATA[1.下载samba镜像1docker pull dperson/samba 2.启动镜像，具体配置看文档，但重要的配置是一下的注释12345678docker run --name samba \-it -p 139:139 -p 445:445 \-v /home/meichaofan:/home/meichaofan \-v /etc/passwd:/etc/passwd \-v /etc/group:/etc/group \-d dperson/samba \-u &quot;meichaofan;huanhuan0921&quot; \-s &quot;meichaofan home;/home/meichaofan;yes;no;no;all;none&quot; 3.替换samba的启动用户，与权限相关1docker exec -it samba sed -i &apos;s/force user = smbuser/force user = meichaofan/g&apos; /etc/samba/smb.conf 3.替换samba的启动组，与权限相关1docker exec -it samba sed -i &apos;s/force group = users/force group = meichaofan/g&apos; /etc/samba/smb.conf 4.重启samba1docker restart samba]]></content>
       <tags>
         <tag>docker</tag>
         <tag>samba</tag>
