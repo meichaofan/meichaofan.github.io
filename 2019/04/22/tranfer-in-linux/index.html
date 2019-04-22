@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="C,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -81,18 +81,17 @@
 
 
 
-<meta name="description" content="这是一个最简单的C程序,hello-world.c： 1234int main(int argc, char *argv[])&amp;#123;    puts(&quot;Hello world.&quot;);    return 0;&amp;#125; 在Linux终端输入： 12$ make hello-worldcc hello-world.c -o hello-world 现在，你可以运行并可以看到程序输出。 12$">
-<meta name="keywords" content="C">
+<meta name="description" content="当我们需要在类UNIX主机间，互传文件，下面几个命令可以排上用场了   rsync1rsync -avz user@src_host:/path/to/file ./ --delete   2.scp 3.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="启用编译器">
-<meta property="og:url" content="https://meichaofan.github.io/2019/04/09/01-dust-off-that-compiler/index.html">
+<meta property="og:title" content="linix之间几种文件传输方式">
+<meta property="og:url" content="https://meichaofan.github.io/2019/04/22/tranfer-in-linux/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="这是一个最简单的C程序,hello-world.c： 1234int main(int argc, char *argv[])&amp;#123;    puts(&quot;Hello world.&quot;);    return 0;&amp;#125; 在Linux终端输入： 12$ make hello-worldcc hello-world.c -o hello-world 现在，你可以运行并可以看到程序输出。 12$">
+<meta property="og:description" content="当我们需要在类UNIX主机间，互传文件，下面几个命令可以排上用场了   rsync1rsync -avz user@src_host:/path/to/file ./ --delete   2.scp 3.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-17T15:18:26.667Z">
+<meta property="og:updated_time" content="2019-04-22T10:45:12.530Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="启用编译器">
-<meta name="twitter:description" content="这是一个最简单的C程序,hello-world.c： 1234int main(int argc, char *argv[])&amp;#123;    puts(&quot;Hello world.&quot;);    return 0;&amp;#125; 在Linux终端输入： 12$ make hello-worldcc hello-world.c -o hello-world 现在，你可以运行并可以看到程序输出。 12$">
+<meta name="twitter:title" content="linix之间几种文件传输方式">
+<meta name="twitter:description" content="当我们需要在类UNIX主机间，互传文件，下面几个命令可以排上用场了   rsync1rsync -avz user@src_host:/path/to/file ./ --delete   2.scp 3.">
 
 
 
@@ -122,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/2019/04/09/01-dust-off-that-compiler/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/04/22/tranfer-in-linux/">
 
 
 
 
 
-  <title>启用编译器 | huany</title>
+  <title>linix之间几种文件传输方式 | huany</title>
   
 
 
@@ -307,7 +306,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/09/01-dust-off-that-compiler/">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/22/tranfer-in-linux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="meichaofan">
@@ -324,7 +323,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">启用编译器</h1>
+          <h1 class="post-title" itemprop="name headline">linix之间几种文件传输方式</h1>
         
 
         <div class="post-meta">
@@ -336,8 +335,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-09T01:39:05+08:00">
-                2019-04-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T18:43:23+08:00">
+                2019-04-22
               </time>
             
 
@@ -354,7 +353,7 @@
 
           
           
-             <span id="/2019/04/09/01-dust-off-that-compiler/" class="leancloud_visitors" data-flag-title="启用编译器">
+             <span id="/2019/04/22/tranfer-in-linux/" class="leancloud_visitors" data-flag-title="linix之间几种文件传输方式">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -390,27 +389,14 @@
       
 
       
-        <p>这是一个最简单的C程序,hello-world.c：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char *argv[])&#123;</span><br><span class="line">    puts("Hello world.");</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在Linux终端输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> make hello-world</span><br><span class="line">cc hello-world.c -o hello-world</span><br></pre></td></tr></table></figure>
-<p>现在，你可以运行并可以看到程序输出。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ./hello-world</span><br><span class="line">Hello World.</span><br></pre></td></tr></table></figure>
-<p>思考：</p>
-<ul>
-<li>1.make指令的运行原理和流程</li>
-<li>2.puts函数的作用<br> C 库函数 int puts(const char *str) 把一个字符串写入到标准输出 stdout，直到空字符，但不包括空字符。换行符会被追加到输出中。</li>
-<li><p>3.C语言中的空字符<br> 在C语言中空字符用’\0’表示;<br> ‘\0’对应的整数值是0，所以给一个字符变量赋值为空字符时，以下两种都是可以的：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char ch=&apos;\0&apos;;</span><br><span class="line">char ch=0;</span><br></pre></td></tr></table></figure>
+        <p>当我们需要在类UNIX主机间，互传文件，下面几个命令可以排上用场了</p>
+<hr>
+<ol>
+<li>rsync<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz user@src_host:/path/to/file ./ --delete</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>4.字符串<br> 字符串就是一串零个或多个字符，并且以位模式为全0的NUL字节即空字符(‘\0’)结尾。C语言中字符串没有显示的数据类型，字符串通常存储在字符数组或动态分配的内存中，在编码操作中通常将整个字符串作为操作对象，常用操作包括复制、查找、比较等。</p>
-</li>
-<li>5.空字符与字符串<ul>
-<li>1、空字符是字符串的终止符。注：空字符本身不是字符串的一部分，所以字符串的长度并不包含空字符； </li>
-<li>2、操作字符串时，必须保证字符串以空字符结尾(注：不以空字符结尾的字符序列，不是字符串)。</li>
-</ul>
-</li>
-</ul>
+</ol>
+<p>2.scp</p>
+<p>3.</p>
 
       
     </div>
@@ -426,12 +412,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/C/" rel="tag"># C</a>
-          
-        </div>
-      
 
       
       
@@ -441,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/09/learn-c-the-hard-way/" rel="next" title="笨方法学C">
-                <i class="fa fa-chevron-left"></i> 笨方法学C
+              <a href="/2019/04/22/about-ubuntu/" rel="next" title="ubuntu">
+                <i class="fa fa-chevron-left"></i> ubuntu
               </a>
             
           </div>
@@ -450,10 +430,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/09/02-use-make/" rel="prev" title="使用make">
-                使用make <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
