@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-04-22T11:26:03.134Z</updated>
+  <updated>2019-04-23T06:42:38.414Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -15,6 +15,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>httpie-a-http-client</title>
+    <link href="https://meichaofan.github.io/2019/04/23/httpie-a-http-client/"/>
+    <id>https://meichaofan.github.io/2019/04/23/httpie-a-http-client/</id>
+    <published>2019-04-23T06:22:03.000Z</published>
+    <updated>2019-04-23T06:42:38.414Z</updated>
+    
+    <content type="html"><![CDATA[<p>一款http客户端</p><hr><h3 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h3><ul><li>具表达力和直观语法</li><li>格式化的及彩色化的终端输出</li><li>内置JSON支持</li><li>表单和文件上传</li><li>HTTPS、代理和认证</li><li>任意请求数据</li><li>自定义头部</li><li>持久化会话</li><li>类似于wget的下载</li><li>支持Python2.7 和 3.x</li></ul><h3 id="在Linux下安装Httpie"><a href="#在Linux下安装Httpie" class="headerlink" title="在Linux下安装Httpie"></a>在Linux下安装Httpie</h3><ol><li>Debian/Ubuntu系统，使用<code>apt-get</code>或<code>apt</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install httpie</span><br></pre></td></tr></table></figure></li></ol><p>2.RHEL/CentOs系统，使用<code>yum</code>安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install httpie</span><br></pre></td></tr></table></figure></p><h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ol><li><p>如何使用HTTPie请求URL？</p><blockquote><p>httpie的基本用法是将URL作为参数</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">meichaofan@ubuntu1:~$ http 2daygeek.com</span><br><span class="line">HTTP/1.1 301 Moved Permanently</span><br><span class="line">CF-RAY: 4cbdc9a7b85322a0-LAX</span><br><span class="line">Cache-Control: max-age=3600</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Date: Tue, 23 Apr 2019 06:30:15 GMT</span><br><span class="line">Expires: Tue, 23 Apr 2019 07:30:15 GMT</span><br><span class="line">Location: https://2daygeek.com/</span><br><span class="line">Server: cloudflare</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Vary: Accept-Encoding</span><br></pre></td></tr></table></figure></blockquote></li><li><p>如何使用HTTPie下载文件</p><blockquote><p>带 <code>--download</code> 参数，用来下载文件，类似于wget</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">meichaofan@ubuntu1:~$ http --download https://www.2daygeek.com/wp-content/uploads/2019/04/Anbox-Easy-Way-To-Run-Android-Apps-On-Linux.png</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">CF-Cache-Status: HIT</span><br><span class="line">CF-RAY: 4cbdcfbafb53540e-LAX</span><br><span class="line">Cache-Control: public, max-age=7200</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Length: 32066</span><br><span class="line">Content-Type: image/png</span><br><span class="line">Date: Tue, 23 Apr 2019 06:34:23 GMT</span><br><span class="line">Expect-CT: max-age=604800, report-uri=&quot;https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct&quot;</span><br><span class="line">Expires: Tue, 23 Apr 2019 08:34:23 GMT</span><br><span class="line">Last-Modified: Mon, 08 Apr 2019 04:54:25 GMT</span><br><span class="line">Server: cloudflare</span><br><span class="line">Set-Cookie: __cfduid=dee8965dcfafc633c5463965e0c40522d1556001263; expires=Wed, 22-Apr-20 06:34:23 GMT; path=/; domain=.2daygeek.com; HttpOnly; Secure</span><br><span class="line">Vary: Accept-Encoding</span><br><span class="line"></span><br><span class="line">Downloading 31.31 kB to &quot;Anbox-Easy-Way-To-Run-Android-Apps-On-Linux.png&quot;</span><br><span class="line">Done. 31.31 kB in 0.55747s (56.17 kB/s)</span><br><span class="line">meichaofan@ubuntu1:~$ ls</span><br><span class="line">Anbox-Easy-Way-To-Run-Android-Apps-On-Linux.png  package  peek-a-boo</span><br></pre></td></tr></table></figure></blockquote></li></ol><blockquote><p>你还可以使用 <code>-o</code> 参数用不同的名称保存输出文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">meichaofan@ubuntu1:~$ http --download https://www.2daygeek.com/wp-content/uploads/2019/04/Anbox-Easy-Way-To-Run-Android-Apps-On-Linux.png -o Anbox-1.png</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">CF-Cache-Status: HIT</span><br><span class="line">CF-RAY: 4cbdd1493c0e5047-LAX</span><br><span class="line">Cache-Control: public, max-age=7200</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Length: 32066</span><br><span class="line">Content-Type: image/png</span><br><span class="line">Date: Tue, 23 Apr 2019 06:35:27 GMT</span><br><span class="line">Expect-CT: max-age=604800, report-uri=&quot;https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct&quot;</span><br><span class="line">Expires: Tue, 23 Apr 2019 08:35:27 GMT</span><br><span class="line">Last-Modified: Mon, 08 Apr 2019 04:54:25 GMT</span><br><span class="line">Server: cloudflare</span><br><span class="line">Set-Cookie: __cfduid=d4ac029dc64db0797db8e607d6a8568341556001327; expires=Wed, 22-Apr-20 06:35:27 GMT; path=/; domain=.2daygeek.com; HttpOnly; Secure</span><br><span class="line">Vary: Accept-Encoding</span><br><span class="line"></span><br><span class="line">Downloading 31.31 kB to &quot;Anbox-1.png&quot;</span><br><span class="line">Done. 31.31 kB in 0.28450s (110.07 kB/s)</span><br><span class="line">meichaofan@ubuntu1:~$ ls</span><br><span class="line">Anbox-1.png  package  peek-a-boo</span><br></pre></td></tr></table></figure></p></blockquote><ol start="3"><li><p>如何使用 HTTPie 恢复部分下载？</p><blockquote><p>可以使用 <code>-c</code> 参数的HTTPie继续下载</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http --download --continue https://speed.hetzner.de/100MB.bin -o 100MB.bin</span><br></pre></td></tr></table></figure></blockquote></li><li><p>如何使用 HTTPie 上传文件？</p><blockquote><p>你可以通过使用带有小于号 <code>&lt;</code> 的 HTTPie 命令上传文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ http https://transfer.sh &lt; Anbox-1.png</span><br></pre></td></tr></table></figure></blockquote></li><li><p>如何使用带有重定向符号 <code>&gt;</code> 下载文件？</p><blockquote><p>你可以使用带有重定向 <code>&gt;</code> 符号的 HTTPie 命令下载文件。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ http https://www.2daygeek.com/wp-content/uploads/2019/03/How-To-Install-And-Enable-Flatpak-Support-On-Linux-1.png &gt; Flatpak.png</span><br><span class="line">$ ls -ltrh Flatpak.png</span><br><span class="line">-rw-r--r-- 1 root root 47K Apr  9 01:44 Flatpak.png</span><br></pre></td></tr></table></figure></blockquote></li><li><p>发送一个 HTTP GET 请求？</p><blockquote><p>您可以在请求中发送 HTTP GET 方法。GET 方法会使用给定的 URI，从给定服务器检索信息。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">http GET httpie.org</span><br><span class="line">HTTP/1.1 301 Moved Permanently</span><br><span class="line">CF-RAY: 4c4a83a3f90dcbe6-SIN</span><br><span class="line">Cache-Control: max-age=3600</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Date: Tue, 09 Apr 2019 06:44:44 GMT</span><br><span class="line">Expires: Tue, 09 Apr 2019 07:44:44 GMT</span><br><span class="line">Location: https://httpie.org/</span><br><span class="line">Server: cloudflare</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Vary: Accept-Encoding</span><br></pre></td></tr></table></figure></blockquote></li><li><p>提交表单</p><blockquote><p>使用以下格式提交表单。POST 请求用于向服务器发送数据，例如客户信息、文件上传等。要使用 HTML 表单。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">http -f POST Ubuntu18.2daygeek.com hello=&apos;World&apos;</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">Content-Encoding: gzip</span><br><span class="line">Content-Length: 3138</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Date: Tue, 09 Apr 2019 06:48:12 GMT</span><br><span class="line">ETag: &quot;2aa6-5844bf1b047fc-gzip&quot;</span><br><span class="line">Keep-Alive: timeout=5, max=100</span><br><span class="line">Last-Modified: Sun, 17 Mar 2019 15:29:55 GMT</span><br><span class="line">Server: Apache/2.4.29 (Ubuntu)</span><br><span class="line">Vary: Accept-Encoding</span><br></pre></td></tr></table></figure></blockquote></li></ol><blockquote><p>运行下面的指令以查看正在发送的请求。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">http -v Ubuntu18.2daygeek.com</span><br><span class="line">GET / HTTP/1.1</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Host: ubuntu18.2daygeek.com</span><br><span class="line">User-Agent: HTTPie/0.9.8</span><br><span class="line">hello=World</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">Content-Encoding: gzip</span><br><span class="line">Content-Length: 3138</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Date: Tue, 09 Apr 2019 06:48:30 GMT</span><br><span class="line">ETag: &quot;2aa6-5844bf1b047fc-gzip&quot;</span><br><span class="line">Keep-Alive: timeout=5, max=100</span><br><span class="line">Last-Modified: Sun, 17 Mar 2019 15:29:55 GMT</span><br><span class="line">Server: Apache/2.4.29 (Ubuntu)</span><br><span class="line">Vary: Accept-Encoding</span><br></pre></td></tr></table></figure></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;一款http客户端&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;主要特点&quot;&gt;&lt;a href=&quot;#主要特点&quot; class=&quot;headerlink&quot; title=&quot;主要特点&quot;&gt;&lt;/a&gt;主要特点&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;具表达力和直观语法&lt;/li&gt;
+&lt;li&gt;格式化的及彩色化的终端输出&lt;/
+      
+    
+    </summary>
+    
+    
+      <category term="linux" scheme="https://meichaofan.github.io/tags/linux/"/>
+    
+      <category term="http" scheme="https://meichaofan.github.io/tags/http/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>介绍urfave/cli 一款构建命令行app的go包</title>
+    <link href="https://meichaofan.github.io/2019/04/22/introducing-urfave-cli/"/>
+    <id>https://meichaofan.github.io/2019/04/22/introducing-urfave-cli/</id>
+    <published>2019-04-22T14:53:29.000Z</published>
+    <updated>2019-04-22T14:59:11.366Z</updated>
+    
+    <content type="html"><![CDATA[<p>一个简单，快速构建基于命令行应用的工具包</p><hr>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;一个简单，快速构建基于命令行应用的工具包&lt;/p&gt;
+&lt;hr&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="cli" scheme="https://meichaofan.github.io/tags/cli/"/>
+    
+      <category term="go" scheme="https://meichaofan.github.io/tags/go/"/>
+    
+  </entry>
   
   <entry>
     <title>linix之间几种文件传输方式</title>
@@ -474,53 +530,6 @@
       <category term="web安全" scheme="https://meichaofan.github.io/tags/web%E5%AE%89%E5%85%A8/"/>
     
       <category term="CSRF" scheme="https://meichaofan.github.io/tags/CSRF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>源码文件</title>
-    <link href="https://meichaofan.github.io/2019/03/29/%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6/"/>
-    <id>https://meichaofan.github.io/2019/03/29/源码文件/</id>
-    <published>2019-03-29T07:23:08.000Z</published>
-    <updated>2019-04-09T10:26:33.711Z</updated>
-    
-    <content type="html"><![CDATA[<p>go文件主要分为下面3类:</p><div align="center"><img src="https://github.com/meichaofan/static-file/blob/master/go/9d08647d238e21e7184d60c0afe5afcb.png?raw=true" width="50%" height="50%" alt="内容"></div><br><div align="center">图1：go文件</div>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;go文件主要分为下面3类:&lt;/p&gt;
-&lt;div align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/meichaofan/static-file/blob/master/go/9d08647d238e21e7184d60c0afe5afcb
-      
-    
-    </summary>
-    
-    
-      <category term="go" scheme="https://meichaofan.github.io/tags/go/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>工作区和GOPATH</title>
-    <link href="https://meichaofan.github.io/2019/03/29/%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%92%8CGOPATH/"/>
-    <id>https://meichaofan.github.io/2019/03/29/工作区和GOPATH/</id>
-    <published>2019-03-29T05:56:32.000Z</published>
-    <updated>2019-03-29T07:18:28.665Z</updated>
-    
-    <content type="html"><![CDATA[<p>我们学习Go语言时，第一件要做的是，就是根据自己电脑的操作系统和计算架构，从<a href="https://golang.google.cn" target="_blank" rel="noopener">Go语言官网</a>下载对应的二进制包，也就是拿来即用的安装包。</p><p>随后，<strong>解压安装包</strong>、<strong>放置到某个目录</strong>、<strong>配置环境变量</strong>，并在命令行输入 <code>go version</code> 来验证是否安装成功。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 解压</span></span><br><span class="line">[root@www package]# ls go1.12.1.linux-amd64.tar.gz </span><br><span class="line">go1.12.1.linux-amd64.tar.gz</span><br><span class="line">[root@www package]# tar zxvf go1.12.1.linux-amd64.tar.gz -C /usr/local/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置GOROOT、GOPATH、GOBIN环境变量</span></span><br><span class="line">[root@www ~]# vim .bash_profile</span><br><span class="line"></span><br><span class="line">PATH=$PATH:$HOME/bin:/usr/local/php/bin:/usr/local/go/bin</span><br><span class="line">export PATH</span><br><span class="line"></span><br><span class="line">export GOROOT=/usr/local/go</span><br><span class="line">export GOPATH=/root/peek-a-bow</span><br><span class="line">export GOBIN=/root/peek-a-bow/bin</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建工作目录</span></span><br><span class="line">mkdir -p /root/peek-a-bow/&#123;src,bin,pkg&#125;</span><br></pre></td></tr></table></figure><p>在整个安装过程中，需要配置3个环境变量，简单介绍一下:</p><ul><li>GOROOT: Go语言的安装目录</li><li>GOPATH: 自定义的工作目录</li><li>GOBIN: Go语言生成的可执行文件的目录</li></ul><p>可以把GOPATH简单理解成Go语言的工作目录，它的值是一个目录的路径，也可以是多个目录的路径，每个目录都代表Go语言的一个工作区（workspace）。</p><p>我们需要利于这些工作区，去放置 Go 语言的源码文件（source file）,以及安装(install)后的归档文件（archive file）和可执行文件（executable file）。</p><p>事实上，由于Go语言项目在其生命周期内的所有操作（编码依赖管理、构建、测试、安装等）基本上都是围绕着GOPATH和工作区进行的。它的背后有3个知识点需要注意:</p><ul><li>1.Go语言源码的组织是怎样的；</li><li>2.你是否了解源码安装后的结果；</li><li>3.你是否理解构建和安装Go程序的过程。</li></ul><h3 id="1-Go语言源码组织方式"><a href="#1-Go语言源码组织方式" class="headerlink" title="1.Go语言源码组织方式"></a>1.Go语言源码组织方式</h3><p>Go语言是以代码包为基本组织单位的。所以说，Go语言源码的组织方式就是以环境变量GOPATH、工作区、src目录和代码包为主线的。</p><h3 id="2-了解源码安装后的结果"><a href="#2-了解源码安装后的结果" class="headerlink" title="2.了解源码安装后的结果"></a>2.了解源码安装后的结果</h3><p>源码文件在安装过程中，如果产生了归档文件，就会放进该工作区的pkg子目录；如果产生了可执行文件，就会放进该工作区的bin子目录。</p><h3 id="3-理解构建和安装Go程序的过程"><a href="#3-理解构建和安装Go程序的过程" class="headerlink" title="3.理解构建和安装Go程序的过程"></a>3.理解构建和安装Go程序的过程</h3><p>构建使用 <code>go build</code>,安装使用命令 <code>go install</code>。构建和安装代码包的时候都会执行编译、打包等操作。并且，这些操作产生的任何文件都会先被保存到某个临时的目录中。</p><p>如果构建的是<strong>库源码</strong>文件,那么操作结果只会保存在临时目录中，安装<strong>库源码</strong>文件，那么它的结果会被搬运到它所在工作区的pkg目录下的某个子目录中。</p><p>如果构建的是<strong>命令源码</strong>文件，那么它的操作结果文件会被搬运到源码文件所在的目录中。如果安装的是<strong>命令源码</strong>文件，那么结果文件会被搬运到它所在工作区的bin目录中，或者环境变量GOBIN指向的目录中。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;我们学习Go语言时，第一件要做的是，就是根据自己电脑的操作系统和计算架构，从&lt;a href=&quot;https://golang.google.cn&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Go语言官网&lt;/a&gt;下载对应的二进制包，也就是拿来即用的安装包。&lt;
-      
-    
-    </summary>
-    
-    
-      <category term="go" scheme="https://meichaofan.github.io/tags/go/"/>
     
   </entry>
   
