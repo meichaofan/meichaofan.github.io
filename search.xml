@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[write-docker-run]]></title>
+    <url>%2F2019%2F04%2F24%2Fwrite-docker-run%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[Linux相关软件和命令]]></title>
     <url>%2F2019%2F04%2F23%2Fabout-linux-software%2F</url>
     <content type="text"><![CDATA[这里主要介绍Linux相关软件安装和日常使用命令 HTTPie - 一款http客户端工具]]></content>
