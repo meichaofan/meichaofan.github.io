@@ -328,9 +328,9 @@
     <link href="https://meichaofan.github.io/2019/04/20/write-docker-self/"/>
     <id>https://meichaofan.github.io/2019/04/20/write-docker-self/</id>
     <published>2019-04-20T10:47:51.000Z</published>
-    <updated>2019-04-20T10:55:54.453Z</updated>
+    <updated>2019-04-24T15:27:37.762Z</updated>
     
-    <content type="html"><![CDATA[<p>Docker目前是后端服务中最火的技术之一，读这本书《自己动手写docker》，对自己来说，主要是从原理上熟悉docker，顺便复习go语言</p><hr><ul><li><p>容器技术的发展</p><ul><li>docker VS 虚拟机</li></ul></li><li><p>基础技术</p><ul><li>docker namespace<ul><li>UTS</li><li>USER</li></ul></li><li>docker cgroup</li><li>aufs</li></ul></li><li><p>构建容器</p><ul><li>构建实现run命令的容器</li></ul></li></ul>]]></content>
+    <content type="html"><![CDATA[<p>Docker目前是后端服务中最火的技术之一，读这本书《自己动手写docker》，对自己来说，主要是从原理上熟悉docker，顺便复习go语言</p><hr><ul><li><p>容器技术的发展</p><ul><li>docker VS 虚拟机</li></ul></li><li><p>基础技术</p><ul><li>docker namespace<ul><li>UTS</li><li>USER</li></ul></li><li>docker cgroup</li><li>aufs</li></ul></li><li><p>构建容器</p><ul><li><a href="/2019/04/24/write-docker-run/">构建实现run命令的容器</a></li></ul></li></ul>]]></content>
     
     <summary type="html">
     
