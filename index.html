@@ -325,7 +325,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/24/write-docker-run/" itemprop="url">write-docker-run</a></h1>
+                <a class="post-title-link" href="/2019/04/24/write-docker-run/" itemprop="url">构建实现run命令的容器</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
 
           
           
-             <span id="/2019/04/24/write-docker-run/" class="leancloud_visitors" data-flag-title="write-docker-run">
+             <span id="/2019/04/24/write-docker-run/" class="leancloud_visitors" data-flag-title="构建实现run命令的容器">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -388,8 +388,11 @@
       
         
           
-          
-          
+          实现run命令
+构建一个简单版本的run命令，类似于docker run -it [command]，为了了解Docker启动容器的原理，该简单版本的实现参考了runC的实现。
+
+1.目前的代码文件结构如下：12345678.├── container│   ├── container_proces
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/04/24/write-docker-run/#more" rel="contents">
@@ -1771,7 +1774,7 @@ ubuntu系统修改网卡ip
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
