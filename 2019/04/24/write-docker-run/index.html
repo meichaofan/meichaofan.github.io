@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/meichaofan/static-file/blob/master/docker/runc.png?raw=true
 ">
-<meta property="og:updated_time" content="2019-04-25T04:22:42.361Z">
+<meta property="og:updated_time" content="2019-04-25T04:24:32.469Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="构建实现run命令的容器">
 <meta name="twitter:description" content="实现run命令 构建一个简单版本的run命令，类似于docker run -it [command]，为了了解Docker启动容器的原理，该简单版本的实现参考了runC的实现。  1.目前的代码文件结构如下：12345678.├── container│   ├── container_process.go│   └── init.go├── main_command.go├── main.go├">
@@ -420,7 +420,7 @@
 <li>MS_NOSUID在本文件系统中运行程序的时候，不允许<code>set-user-ID</code>或<code>set-group-ID</code></li>
 <li>MS_NODEV这个参数自Linux2.4以来，所有mount的系统都会默认设定的</li>
 </ul>
-<p><strong>本函数最后的syscall.Exec，这个系统调用实现了完成初始化并将用户进程运行起来的操作。</strong>，下面解释一下这句话的神奇之处。</p>
+<p><strong>本函数最后的syscall.Exec，这个系统调用实现了完成初始化并将用户进程运行起来的操作。</strong>下面解释一下这句话的神奇之处。</p>
 <p>首先，使用<code>Docker</code>创建起来一个容器后，会发现容器内的第一个进程，也就是PID为1的那个进程，是指定的前台进程。但是，根据前面所讲，容器启动后的第一个进程不是用户进程，而是<code>init</code>初始化的进程。这个时候通过<code>ps</code>命令就会发现，容器内的第一进程变成了自己的<code>init</code>，这个和预想的不一样。你可能回想，大不了把第一个<code>init</code>进程给<code>kill</code>掉。但是PID为1的进程是不能被<code>kill</code>掉的，如果该进程被<code>kill</code>掉，我们的容器也就退出了。那么有什么办法？这里execve系统调用就可以大显神威了。</p>
 <p>syscall.Exec这个方法，其实最终调用了Kernel的int execve(const char <em>filename,const </em>const argv[],char *const envp[]);这个系统函数。它的作用是执行当前的filename对应的程序，会覆盖当前进程的镜像、数据和堆栈等信息，包括PID，这些都会将要运行的进程覆盖掉。也就是说，调用这个方法，将用户指定的进程运行起来，把最初的<code>init</code>进程给替换掉，这样当进入到容器内部的时候，就会发现容器内的第一个程序就是我们指定的进程了[command]。这其实也是目前Docker使用的容器引擎<code>runC</code>的实现方式之一。</p>
 <p>6.流程图如图所示:</p>
