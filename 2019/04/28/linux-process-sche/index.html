@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://github.com/meichaofan/static-file/blob/master/linux/3.png?raw=true">
 <meta property="og:image" content="https://github.com/meichaofan/static-file/blob/master/linux/virtual_running_time.png?raw=true
 ">
-<meta property="og:updated_time" content="2019-04-28T09:54:11.463Z">
+<meta property="og:updated_time" content="2019-04-28T09:57:38.279Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux的进程调度">
 <meta name="twitter:description" content="转载至 https://blog.csdn.net/gatieme/article/details/51701149  1. 前言 1.1 进程调度内存中保存了对每个进程的唯一描述，并通过若干结构与其它进程连接起来。 调度器面对的情形就是这样，其任务是在程序之间共享CPU时间，创造并行执行的错觉，该任务分为两个不同的部分，其中一个涉及调度策略，另外一个涉及上下文切换。  1.2 进程的分类 Lin">
@@ -406,18 +406,30 @@
 <table>
 <thead>
 <tr>
-<th>类型</th>
-<th>描述</th>
-<th>示例</th>
+<th></th>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:right">示例</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
+<td>实时进程（real-time process）</td>
+<td style="text-align:center">这些进程需要很强的调度需要，这样的进程不会被低优先级进程阻塞，并且他们的响应时间要尽可能的短</td>
+<td style="text-align:center">视频音频应用程程序，机器人控制程序以及物理传感器收集数据的程序</td>
+</tr>
+<tr>
+<td>交互式进程（interactive process）</td>
+<td style="text-align:center">此类进程经常与用户进行交互，因此需要花很多时间等待键盘和鼠标操作，当接受了用户输入后，进程必须很快被唤醒，否则用户感觉系统反应迟钝</td>
+<td style="text-align:center">shell,文本编辑程序和图形应用程序</td>
+</tr>
+<tr>
+<td>批处理进程（batch process）</td>
+<td style="text-align:center">此类进程不必与用户交互，因此经常在后台运行，因为这样的进程不必很快响应，因此常受到调度程序的怠慢</td>
+<td style="text-align:center">程序语言的编译程序，数据库搜索引擎以及科学计算</td>
 </tr>
 </tbody>
 </table>
-<p>实时进程（real-time process）|这些进程需要很强的调度需要，这样的进程不会被低优先级进程阻塞，并且他们的响应时间要尽可能的短|视频音频应用程程序，机器人控制程序以及物理传感器收集数据的程序<br>交互式进程（interactive process）| 此类进程经常与用户进行交互，因此需要花很多时间等待键盘和鼠标操作，当接受了用户输入后，进程必须很快被唤醒，否则用户感觉系统反应迟钝|shell,文本编辑程序和图形应用程序<br>批处理进程（batch process）| 此类进程不必与用户交互，因此经常在后台运行，因为这样的进程不必很快响应，因此常受到调度程序的怠慢|程序语言的编译程序，数据库搜索引擎以及科学计算</p>
 <p>在Linux中，调度算法可以明确的确认所有实时进程的身份，但是没办法区分交互式程序和批处理程序，在Linux2.6的调度程序实现了基于进程过去式行为的启发式算法，以确定进程应该被当做交互式进程还是批处理进程，当然与批处理进程相比，调度程序有偏爱交互式进程的倾向。</p>
 <h3 id="1-3-不同进程采用不同的调度策略"><a href="#1-3-不同进程采用不同的调度策略" class="headerlink" title="1.3 不同进程采用不同的调度策略"></a>1.3 不同进程采用不同的调度策略</h3><hr>
 <p>根据进程的不同分类Linux采用不同的调度策略。</p>
@@ -523,7 +535,7 @@
 <div align="center"><img src="https://github.com/meichaofan/static-file/blob/master/linux/3.png?raw=true" width="50%" height="50%"></div>
 
 <p>当active数组为空，或者所有的进程都降低到最低优先级时就会触发主轮询major rotation。Major rotation交换active数组和expire数组，所有进程都恢复到初始状态，再一次从新开始minor rotation的过程。<br>RSDL对交互式进程的支持：和SD同样的道理，交互式进程在睡眠时间时，它所有的竞争者都因为minor rotation而降到了低优先级进程队列中。当它重新进入RUNNING状态时，就获得了相对较高的优先级，从而能被迅速响应。</p>
-<h2 id="4-3-安全公平的调度器CFS"><a href="#4-3-安全公平的调度器CFS" class="headerlink" title="4.3 安全公平的调度器CFS"></a>4.3 安全公平的调度器CFS</h2><hr>
+<h3 id="4-3-安全公平的调度器CFS"><a href="#4-3-安全公平的调度器CFS" class="headerlink" title="4.3 安全公平的调度器CFS"></a>4.3 安全公平的调度器CFS</h3><hr>
 <p>CFS是最终被内核采纳的调度器。它从RSDL/SD中吸取了完全公平的思想，不再跟踪进程的睡眠时间，也不再企图区分交互式进程。它将所有的进程都统一对待，这就是公平的含义。CFS的算法和实现都相当简单，众多的测试表明其性能也非常优越。<br>按照作者Ingo Molnar的说法（参考Documentation/scheduler/sched-design-CFS.txt），</p>
 <p>CFS百分之八十的工作可以用一句话概括：CFS在真实的硬件上模拟了完全理想的多任务处理器。在真空的硬件上，同一时刻我们只能运行单个进程，因此当一个进程占用CPU时，其它进程就必须等待，这就产生了不公平。但是在“完全理想的多任务处理器 “下，每个进程都能同时获得CPU的执行时间，即并行地每个进程占1/nr_running的时间。例如当系统中有两个进程时，CPU的计算时间被分成两份，每个进程获得50%。假设runqueue中有n个进程，当前进程运行了10ms。在“完全理想的多任务处理器”中，10ms应该平分给n个进程(不考虑各个进程的nice值)，因此当前进程应得的时间是(10/n)ms，但是它却运行了10ms。所以CFS将惩罚当前进程，使其它进程能够在下次调度时尽可能取代当前进程。最终实现所有进程的公平调度。</p>
 <p>与之前的Linux调度器不同，CFS没有将任务维护在链表式的运行队列中，它抛弃了active/expire数组，而是对每个CPU维护一个以时间为顺序的红黑树。 </p>
@@ -726,7 +738,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-进程调度"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 进程调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-进程的分类"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 进程的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-不同进程采用不同的调度策略"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 不同进程采用不同的调度策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Linux调度器的演变"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Linux调度器的演变</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-O-n-的始调度算法"><span class="nav-number">2.</span> <span class="nav-text">2. O(n)的始调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Linux2-4之前的内核调度器"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Linux2.4之前的内核调度器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Linux2-4的调度器"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Linux2.4的调度器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-概述"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-详情"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 详情</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-O-1-的调度算法"><span class="nav-number">3.</span> <span class="nav-text">3. O(1)的调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-概述"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-详情"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 详情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-普通进程的优先级计算"><span class="nav-number">3.3.</span> <span class="nav-text">3.2.1 普通进程的优先级计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-实时进程的优先级计算"><span class="nav-number">3.4.</span> <span class="nav-text">3.2.2 实时进程的优先级计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-pick-next算法"><span class="nav-number">3.5.</span> <span class="nav-text">3.2.3 pick next算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Linux-2-6的新一代调度器CFS"><span class="nav-number">4.</span> <span class="nav-text">4. Linux 2.6的新一代调度器CFS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-楼梯调度算法staircase-scheduler"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 楼梯调度算法staircase scheduler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-RSLD-Rotating-Staircase-Deadline-Scheduler"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 RSLD(Rotating Staircase Deadline Scheduler)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-安全公平的调度器CFS"><span class="nav-number">5.</span> <span class="nav-text">4.3 安全公平的调度器CFS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-CFS如何实现pick-next"><span class="nav-number">5.0.1.</span> <span class="nav-text">4.3.1 CFS如何实现pick next</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-tick中断"><span class="nav-number">5.0.2.</span> <span class="nav-text">4.3.2 tick中断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3-红黑树键值计算"><span class="nav-number">5.0.3.</span> <span class="nav-text">4.3.3 红黑树键值计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-4-调度器管理器"><span class="nav-number">5.0.4.</span> <span class="nav-text">4.3.4 调度器管理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-5-CFS组调度"><span class="nav-number">5.0.5.</span> <span class="nav-text">4.3.5 CFS组调度</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-进程调度"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 进程调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-进程的分类"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 进程的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-不同进程采用不同的调度策略"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 不同进程采用不同的调度策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Linux调度器的演变"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Linux调度器的演变</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-O-n-的始调度算法"><span class="nav-number">2.</span> <span class="nav-text">2. O(n)的始调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Linux2-4之前的内核调度器"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Linux2.4之前的内核调度器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Linux2-4的调度器"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Linux2.4的调度器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-概述"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-详情"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 详情</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-O-1-的调度算法"><span class="nav-number">3.</span> <span class="nav-text">3. O(1)的调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-概述"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-详情"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 详情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-普通进程的优先级计算"><span class="nav-number">3.3.</span> <span class="nav-text">3.2.1 普通进程的优先级计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-实时进程的优先级计算"><span class="nav-number">3.4.</span> <span class="nav-text">3.2.2 实时进程的优先级计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-pick-next算法"><span class="nav-number">3.5.</span> <span class="nav-text">3.2.3 pick next算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Linux-2-6的新一代调度器CFS"><span class="nav-number">4.</span> <span class="nav-text">4. Linux 2.6的新一代调度器CFS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-楼梯调度算法staircase-scheduler"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 楼梯调度算法staircase scheduler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-RSLD-Rotating-Staircase-Deadline-Scheduler"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 RSLD(Rotating Staircase Deadline Scheduler)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-安全公平的调度器CFS"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 安全公平的调度器CFS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-CFS如何实现pick-next"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.3.1 CFS如何实现pick next</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-tick中断"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.3.2 tick中断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3-红黑树键值计算"><span class="nav-number">4.3.3.</span> <span class="nav-text">4.3.3 红黑树键值计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-4-调度器管理器"><span class="nav-number">4.3.4.</span> <span class="nav-text">4.3.4 调度器管理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-5-CFS组调度"><span class="nav-number">4.3.5.</span> <span class="nav-text">4.3.5 CFS组调度</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
