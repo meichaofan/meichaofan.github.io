@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Linux如何给应用程序创建一个桌面启动图标]]></title>
+    <url>%2F2019%2F04%2F29%2Flinux-create-a-desktop-app%2F</url>
+    <content type="text"><![CDATA[本文主要讲述的是linux中如何给应用程序创建一个快速启动图标，话不多说，我们来看实际的操作步骤： 本文的实例是给celipse创建一个启动图标 我们需要通过下列命令，来创建一个启动的脚本： 1vim /usr/share/applications/eclipse.desktop 将下列内容复制到启动脚本中： 12345678910[Desktop Entry]Encoding=UTF-8Name=EclipseComment=Eclipse IDEExec=/usr/local/android/eclipse/eclipse Icon=/usr/local/android/eclipse/icon.xpmTerminal=falseStartupNotify=trueType=ApplicationCategories=Application;Development; 说明部分：Exec ：这个是应用程序可执行文件的目录Icon ：这个是图标的目录 然后在applications -&gt; programming 菜单中就可以找到你所创建的图标了，然后再右键创建一个桌面图标即可]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Desktop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Ubuntu 系统修改默认运行级别]]></title>
     <url>%2F2019%2F04%2F29%2Fubuntu-change-runlevel%2F</url>
     <content type="text"><![CDATA[Deb系运行级别（Debian、Ubuntu） 0 – Halt，关机模式1 – Single，单用户模式2 - Full multi-user with display manager (GUI)3 - Full multi-user with display manager (GUI)4 - Full multi-user with display manager (GUI)5 - Full multi-user with display manager (GUI)6 – Reboot，重启S - 单用户恢复模式 2~5级是没有任何区别的，他们为多用户模式。 Rpm系运行级别（Redhat、CentOS） 0 – Halt，关机模式1 – Single，单用户模式2 – 多用户模式，但不能使用NFS（相当于Windows下的网上邻居）3 – 字符界面的多用户模式4 – Undefined5 – Full multi-user with display manager (GUI)6 – Reboot，重启 查看当前运行级别12meichaofan@ubuntu:~$ runlevel N 2 ubuntu系统下修改运行级别1234567vi /etc/default/grup将GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet&quot;改为GRUB_CMDLINE_LINUX_DEFAULT=&quot;text&quot;然后执行update-grub2]]></content>
