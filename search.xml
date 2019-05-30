@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[NumPy介绍]]></title>
+    <url>%2F2019%2F05%2F31%2Fpython-numpy%2F</url>
+    <content type="text"><![CDATA[NumPy在学习深度学习时，NumPy的数组类提供了很多关于操作数组和矩阵的便捷方法。 2019/5/301.1 导入NumPyNumPy并不存在于标准版Python中，因此，首先需要导入NumPy库 1&gt;&gt;&gt; import numpy as np 1.2 生成NumPy数组使用np.array()方法。np.array()接受Python的列表作为参数，生成NumPy数组（num.ndarray）。 12345&gt;&gt;&gt; x=np.array([1.0,2.0,3.0])&gt;&gt;&gt; print(x)[1. 2. 3.]&gt;&gt;&gt; type(x)&lt;class &apos;numpy.ndarray&apos;&gt; 1.3 NumPy的算术运算12345678910&gt;&gt;&gt; x = np.array([1.0, 2.0, 3.0])&gt;&gt;&gt; y = np.array([2.0, 4.0, 6.0])&gt;&gt;&gt; x + y # 对应元素的加法array([ 3., 6., 9.])&gt;&gt;&gt; x - yarray([ -1., -2., -3.])&gt;&gt;&gt; x * y # element-wise productarray([ 2., 8., 18.])&gt;&gt;&gt; x / yarray([ 0.5, 0.5, 0.5]) 需要注意，数组x和数组y的元素个数相同，如果元素个数不同，程序会报错。 NumPy数组不仅可以进行对应元素的运算，也可以和单一的数值（标量）进行运算，这个功能叫广播。 123&gt;&gt;&gt; x = np.array([1.0, 2.0, 3.0])&gt;&gt;&gt; x / 2.0array([ 0.5, 1. , 1.5]) NumPy的N维数组NumPy可以生成多维数组 12345678&gt;&gt;&gt; A = np.array([[1, 2], [3, 4]])&gt;&gt;&gt; print(A)[[1 2][3 4]]&gt;&gt;&gt; A.shape #查看数组形状(2, 2)&gt;&gt;&gt; A.dtype #查看数组元素的数据类型dtype(&apos;int64&apos;) 1234567&gt;&gt;&gt; B = np.array([[3, 0],[0, 6]])&gt;&gt;&gt; A + B #两个二维数组相加array([[ 4, 2],[ 3, 10]])&gt;&gt;&gt; A * B #两个二维数组相乘，对应位置的元素进行算术运算array([[ 3, 0],[ 0, 24]]) 1234567#广播&gt;&gt;&gt;print(A)[[1 2] [3 4]]&gt;&gt;&gt;A*10array([[ 10, 20],[ 30, 40]]) 访问元素元素的索引从0开始。对各个元素的访问如下： 123456789&gt;&gt;&gt; X = np.array([[51, 55], [14, 19], [0, 4]])&gt;&gt;&gt; print(X)[[51 55][14 19][ 0 4]]&gt;&gt;&gt; X[0] # 第0行array([51, 55])&gt;&gt;&gt; X[0][1] # (0,1)的元素55 也可以用for语句访问各个元素 123456&gt;&gt;&gt; for row in X:... print(row)...[51 55][14 19][0 4] 除了前面介绍的索引操作，NumPy还可以使用数组访问各个元素 12345&gt;&gt;&gt; X = X.flatten() # 将X转换为一维数组&gt;&gt;&gt; print(X)[51 55 14 19 0 4]&gt;&gt;&gt; X[np.array([0, 2, 4])] # 获取索引为0、 2、 4的元素array([51, 14, 0]) 运用这个标记法，可以获取满足一定条件的元素。例如，要从 X中抽出大于15的元素，可以写成如下形式。 1234&gt;&gt;&gt; X &gt; 15array([ True, True, False, True, False, False], dtype=bool)&gt;&gt;&gt; X[X&gt;15]array([51, 55, 19]) 对NumPy数组使用不等号运算符等（上例中是 X &gt; 15）,结果会得到一个布尔型的数组。上例中就是使用这个布尔型数组取出了数组的各个元素（取出 True对应的元素）。]]></content>
+      <tags>
+        <tag>python</tag>
+        <tag>numpy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[leetcode-1-two-sum]]></title>
     <url>%2F2019%2F05%2F29%2Fleetcode-1-two-sum%2F</url>
     <content type="text"><![CDATA[描述给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 123456示例:给定 nums = [2, 7, 11, 15], target = 9因为 nums[0] + nums[1] = 2 + 7 = 9所以返回 [0, 1] 思路解法PHP版本JAVA版本Go版本Python版本]]></content>
