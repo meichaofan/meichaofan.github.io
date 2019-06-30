@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="go,">
 
 
 
@@ -81,16 +81,18 @@
 
 
 
-<meta name="description" content="一如当年">
-<meta property="og:type" content="website">
-<meta property="og:title" content="huany">
-<meta property="og:url" content="https://meichaofan.github.io/tags/leetcode/index.html">
+<meta name="description" content="strings包提供了操作字符串的简单函数。  func Compare(a,b string) int func Contains(s, substr string) bool func Count(s, sep string) int func Fields(s string) []string func FieldsFunc(s string, f func(rune) bool) []st">
+<meta name="keywords" content="go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go strings包介绍">
+<meta property="og:url" content="https://meichaofan.github.io/2019/06/30/go-strings-package/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="一如当年">
+<meta property="og:description" content="strings包提供了操作字符串的简单函数。  func Compare(a,b string) int func Contains(s, substr string) bool func Count(s, sep string) int func Fields(s string) []string func FieldsFunc(s string, f func(rune) bool) []st">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-30T08:35:20.455Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="huany">
-<meta name="twitter:description" content="一如当年">
+<meta name="twitter:title" content="go strings包介绍">
+<meta name="twitter:description" content="strings包提供了操作字符串的简单函数。  func Compare(a,b string) int func Contains(s, substr string) bool func Count(s, sep string) int func Fields(s string) []string func FieldsFunc(s string, f func(rune) bool) []st">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/tags/leetcode/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/06/30/go-strings-package/">
 
 
 
 
 
-  <title>标签: leetcode | huany</title>
+  <title>go strings包介绍 | huany</title>
   
 
 
@@ -145,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -291,52 +293,228 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>leetcode<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/06/30/go-strings-package/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="meichaofan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/huany.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="huany">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/05/29/leetcode-1-two-sum/" itemprop="url">
-              
-                <span itemprop="name">leetcode-1-two-sum</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">go strings包介绍</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-29T16:28:57+08:00" content="2019-05-29">
-          05-29
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T15:22:04+08:00">
+                2019-06-30
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/06/30/go-strings-package/" class="leancloud_visitors" data-flag-title="go strings包介绍">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>strings</strong>包提供了操作字符串的简单函数。</p>
+<ol>
+<li>func Compare(a,b string) int</li>
+<li>func Contains(s, substr string) bool</li>
+<li>func Count(s, sep string) int</li>
+<li>func Fields(s string) []string</li>
+<li>func FieldsFunc(s string, f func(rune) bool) []string</li>
+<li>func HasPrefix(s, prefix string) bool</li>
+<li>func HasSuffix(s, suffix string) bool</li>
+<li>func Index(s, sep string) int</li>
+<li>func LastIndex(s,sep string) int</li>
+<li>func Join(a []string,sep string) string</li>
+<li>func Repeat(s string,count int) string</li>
+<li>func Replace(s,old,new string,n int) string</li>
+<li>func Split(s,sep string) []string</li>
+<li>func SplitN(s,sep string, n int) []string</li>
+<li>func ToLower(s string) string</li>
+<li>funcc ToUpper(s string) string</li>
+<li>func Trim(s string,cutset string) string</li>
+</ol>
+<hr>
+<h3 id="1-func-Compare"><a href="#1-func-Compare" class="headerlink" title="1. func Compare"></a>1. func Compare</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func Compare(a, b string) int</span><br></pre></td></tr></table></figure>
+<p>根据字典顺序，比较两个字符串的大小。字典顺序，就是说，将多个字符串的同一位置的字符按照26个字母的顺序进行比对。a最小，z最大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The result will be 0 if a==b, -1 if a &lt; b, and +1 if a &gt; b.</span><br></pre></td></tr></table></figure>
+<h3 id="2-func-Contains"><a href="#2-func-Contains" class="headerlink" title="2. func Contains"></a>2. func Contains</h3><p>判断，原字符串是否包含子串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fmt.Println(strings.Contains(&quot;seafood&quot;, &quot;foo&quot;))</span><br><span class="line">fmt.Println(strings.Contains(&quot;seafood&quot;, &quot;bar&quot;))</span><br><span class="line">fmt.Println(strings.Contains(&quot;seafood&quot;, &quot;&quot;))</span><br><span class="line">fmt.Println(strings.Contains(&quot;&quot;, &quot;&quot;))</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">true</span><br><span class="line">false</span><br><span class="line">true</span><br><span class="line">true</span><br></pre></td></tr></table></figure>
+<h3 id="3-func-Count"><a href="#3-func-Count" class="headerlink" title="3. func Count"></a>3. func Count</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func Count(s, sep string) int</span><br></pre></td></tr></table></figure>
+<p>Count计算s中非重叠sep实例的数量。如果sep是空字符串，则Count返回1 +len(s)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fmt.Println（strings.Count（“cheese”，“e”））</span><br><span class="line">fmt.Println（strings.Count（“five”，“”））//在每个符文之前和之后</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">3 </span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+<h3 id="4-func-Fields"><a href="#4-func-Fields" class="headerlink" title="4. func Fields"></a>4. func Fields</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func Fields(s string) []string</span><br></pre></td></tr></table></figure>
+<p>以空格为分隔符，分割字符串s，并返回字符切片</p>
+<h3 id="5-func-FieldsFunc"><a href="#5-func-FieldsFunc" class="headerlink" title="5. func FieldsFunc"></a>5. func FieldsFunc</h3><p>按照空格，分割字符串，同时对分割后的单个字符串，做相应的逻辑判断，如果匿名函数为真，则不返回该子串。最后返回一个字符串切片。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//只返回字母</span><br><span class="line">func testFieldsFunc() &#123;</span><br><span class="line">        str := &quot;- MY NAME is meichaofan JACK 1534&quot;</span><br><span class="line">            r := strings.FieldsFunc(str, func(r rune) bool &#123;</span><br><span class="line">                        return !unicode.IsLetter(r)</span><br><span class="line">                            &#125;)</span><br><span class="line">                fmt.Printf(&quot;%v&quot;, r)</span><br><span class="line">&#125;</span><br><span class="line">//output </span><br><span class="line">// [MY NAME is meichaofan JACK]</span><br></pre></td></tr></table></figure></p>
+<h3 id="6-func-HasPrefix"><a href="#6-func-HasPrefix" class="headerlink" title="6. func HasPrefix"></a>6. func HasPrefix</h3><p>判断字符串是否以某个前缀开头</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func testHasPrefix()  &#123;</span><br><span class="line">        str := &quot;meichaofan&quot;</span><br><span class="line">            r := strings.HasPrefix(str,&quot;mei&quot;)</span><br><span class="line">                fmt.Println(r)</span><br><span class="line">&#125;</span><br><span class="line">//output</span><br><span class="line">//true</span><br></pre></td></tr></table></figure>
+<h3 id="7-func-HasSuffix"><a href="#7-func-HasSuffix" class="headerlink" title="7. func HasSuffix"></a>7. func HasSuffix</h3><p>判断字符串是否以某个后缀结束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func testHasSuffix()  &#123;</span><br><span class="line">        str := &quot;/home/meichaofan&quot;</span><br><span class="line">            r := strings.HasPrefix(str,&quot;/&quot;)</span><br><span class="line">                fmt.Println(r)</span><br><span class="line">&#125;</span><br><span class="line">//output</span><br><span class="line">//false</span><br></pre></td></tr></table></figure>
+<h3 id="8-func-Index"><a href="#8-func-Index" class="headerlink" title="8.func Index"></a>8.func Index</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func Index（s，sep string）int</span><br></pre></td></tr></table></figure>
+<p>Index 返回s中第一个sep子串的位置，如果不存在sep，返回-1</p>
+<p>代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fmt.Println（strings.Index（“chicken”，“ken”））</span><br><span class="line">fmt.Println（strings.Index（“chicken”，“dmr”））</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">4</span><br><span class="line">-1</span><br></pre></td></tr></table></figure>
+<h3 id="9-func-LastIndex"><a href="#9-func-LastIndex" class="headerlink" title="9.func LastIndex"></a>9.func LastIndex</h3><p>返回子串最后一次出现的位置</p>
+<h3 id="10-func-Join"><a href="#10-func-Join" class="headerlink" title="10.func Join"></a>10.func Join</h3><p>字符串切片以<strong>sep</strong>合并</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">str := []string&#123;&quot;my&quot;, &quot;name&quot;, &quot;is&quot;, &quot;jack&quot;&#125;</span><br><span class="line">r:= strings.Join(str,&quot;-&quot;)</span><br><span class="line">fmt.Println(r)</span><br><span class="line">//output</span><br><span class="line">//my-name-is-jack</span><br></pre></td></tr></table></figure>
+<h3 id="11-func-Repeat"><a href="#11-func-Repeat" class="headerlink" title="11. func Repeat"></a>11. func Repeat</h3><p>重复字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fmt.Println（“ba”+ strings.Repeat（“na”，2））</span><br><span class="line">//output</span><br><span class="line">//banana</span><br></pre></td></tr></table></figure>
+<h3 id="12-func-Replace"><a href="#12-func-Replace" class="headerlink" title="12. func Replace"></a>12. func Replace</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func Replace(s, old, new string, n int) string</span><br></pre></td></tr></table></figure>
+<p>字符串替换，将原串中<strong>old</strong>串，替换成<strong>new</strong>串。替换次数为<strong>n</strong>次。当n&lt;0，替换次数没有限制。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fmt.Println(strings.Replace(&quot;oink oink oink&quot;, &quot;k&quot;, &quot;ky&quot;, 2))</span><br><span class="line">fmt.Println(strings.Replace(&quot;oink oink oink&quot;, &quot;oink&quot;, &quot;moo&quot;, -1))</span><br><span class="line">//output </span><br><span class="line">//oinky oinky oink</span><br><span class="line">//moo moo moo</span><br></pre></td></tr></table></figure>
+<h3 id="13-fun-Split"><a href="#13-fun-Split" class="headerlink" title="13.fun Split"></a>13.fun Split</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func Split(s, sep string) []string</span><br></pre></td></tr></table></figure>
+<p>将字符串s按照分隔符<strong>sep</strong>分割。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fmt.Printf(&quot;%q\n&quot;, strings.Split(&quot;a,b,c&quot;, &quot;,&quot;))</span><br><span class="line">fmt.Printf(&quot;%q\n&quot;, strings.Split(&quot;a man a plan a canal panama&quot;, &quot;a &quot;))</span><br><span class="line">fmt.Printf(&quot;%q\n&quot;, strings.Split(&quot; xyz &quot;, &quot;&quot;))</span><br><span class="line">fmt.Printf(&quot;%q\n&quot;, strings.Split(&quot;&quot;, &quot;Bernardo O&apos;Higgins&quot;))</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[&quot;a&quot; &quot;b&quot; &quot;c&quot;]</span><br><span class="line">[&quot;&quot; &quot;man &quot; &quot;plan &quot; &quot;canal panama&quot;]</span><br><span class="line">[&quot; &quot; &quot;x&quot; &quot;y&quot; &quot;z&quot; &quot; &quot;]</span><br><span class="line">[&quot;&quot;]</span><br></pre></td></tr></table></figure>
+<h3 id="14-func-SplitN"><a href="#14-func-SplitN" class="headerlink" title="14. func SplitN"></a>14. func SplitN</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func SplitN（s，sep string，n int）[] string</span><br></pre></td></tr></table></figure>
+<p>n表示要返回的子字符串数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">n&gt;0:最多n个子串，最后一个子字符串是未分割的余数</span><br><span class="line">n==0:结果是nil</span><br><span class="line">n&lt;0;所有子串 等效于 split</span><br></pre></td></tr></table></figure>
+<p>代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fmt.Printf（“％q \ n”，strings.SplitN（“a，b，c”，“，”，2））</span><br><span class="line">z：= strings.SplitN（“a，b，c”，“，”，0 ）</span><br><span class="line">fmt.Printf（“％q（nil =％v）\ n”，z，z == nil）</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[“a”“b，c”] </span><br><span class="line">[]（nil = true）</span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/go/" rel="tag"># go</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/30/go-initialization-sequence/" rel="next" title="go 初始化顺序">
+                <i class="fa fa-chevron-left"></i> go 初始化顺序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -344,6 +522,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -364,8 +546,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -435,6 +626,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-func-Compare"><span class="nav-number">1.</span> <span class="nav-text">1. func Compare</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-func-Contains"><span class="nav-number">2.</span> <span class="nav-text">2. func Contains</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-func-Count"><span class="nav-number">3.</span> <span class="nav-text">3. func Count</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-func-Fields"><span class="nav-number">4.</span> <span class="nav-text">4. func Fields</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-func-FieldsFunc"><span class="nav-number">5.</span> <span class="nav-text">5. func FieldsFunc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-func-HasPrefix"><span class="nav-number">6.</span> <span class="nav-text">6. func HasPrefix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-func-HasSuffix"><span class="nav-number">7.</span> <span class="nav-text">7. func HasSuffix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-func-Index"><span class="nav-number">8.</span> <span class="nav-text">8.func Index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-func-LastIndex"><span class="nav-number">9.</span> <span class="nav-text">9.func LastIndex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-func-Join"><span class="nav-number">10.</span> <span class="nav-text">10.func Join</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-func-Repeat"><span class="nav-number">11.</span> <span class="nav-text">11. func Repeat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-func-Replace"><span class="nav-number">12.</span> <span class="nav-text">12. func Replace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-fun-Split"><span class="nav-number">13.</span> <span class="nav-text">13.fun Split</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-func-SplitN"><span class="nav-number">14.</span> <span class="nav-text">14. func SplitN</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -588,6 +795,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
