@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://image.huany.top/hexo/go/make_slice_01.png">
 <meta property="og:image" content="http://image.huany.top/hexo/go/make_slice_02.jpg">
 <meta property="og:image" content="http://image.huany.top/hexo/go/make_slice_03.jpg">
-<meta property="og:updated_time" content="2019-06-30T13:19:58.468Z">
+<meta property="og:updated_time" content="2019-06-30T13:20:57.765Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go slice实现原理">
 <meta name="twitter:description" content="1 前言Slice又称为动态数组，低层依托于数组实现。可以方便的进行扩容，传递等。实际使用过程中，比数组更灵活。 2 Slice实现原理Slice依托于数组实现，低层数组对用户屏蔽，在低层数组容量不足时可以实现自动重分配并生成新的Slice。 2.1 Slice的数据结构源码包中src/runtime/slice.go定义了Slice的数据结构 12345type slice struct&amp;#12">
@@ -423,7 +423,8 @@
 <li>将新元素追加进新Slice，Slice.len++，返回新的Slice。</li>
 </ol>
 <h3 id="2-5-Slice-Copy"><a href="#2-5-Slice-Copy" class="headerlink" title="2.5 Slice Copy"></a>2.5 Slice Copy</h3><p>使用copy()内置函数拷贝两个切片时，会将源切片的数据逐个拷贝到目的切片指向的数组中，拷贝数量取两个切片长度的最小值。例如长度为10的切片拷贝到长度为5的切片时，将会拷贝5个元素。也就是说，copy过程中不会发生扩容。</p>
-<h3 id="2-6-特殊切片"><a href="#2-6-特殊切片" class="headerlink" title="2.6 特殊切片"></a>2.6 特殊切片</h3><p>跟据数组或切片生成新的切片一般使用<code>slice := array[start:end]</code>方式，这种新生成的切片并没有指定切片的容量，实际上新切片的容量是从start开始直至array的结束。<br>比如下面两个切片，长度和容量都是一致的，使用共同的内存地址：</p>
+<h3 id="2-6-特殊切片"><a href="#2-6-特殊切片" class="headerlink" title="2.6 特殊切片"></a>2.6 特殊切片</h3><p>跟据数组或切片生成新的切片一般使用<code>slice := array[start:end]</code>方式，这种新生成的切片并没有指定切片的容量，实际上新切片的容量是从start开始直至array的结束。</p>
+<p>比如下面两个切片，长度和容量都是一致的，使用共同的内存地址：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sliceA := make([]int, 5, 10)</span><br><span class="line">sliceB := sliceA[0:5]</span><br></pre></td></tr></table></figure>
 <p>根据数组或切片生成切片还有另一种写法，即切片同时也指定容量，即<code>slice[start:end:cap]</code>, 其中cap即为新切片的容量，当然容量不能超过原切片实际值，如下所示：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sliceA := make([]int, 5, 10)  //length = 5; capacity = 10</span><br><span class="line">sliceB := sliceA[0:5]         //length = 5; capacity = 10</span><br><span class="line">sliceC := sliceA[0:5:5]       //length = 5; capacity = 5</span><br></pre></td></tr></table></figure>
