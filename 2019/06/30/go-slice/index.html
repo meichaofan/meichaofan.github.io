@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="go,">
 
 
 
@@ -81,16 +81,22 @@
 
 
 
-<meta name="description" content="一如当年">
-<meta property="og:type" content="website">
-<meta property="og:title" content="huany">
-<meta property="og:url" content="https://meichaofan.github.io/page/2/index.html">
+<meta name="description" content="1 前言​      Slice又称为动态数组，低层依托于数组实现。可以方便的进行扩容，传递等。实际使用过程中，比数组更灵活。 2 Slice实现原理​      Slice依托于数组实现，低层数组对用户屏蔽，在低层数组容量不足时可以实现自动重分配并生成新的Slice。 2.1 Slice的数据结构​      源码包中src/runtime/slice.go定义了Slice的数据结构12345t">
+<meta name="keywords" content="go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go slice实现原理">
+<meta property="og:url" content="https://meichaofan.github.io/2019/06/30/go-slice/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="一如当年">
+<meta property="og:description" content="1 前言​      Slice又称为动态数组，低层依托于数组实现。可以方便的进行扩容，传递等。实际使用过程中，比数组更灵活。 2 Slice实现原理​      Slice依托于数组实现，低层数组对用户屏蔽，在低层数组容量不足时可以实现自动重分配并生成新的Slice。 2.1 Slice的数据结构​      源码包中src/runtime/slice.go定义了Slice的数据结构12345t">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://image.huany.top/hexo/go/make_slice_01.png">
+<meta property="og:image" content="http://image.huany.top/hexo/go/make_slice_02.jpg">
+<meta property="og:image" content="http://image.huany.top/hexo/go/make_slice_03.jpg">
+<meta property="og:updated_time" content="2019-06-30T13:10:07.044Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="huany">
-<meta name="twitter:description" content="一如当年">
+<meta name="twitter:title" content="Go slice实现原理">
+<meta name="twitter:description" content="1 前言​      Slice又称为动态数组，低层依托于数组实现。可以方便的进行扩容，传递等。实际使用过程中，比数组更灵活。 2 Slice实现原理​      Slice依托于数组实现，低层数组对用户屏蔽，在低层数组容量不足时可以实现自动重分配并生成新的Slice。 2.1 Slice的数据结构​      源码包中src/runtime/slice.go定义了Slice的数据结构12345t">
+<meta name="twitter:image" content="http://image.huany.top/hexo/go/make_slice_01.png">
 
 
 
@@ -120,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/page/2/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/06/30/go-slice/">
 
 
 
 
 
-  <title>huany</title>
+  <title>Go slice实现原理 | huany</title>
   
 
 
@@ -145,8 +151,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -291,9 +296,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -306,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/29/ubuntu-change-runlevel/">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/06/30/go-slice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="meichaofan">
@@ -323,9 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/29/ubuntu-change-runlevel/" itemprop="url">Ubuntu 系统修改默认运行级别</a></h1>
+          <h1 class="post-title" itemprop="name headline">Go slice实现原理</h1>
         
 
         <div class="post-meta">
@@ -337,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-29T01:40:12+08:00">
-                2019-04-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T17:27:15+08:00">
+                2019-06-30
               </time>
             
 
@@ -355,7 +358,7 @@
 
           
           
-             <span id="/2019/04/29/ubuntu-change-runlevel/" class="leancloud_visitors" data-flag-title="Ubuntu 系统修改默认运行级别">
+             <span id="/2019/06/30/go-slice/" class="leancloud_visitors" data-flag-title="Go slice实现原理">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -367,6 +370,11 @@
              </span>
           
 
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
           
 
           
@@ -386,19 +394,45 @@
       
 
       
-        
-          
-          Deb系运行级别（Debian、Ubuntu）
-0 – Halt，关机模式1 – Single，单用户模式2 - Full multi-user with display manager (GUI)3 - Full multi-user with display manager (GUI)4 - F
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/29/ubuntu-change-runlevel/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h3><p>​      Slice又称为动态数组，低层依托于数组实现。可以方便的进行扩容，传递等。实际使用过程中，比数组更灵活。</p>
+<h3 id="2-Slice实现原理"><a href="#2-Slice实现原理" class="headerlink" title="2 Slice实现原理"></a>2 Slice实现原理</h3><p>​      Slice依托于数组实现，低层数组对用户屏蔽，在低层数组容量不足时可以实现自动重分配并生成新的Slice。</p>
+<h3 id="2-1-Slice的数据结构"><a href="#2-1-Slice的数据结构" class="headerlink" title="2.1 Slice的数据结构"></a>2.1 Slice的数据结构</h3><p>​      源码包中<code>src/runtime/slice.go</code>定义了Slice的数据结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type slice struct&#123;</span><br><span class="line">    array unsafe.Pointer</span><br><span class="line">    len int</span><br><span class="line">    cap int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从数据结构看，slice其实就是一个结构体，array指针指向低层数组，len表示切片长度，cap表示低层数组容量。</p>
+<h3 id="2-2-使用make创建Slice"><a href="#2-2-使用make创建Slice" class="headerlink" title="2.2 使用make创建Slice"></a>2.2 使用make创建Slice</h3><p>​      使用<strong>make</strong>关键字创建Slice时，可以同时制定长度和容量，创建时低层会分配一个数组，数组的长度即容量。<br>例如，语句 <code>slice:=make([]int,5,10)</code>所创建的slice，结构如下图所示:<br><img src="http://image.huany.top/hexo/go/make_slice_01.png" alt><br>​      该Slice的长度为5，可以使用slice[0]~slice[4]来操作里面的元素，capacity为10，表示后续向slice添加新的元素时可以不必重新分配内存，直接使用预留内存即可。</p>
+<h3 id="2-3-使用数组创建Slice"><a href="#2-3-使用数组创建Slice" class="headerlink" title="2.3 使用数组创建Slice"></a>2.3 使用数组创建Slice</h3><p>​      使用数组来创建Slice时，Slice将于原数组共用一部分内存。<br>​      例如，语句<code>slice:=array[5:7]</code>所创建的Slice，结构如下图所示:<br><img src="http://image.huany.top/hexo/go/make_slice_02.jpg" alt><br>​      切片从数组array[5]开始，到数组array[7]结束（不含array[7]）,即切片长度为2，数组后面的内容都作为切片的预留内存，即capacity为5。<br>​      数组和切片操作可能作用于同一块内存，这也是使用过程中需要注意的地方。</p>
+<h3 id="2-4-Slice扩容"><a href="#2-4-Slice扩容" class="headerlink" title="2.4 Slice扩容"></a>2.4 Slice扩容</h3><p>​      使用append向Slice追加元素时，如果Slice空间不足，将会触发Slice扩容，扩容实际上重新一配一块更大的内存，将原Slice数据拷贝进新Slice，然后返回新Slice，扩容后再将数据追加进去。</p>
+<p>​      例如，当向一个capacity为5，且length也为5的Slice再次追加1个元素时，就会发生扩容，如题所示：<br><img src="http://image.huany.top/hexo/go/make_slice_03.jpg" alt><br>​      扩容操作只关心容量，会把原Slice数据拷贝到新Slice，追加数据由append在扩容结束后完成。上图可见，扩容后新的Slice长度仍然是5，但容量由5提升到了10，原Slice的数据也都拷贝到了新Slice指向的数组中。</p>
+<p>​      扩容容量的选择遵循以下规则：</p>
+<ul>
+<li><p>如果原Slice容量小于1024，则新Slice容量将扩大为原来的2倍；</p>
+</li>
+<li><p>如果原Slice容量大于等于1024，则新Slice容量将扩大为原来的1.25倍；</p>
+<p>使用append()向Slice添加一个元素的实现步骤如下：</p>
+</li>
+</ul>
+<ol>
+<li><p>假如Slice容量够用，则将新元素追加进去，Slice.len++，返回原Slice</p>
+</li>
+<li><p>原Slice容量不够，则将Slice先扩容，扩容后得到新Slice</p>
+</li>
+<li><p>将新元素追加进新Slice，Slice.len++，返回新的Slice。</p>
+</li>
+</ol>
+<h3 id="2-5-Slice-Copy"><a href="#2-5-Slice-Copy" class="headerlink" title="2.5 Slice Copy"></a>2.5 Slice Copy</h3><p>​      使用copy()内置函数拷贝两个切片时，会将源切片的数据逐个拷贝到目的切片指向的数组中，拷贝数量取两个切片长度的最小值。例如长度为10的切片拷贝到长度为5的切片时，将会拷贝5个元素。也就是说，copy过程中不会发生扩容。</p>
+<h3 id="2-6-特殊切片"><a href="#2-6-特殊切片" class="headerlink" title="2.6 特殊切片"></a>2.6 特殊切片</h3><p>​      跟据数组或切片生成新的切片一般使用<code>slice := array[start:end]</code>方式，这种新生成的切片并没有指定切片的容量，实际上新切片的容量是从start开始直至array的结束。</p>
+<p>​      比如下面两个切片，长度和容量都是一致的，使用共同的内存地址：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sliceA := make([]int, 5, 10)</span><br><span class="line">sliceB := sliceA[0:5]</span><br></pre></td></tr></table></figure>
+<p>​      根据数组或切片生成切片还有另一种写法，即切片同时也指定容量，即<code>slice[start:end:cap]</code>, 其中cap即为新切片的容量，当然容量不能超过原切片实际值，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sliceA := make([]int, 5, 10)  //length = 5; capacity = 10</span><br><span class="line">sliceB := sliceA[0:5]         //length = 5; capacity = 10</span><br><span class="line">sliceC := sliceA[0:5:5]       //length = 5; capacity = 5</span><br></pre></td></tr></table></figure>
+<h3 id="3-总结"><a href="#3-总结" class="headerlink" title="3 总结"></a>3 总结</h3><ul>
+<li>每个切片都指向一个底层数组</li>
+<li>每个切片都保存了当前切片的长度、底层数组可用容量</li>
+<li>使用len()计算切片长度时间复杂度为O(1)，不需要遍历切片</li>
+<li>使用cap()计算切片容量时间复杂度为O(1)，不需要遍历切片</li>
+<li>通过函数传递切片时，不会拷贝整个切片，因为切片本身只是个结构体而矣</li>
+<li>使用append()向切片追加元素时有可能触发扩容，扩容后将会生成新的切片</li>
+</ul>
+
       
     </div>
     
@@ -413,295 +447,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/28/linux-process-sche/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/huany.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="huany">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/28/linux-process-sche/" itemprop="url">linux的进程调度</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-28T17:53:20+08:00">
-                2019-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/go/" rel="tag"># go</a>
           
-            
-          
-
-          
-          
-             <span id="/2019/04/28/linux-process-sche/" class="leancloud_visitors" data-flag-title="linux的进程调度">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          
-          转载至 https://blog.csdn.net/gatieme/article/details/51701149
-
-1. 前言
-1.1 进程调度内存中保存了对每个进程的唯一描述，并通过若干结构与其它进程连接起来。
-调度器面对的情形就是这样，其任务是在程序之间共享CPU时间，创造并行执行的错觉，该
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/28/linux-process-sche/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/30/go-date-time-conver/" rel="next" title="go-date-time-conver">
+                <i class="fa fa-chevron-left"></i> go-date-time-conver
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/24/write-docker-run/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/huany.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="huany">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/24/write-docker-run/" itemprop="url">构建实现run命令的容器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-24T23:24:32+08:00">
-                2019-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/24/write-docker-run/" class="leancloud_visitors" data-flag-title="构建实现run命令的容器">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-          实现run命令
-构建一个简单版本的run命令，类似于docker run -it [command]，为了了解Docker启动容器的原理，该简单版本的实现参考了runC的实现。
-
-1.目前的代码文件结构如下：12345678.├── container│   ├── container_proces
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/24/write-docker-run/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -711,1017 +486,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/23/about-linux-software/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/huany.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="huany">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/23/about-linux-software/" itemprop="url">Linux相关软件和命令</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-23T14:50:43+08:00">
-                2019-04-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/23/about-linux-software/" class="leancloud_visitors" data-flag-title="Linux相关软件和命令">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          这里主要介绍Linux相关软件安装和日常使用命令
-
-
-HTTPie - 一款http客户端工具
-
-
-          
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/23/about-linux-software/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/23/httpie-a-http-client/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/huany.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="huany">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/23/httpie-a-http-client/" itemprop="url">HTTPie - 一款http客户端</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-23T14:22:03+08:00">
-                2019-04-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/23/httpie-a-http-client/" class="leancloud_visitors" data-flag-title="HTTPie - 一款http客户端">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          一款http客户端
-
-主要特点
-具表达力和直观语法
-格式化的及彩色化的终端输出
-内置JSON支持
-表单和文件上传
-HTTPS、代理和认证
-任意请求数据
-自定义头部
-持久化会话
-类似于wget的下载
-支持Python2.7 和 3.x
-
-在Linux下安装Httpie
-Debian/Ubuntu系统，
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/23/httpie-a-http-client/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/22/introducing-urfave-cli/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/huany.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="huany">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/22/introducing-urfave-cli/" itemprop="url">介绍urfave/cli 一款构建命令行app的go包</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T22:53:29+08:00">
-                2019-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/22/introducing-urfave-cli/" class="leancloud_visitors" data-flag-title="介绍urfave/cli 一款构建命令行app的go包">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          一个简单，快速构建基于命令行应用的工具包https://github.com/urfave/cli
-
-安装1go get github.com/urfave/cli
-使用1.Cli的哲学之一是API应该有趣和充满惊喜，所以cli应用程序可以做到在main()函数里只有一行代码。
-1234567891
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/22/introducing-urfave-cli/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/22/tranfer-in-linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/huany.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="huany">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/22/tranfer-in-linux/" itemprop="url">linix之间几种文件传输方式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T18:43:23+08:00">
-                2019-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/22/tranfer-in-linux/" class="leancloud_visitors" data-flag-title="linix之间几种文件传输方式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          当我们需要在类UNIX主机间，互传文件，下面几个命令可以排上用场了
-
-
-rsync
-1rsync -avz user@src_host:/path/to/file ./ --delete
-
-scp
-
-
-
-
-          
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/22/tranfer-in-linux/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/22/about-ubuntu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/huany.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="huany">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/22/about-ubuntu/" itemprop="url">ubuntu</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T18:19:32+08:00">
-                2019-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/22/about-ubuntu/" class="leancloud_visitors" data-flag-title="ubuntu">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          这是关于Ubuntu系统运维的
-
-
-ubuntu系统修改网卡ip
-ubuntu系统修改默认运行级别
-
-
-          
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/22/about-ubuntu/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/22/change-ip-on-ubuntu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/huany.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="huany">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/22/change-ip-on-ubuntu/" itemprop="url">ubuntu系统修改网卡ip</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T17:49:25+08:00">
-                2019-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/22/change-ip-on-ubuntu/" class="leancloud_visitors" data-flag-title="ubuntu系统修改网卡ip">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          需求：将ubuntu系统ens33网卡ip修改为192.168.244.140
-
-1.编辑/etc/network/interfaces文件
-1234567891011meichaofan@ubuntu:~$ cat /etc/network/interfaces# interfaces(5) fi
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/22/change-ip-on-ubuntu/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/22/docker-run-samba/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="meichaofan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/huany.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="huany">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/22/docker-run-samba/" itemprop="url">利用docker搭建samba目录共享</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T01:20:04+08:00">
-                2019-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/22/docker-run-samba/" class="leancloud_visitors" data-flag-title="利用docker搭建samba目录共享">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          1.下载samba镜像1docker pull dperson/samba
-2.启动镜像，具体配置看文档，但重要的配置是一下的注释12345678docker run --name samba \-it -p 139:139 -p 445:445 \-v /home/meichaofan:/home
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/22/docker-run-samba/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
 
 
           </div>
@@ -1729,6 +498,10 @@ ubuntu系统修改默认运行级别
 
 
           
+
+  
+
+
 
         </div>
         
@@ -1749,8 +522,17 @@ ubuntu系统修改默认运行级别
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1820,6 +602,22 @@ ubuntu系统修改默认运行级别
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Slice实现原理"><span class="nav-number">2.</span> <span class="nav-text">2 Slice实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Slice的数据结构"><span class="nav-number">3.</span> <span class="nav-text">2.1 Slice的数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-使用make创建Slice"><span class="nav-number">4.</span> <span class="nav-text">2.2 使用make创建Slice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-使用数组创建Slice"><span class="nav-number">5.</span> <span class="nav-text">2.3 使用数组创建Slice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Slice扩容"><span class="nav-number">6.</span> <span class="nav-text">2.4 Slice扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-Slice-Copy"><span class="nav-number">7.</span> <span class="nav-text">2.5 Slice Copy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-特殊切片"><span class="nav-number">8.</span> <span class="nav-text">2.6 特殊切片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-总结"><span class="nav-number">9.</span> <span class="nav-text">3 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1973,6 +771,10 @@ ubuntu系统修改默认运行级别
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
