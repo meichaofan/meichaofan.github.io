@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[go 初始化顺序]]></title>
+    <url>%2F2019%2F06%2F30%2Fgo-initialization-sequence%2F</url>
+    <content type="text"><![CDATA[初始化顺序先执行import包的每个文件的常量和变量，然后是init函数，最后执行main函数，当main函数执行结束程序退出。]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[全方位解读PHP7低层源码]]></title>
     <url>%2F2019%2F06%2F15%2Fphp7-source-code%2F</url>
     <content type="text"><![CDATA[本栏从源码的角度，解析PHP7。对掌握PHP有重大帮助，望坚持更新。 PHP7的新特性 基础变量与内存管理 PHP运行的生命周期 PHP代码的编译与执行 基础语法实现的细节 PHP扩展编写]]></content>

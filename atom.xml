@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-06-15T14:50:10.369Z</updated>
+  <updated>2019-06-30T07:09:28.191Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>go 初始化顺序</title>
+    <link href="https://meichaofan.github.io/2019/06/30/go-initialization-sequence/"/>
+    <id>https://meichaofan.github.io/2019/06/30/go-initialization-sequence/</id>
+    <published>2019-06-30T07:00:59.000Z</published>
+    <updated>2019-06-30T07:09:28.191Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h3><p>先执行import包的每个文件的<strong>常量</strong>和<strong>变量</strong>，然后是<strong>init</strong>函数，最后执行<strong>main</strong>函数，当<strong>main</strong>函数执行结束程序退出。</p><p><img src="http://image.huany.top/hexo/go/go-initialization-sequence.png" alt="go 初始化顺序"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;初始化顺序&quot;&gt;&lt;a href=&quot;#初始化顺序&quot; class=&quot;headerlink&quot; title=&quot;初始化顺序&quot;&gt;&lt;/a&gt;初始化顺序&lt;/h3&gt;&lt;p&gt;先执行import包的每个文件的&lt;strong&gt;常量&lt;/strong&gt;和&lt;strong&gt;变量&lt;/strong&gt;，然后
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>全方位解读PHP7低层源码</title>
@@ -504,41 +525,6 @@
     
     
       <category term="docker" scheme="https://meichaofan.github.io/tags/docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker运维相关</title>
-    <link href="https://meichaofan.github.io/2019/04/20/about-use-docker/"/>
-    <id>https://meichaofan.github.io/2019/04/20/about-use-docker/</id>
-    <published>2019-04-20T13:34:52.000Z</published>
-    <updated>2019-04-20T17:05:45.759Z</updated>
-    
-    <content type="html"><![CDATA[<p>记录Docker在日常学习和工作中的相关积累</p><hr><ul><li><p>Docker运维</p><ul><li>安装Docker</li></ul></li><li><p>Image相关</p></li><li><p>Unionfs<br> *overlay2</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;记录Docker在日常学习和工作中的相关积累&lt;/p&gt;
-&lt;hr&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Docker运维&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;安装Docker&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Image相关&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Unionfs&lt;br&gt; *
-      
-    
-    </summary>
-    
-    
-      <category term="docker" scheme="https://meichaofan.github.io/tags/docker/"/>
-    
-      <category term="DevOps" scheme="https://meichaofan.github.io/tags/DevOps/"/>
     
   </entry>
   
