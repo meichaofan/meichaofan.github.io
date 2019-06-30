@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="go,">
 
 
 
@@ -81,16 +81,21 @@
 
 
 
-<meta name="description" content="一如当年">
-<meta property="og:type" content="website">
-<meta property="og:title" content="huany">
-<meta property="og:url" content="https://meichaofan.github.io/tags/overlay2/index.html">
+<meta name="description" content="string标准概念Go标准库builtin给出了所有内置类型的定义。源码位于src/builtin/builtin.go，其中关于string的描述如下： 1234// string is the set of all strings of 8-bit bytes, conventionally but not// necessarily representing UTF-8-encoded t">
+<meta name="keywords" content="go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go string低层原理">
+<meta property="og:url" content="https://meichaofan.github.io/2019/06/30/go-string/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="一如当年">
+<meta property="og:description" content="string标准概念Go标准库builtin给出了所有内置类型的定义。源码位于src/builtin/builtin.go，其中关于string的描述如下： 1234// string is the set of all strings of 8-bit bytes, conventionally but not// necessarily representing UTF-8-encoded t">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://image.huany.top/hexo/go/string-01-slice2string.png">
+<meta property="og:image" content="http://image.huany.top/hexo/go/string-02-string2slice.png">
+<meta property="og:updated_time" content="2019-06-30T15:09:45.487Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="huany">
-<meta name="twitter:description" content="一如当年">
+<meta name="twitter:title" content="Go string低层原理">
+<meta name="twitter:description" content="string标准概念Go标准库builtin给出了所有内置类型的定义。源码位于src/builtin/builtin.go，其中关于string的描述如下： 1234// string is the set of all strings of 8-bit bytes, conventionally but not// necessarily representing UTF-8-encoded t">
+<meta name="twitter:image" content="http://image.huany.top/hexo/go/string-01-slice2string.png">
 
 
 
@@ -120,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/tags/overlay2/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/06/30/go-string/">
 
 
 
 
 
-  <title>标签: overlay2 | huany</title>
+  <title>Go string低层原理 | huany</title>
   
 
 
@@ -145,7 +150,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -291,52 +296,233 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>overlay2<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/06/30/go-string/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="meichaofan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/huany.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="huany">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/04/21/docker-overlay2/" itemprop="url">
-              
-                <span itemprop="name">Docker 存储驱动之 overlay2</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Go string低层原理</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-21T01:05:59+08:00" content="2019-04-21">
-          04-21
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T22:19:46+08:00">
+                2019-06-30
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/06/30/go-string/" class="leancloud_visitors" data-flag-title="Go string低层原理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="string标准概念"><a href="#string标准概念" class="headerlink" title="string标准概念"></a>string标准概念</h3><p>Go标准库<code>builtin</code>给出了所有内置类型的定义。源码位于<code>src/builtin/builtin.go</code>，其中关于string的描述如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// string is the set of all strings of 8-bit bytes, conventionally but not</span><br><span class="line">// necessarily representing UTF-8-encoded text. A string may be empty, but</span><br><span class="line">// not nil. Values of string type are immutable.</span><br><span class="line">type string string</span><br></pre></td></tr></table></figure>
+<p>所以string是8比特字节的集合，通常但不一定是UTF-8编码的文本。</p>
+<p>另外还提到了两点，非常重要：</p>
+<ul>
+<li>string可以为空（长度为0），但不会是nil；</li>
+<li>string对象是不可修改的。</li>
+</ul>
+<h3 id="string-数据结构"><a href="#string-数据结构" class="headerlink" title="string 数据结构"></a>string 数据结构</h3><p>源码包<code>src/runtime/string.go:stringStruct</code>定义了string的数据结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">type stringStruct struct &#123;</span><br><span class="line">    str unsafe.Pointer</span><br><span class="line">    len int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其数据结构很简单：</p>
+<ul>
+<li>stringStruct.str: 字符串首字母地址；</li>
+<li>stringStruct.len：字符串的长度；</li>
+</ul>
+<p>string数据结构跟切片有些类似，只不过切片还有一个表示容量的成员，事实上string和切片，准确的说是byte切片经常发生转换。这个后面再详细介绍。</p>
+<h3 id="string操作"><a href="#string操作" class="headerlink" title="string操作"></a>string操作</h3><h4 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h4><p>如下代码所示，可以声明一个string变量并赋予初值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var str string</span><br><span class="line">str = &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
+<p>字符串构建过程中先根据字符串构建stringStruct，再转换成string。转换的源码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func gostringnocopy(str *byte) string &#123; // 跟据字符串地址构建string</span><br><span class="line">    ss := stringStruct&#123;str: unsafe.Pointer(str), len: findnull(str)&#125; // 先构造stringStruct</span><br><span class="line">    s := *(*string)(unsafe.Pointer(&amp;ss))                             // 再将stringStruct转换成string</span><br><span class="line">    return s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>string在runtime包中就是stringStruct，对外呈现叫做string。</p>
+<h4 id="byte转string"><a href="#byte转string" class="headerlink" title="[]byte转string"></a>[]byte转string</h4><p>byte切片可以很方便的转换成string，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func GetStringBySlice(s []byte) string &#123;</span><br><span class="line">    return string(s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是这种转换需要一次内存拷贝。</p>
+<p>转换过程如下： </p>
+<ol>
+<li>跟据切片的长度申请内存空间，假设内存地址为p，切片长度为len(b)；</li>
+<li>构建string（string.str = p；string.len = len；） </li>
+<li>拷贝数据(切片中数据拷贝到新申请的内存空间)</li>
+</ol>
+<p>转换示意图：<br><img src="http://image.huany.top/hexo/go/string-01-slice2string.png" alt></p>
+<h4 id="string转-byte"><a href="#string转-byte" class="headerlink" title="string转[]byte"></a>string转[]byte</h4><p>string也可以很方便的转成byte切片，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func GetSliceByString(str string) []byte &#123;</span><br><span class="line">    return []byte(str)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>string转换成byte切片，也需要一次内存拷贝，其过程如下：</p>
+<ul>
+<li>申请切片内存空间</li>
+<li>将string拷贝到切片</li>
+</ul>
+<p>转换示意图：<br><img src="http://image.huany.top/hexo/go/string-02-string2slice.png" alt></p>
+<h4 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h4><p>字符串可以很方便的拼接，像下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str := &quot;Str1&quot; + &quot;Str2&quot; + &quot;Str3&quot;</span><br></pre></td></tr></table></figure>
+<p>即便有非常多的字符串需要拼接，性能上也有比较好的保证，因为新字符串的内存空间是一次分配完成的，所以性能消耗主要在拷贝数据上。</p>
+<p>一个拼接语句的字符串编译时都会被存放到一个切片中，拼接过程需要遍历两次切片，第一次遍历获取总的字符串长度，据此申请内存，第二次遍历会把字符串逐个拷贝过去。</p>
+<p>字符串拼接伪代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">func concatstrings(a []string) string &#123; // 字符串拼接</span><br><span class="line">    length := 0        // 拼接后总的字符串长度</span><br><span class="line"></span><br><span class="line">    for _, str := range a &#123;</span><br><span class="line">        length += length(str)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    s, b := rawstring(length) // 生成指定大小的字符串，返回一个string和切片，二者共享内存空间</span><br><span class="line"></span><br><span class="line">    for _, str := range a &#123;</span><br><span class="line">        copy(b, str)    // string无法修改，只能通过切片修改</span><br><span class="line">        b = b[len(str):]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为string是无法直接修改的，所以这里使用rawstring()方法初始化一个指定大小的string，同时返回一个切片，二者共享同一块内存空间，后面向切片中拷贝数据，也就间接修改了string。</p>
+<p>rawstring()源代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func rawstring(size int) (s string, b []byte) &#123; // 生成一个新的string，返回的string和切片共享相同的空间</span><br><span class="line">    p := mallocgc(uintptr(size), nil, false)</span><br><span class="line"></span><br><span class="line">    stringStructOf(&amp;s).str = p</span><br><span class="line">    stringStructOf(&amp;s).len = size</span><br><span class="line"></span><br><span class="line">    *(*slice)(unsafe.Pointer(&amp;b)) = slice&#123;p, size, size&#125;</span><br><span class="line"></span><br><span class="line">    return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="为什么字符串不允许修改？"><a href="#为什么字符串不允许修改？" class="headerlink" title="为什么字符串不允许修改？"></a>为什么字符串不允许修改？</h4><p>像C++语言中的string，其本身拥有内存空间，修改string是支持的。但Go的实现中，string不包含内存空间，只有一个内存的指针，这样做的好处是string变得非常轻量，可以很方便的进行传递而不用担心内存拷贝。</p>
+<p>因为string通常指向字符串字面量，而字符串字面量存储位置是只读段，而不是堆或栈上，所以才有了string不可修改的约定。</p>
+<h4 id="byte转换成string一定会拷贝内存吗？"><a href="#byte转换成string一定会拷贝内存吗？" class="headerlink" title="[]byte转换成string一定会拷贝内存吗？"></a>[]byte转换成string一定会拷贝内存吗？</h4><p>byte切片转换成string的场景很多，为了性能上的考虑，有时候只是临时需要字符串的场景下，byte切片转换成string时并不会拷贝内存，而是直接返回一个string，这个string的指针(string.str)指向切片的内存。</p>
+<p>比如，编译器会识别如下临时场景：</p>
+<ul>
+<li>使用m[string(b)]来查找map（map是string为key，临时把切片b转成string）；</li>
+<li>字符串拼接，如”&lt;” + “string(b)” + “&gt;”；</li>
+<li>字符串比较：string(b) == “foo”</li>
+</ul>
+<p>因为是临时把byte切片转换成string，也就避免了因byte切片内容改变而导致string引用失败的情况，所以此时可以不必拷贝内存新建一个string。</p>
+<h4 id="string和-byte如何取舍？"><a href="#string和-byte如何取舍？" class="headerlink" title="string和[]byte如何取舍？"></a>string和[]byte如何取舍？</h4><p>string和[]byte都可以表示字符串，但因数据结构不同，其衍生出来的方法也不同，要跟据实际应用场景来选择。</p>
+<p>string 擅长的场景：</p>
+<ul>
+<li>需要字符串比较的场景；</li>
+<li>不需要nil字符串的场景；</li>
+</ul>
+<p>[]byte擅长的场景：</p>
+<ul>
+<li>修改字符串的场景，尤其是修改粒度为1个字节</li>
+<li>函数返回值，需要用nil表示含义的场景；</li>
+<li>需要切片操作的场景；</li>
+</ul>
+<p>虽然看起来string适用的场景不如[]byte多，但因为string直观，在实际应用中还是大量存在，在偏底层的实现中[]byte使用更多。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/go/" rel="tag"># go</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/30/go-slice/" rel="next" title="Go slice实现原理">
+                <i class="fa fa-chevron-left"></i> Go slice实现原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -344,6 +530,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -364,8 +554,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -435,6 +634,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#string标准概念"><span class="nav-number">1.</span> <span class="nav-text">string标准概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string-数据结构"><span class="nav-number">2.</span> <span class="nav-text">string 数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string操作"><span class="nav-number">3.</span> <span class="nav-text">string操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明"><span class="nav-number">3.1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#byte转string"><span class="nav-number">3.2.</span> <span class="nav-text">[]byte转string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string转-byte"><span class="nav-number">3.3.</span> <span class="nav-text">string转[]byte</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串拼接"><span class="nav-number">3.4.</span> <span class="nav-text">字符串拼接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么字符串不允许修改？"><span class="nav-number">3.5.</span> <span class="nav-text">为什么字符串不允许修改？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#byte转换成string一定会拷贝内存吗？"><span class="nav-number">3.6.</span> <span class="nav-text">[]byte转换成string一定会拷贝内存吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string和-byte如何取舍？"><span class="nav-number">3.7.</span> <span class="nav-text">string和[]byte如何取舍？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -588,6 +803,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
