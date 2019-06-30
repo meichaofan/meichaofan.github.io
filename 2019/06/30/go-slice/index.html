@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://image.huany.top/hexo/go/make_slice_01.png">
 <meta property="og:image" content="http://image.huany.top/hexo/go/make_slice_02.jpg">
 <meta property="og:image" content="http://image.huany.top/hexo/go/make_slice_03.jpg">
-<meta property="og:updated_time" content="2019-06-30T13:18:30.139Z">
+<meta property="og:updated_time" content="2019-06-30T13:19:58.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go slice实现原理">
 <meta name="twitter:description" content="1 前言Slice又称为动态数组，低层依托于数组实现。可以方便的进行扩容，传递等。实际使用过程中，比数组更灵活。 2 Slice实现原理Slice依托于数组实现，低层数组对用户屏蔽，在低层数组容量不足时可以实现自动重分配并生成新的Slice。 2.1 Slice的数据结构源码包中src/runtime/slice.go定义了Slice的数据结构 12345type slice struct&amp;#12">
@@ -399,13 +399,16 @@
 <h3 id="2-1-Slice的数据结构"><a href="#2-1-Slice的数据结构" class="headerlink" title="2.1 Slice的数据结构"></a>2.1 Slice的数据结构</h3><p>源码包中<code>src/runtime/slice.go</code>定义了Slice的数据结构</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type slice struct&#123;</span><br><span class="line">    array unsafe.Pointer</span><br><span class="line">    len int</span><br><span class="line">    cap int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>从数据结构看，slice其实就是一个结构体，array指针指向低层数组，len表示切片长度，cap表示低层数组容量。</p>
-<h3 id="2-2-使用make创建Slice"><a href="#2-2-使用make创建Slice" class="headerlink" title="2.2 使用make创建Slice"></a>2.2 使用make创建Slice</h3><p>使用<strong>make</strong>关键字创建Slice时，可以同时制定长度和容量，创建时低层会分配一个数组，数组的长度即容量。<br>例如，语句 <code>slice:=make([]int,5,10)</code>所创建的slice，结构如下图所示:</p>
+<h3 id="2-2-使用make创建Slice"><a href="#2-2-使用make创建Slice" class="headerlink" title="2.2 使用make创建Slice"></a>2.2 使用make创建Slice</h3><p>使用<strong>make</strong>关键字创建Slice时，可以同时制定长度和容量，创建时低层会分配一个数组，数组的长度即容量。</p>
+<p>例如，语句 <code>slice:=make([]int,5,10)</code>所创建的slice，结构如下图所示:</p>
 <p><img src="http://image.huany.top/hexo/go/make_slice_01.png" alt></p>
 <p>该Slice的长度为5，可以使用slice[0]~slice[4]来操作里面的元素，capacity为10，表示后续向slice添加新的元素时可以不必重新分配内存，直接使用预留内存即可。</p>
 <h3 id="2-3-使用数组创建Slice"><a href="#2-3-使用数组创建Slice" class="headerlink" title="2.3 使用数组创建Slice"></a>2.3 使用数组创建Slice</h3><p>使用数组来创建Slice时，Slice将于原数组共用一部分内存。例如，语句<code>slice:=array[5:7]</code>所创建的Slice，结构如下图所示:</p>
 <p><img src="http://image.huany.top/hexo/go/make_slice_02.jpg" alt></p>
-<p>切片从数组array[5]开始，到数组array[7]结束（不含array[7]）,即切片长度为2，数组后面的内容都作为切片的预留内存，即capacity为5。<br>数组和切片操作可能作用于同一块内存，这也是使用过程中需要注意的地方。</p>
-<h3 id="2-4-Slice扩容"><a href="#2-4-Slice扩容" class="headerlink" title="2.4 Slice扩容"></a>2.4 Slice扩容</h3><p>使用append向Slice追加元素时，如果Slice空间不足，将会触发Slice扩容，扩容实际上重新一配一块更大的内存，将原Slice数据拷贝进新Slice，然后返回新Slice，扩容后再将数据追加进去。<br>例如，当向一个capacity为5，且length也为5的Slice再次追加1个元素时，就会发生扩容，如图所示：</p>
+<p>切片从数组array[5]开始，到数组array[7]结束（不含array[7]）,即切片长度为2，数组后面的内容都作为切片的预留内存，即capacity为5。</p>
+<p>数组和切片操作可能作用于同一块内存，这也是使用过程中需要注意的地方。</p>
+<h3 id="2-4-Slice扩容"><a href="#2-4-Slice扩容" class="headerlink" title="2.4 Slice扩容"></a>2.4 Slice扩容</h3><p>使用append向Slice追加元素时，如果Slice空间不足，将会触发Slice扩容，扩容实际上重新一配一块更大的内存，将原Slice数据拷贝进新Slice，然后返回新Slice，扩容后再将数据追加进去。</p>
+<p>例如，当向一个capacity为5，且length也为5的Slice再次追加1个元素时，就会发生扩容，如图所示：</p>
 <p><img src="http://image.huany.top/hexo/go/make_slice_03.jpg" alt></p>
 <p>扩容操作只关心容量，会把原Slice数据拷贝到新Slice，追加数据由append在扩容结束后完成。上图可见，扩容后新的Slice长度仍然是5，但容量由5提升到了10，原Slice的数据也都拷贝到了新Slice指向的数组中。</p>
 <p>扩容容量的选择遵循以下规则：</p>
