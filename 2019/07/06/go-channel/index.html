@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="go,">
 
 
 
@@ -81,16 +81,23 @@
 
 
 
-<meta name="description" content="一如当年">
-<meta property="og:type" content="website">
-<meta property="og:title" content="huany">
-<meta property="og:url" content="https://meichaofan.github.io/tags/DevOps/index.html">
+<meta name="description" content="1. 前言channel是Golang在语言层面提供的goroutine间通信方式，比Unix管道更易用也更轻便。channel主要用于进程内各goroutine间通信，如果需要跨进程通信，建议使用分布式系统方法来解决。 本章，从源码角度分析channel的实现机制，实际上这部分源码非常简单易读。 chan数据结构src/runtine/chan.go:hchan定义了channel的数据结构：">
+<meta name="keywords" content="go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go channel 低层源码剖析">
+<meta property="og:url" content="https://meichaofan.github.io/2019/07/06/go-channel/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="一如当年">
+<meta property="og:description" content="1. 前言channel是Golang在语言层面提供的goroutine间通信方式，比Unix管道更易用也更轻便。channel主要用于进程内各goroutine间通信，如果需要跨进程通信，建议使用分布式系统方法来解决。 本章，从源码角度分析channel的实现机制，实际上这部分源码非常简单易读。 chan数据结构src/runtine/chan.go:hchan定义了channel的数据结构：">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://image.huany.top/hexo/go/chan-01-circle_queue.png">
+<meta property="og:image" content="http://image.huany.top/hexo/go/chan-02-wait_queue.png">
+<meta property="og:image" content="http://image.huany.top/hexo/go/chan-03-send_data.png">
+<meta property="og:image" content="http://image.huany.top/hexo/go/chan-04-recieve_data.png">
+<meta property="og:updated_time" content="2019-07-05T16:01:30.816Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="huany">
-<meta name="twitter:description" content="一如当年">
+<meta name="twitter:title" content="go channel 低层源码剖析">
+<meta name="twitter:description" content="1. 前言channel是Golang在语言层面提供的goroutine间通信方式，比Unix管道更易用也更轻便。channel主要用于进程内各goroutine间通信，如果需要跨进程通信，建议使用分布式系统方法来解决。 本章，从源码角度分析channel的实现机制，实际上这部分源码非常简单易读。 chan数据结构src/runtine/chan.go:hchan定义了channel的数据结构：">
+<meta name="twitter:image" content="http://image.huany.top/hexo/go/chan-01-circle_queue.png">
 
 
 
@@ -120,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/tags/DevOps/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/07/06/go-channel/">
 
 
 
 
 
-  <title>标签: DevOps | huany</title>
+  <title>go channel 低层源码剖析 | huany</title>
   
 
 
@@ -145,7 +152,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -291,52 +298,238 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>DevOps<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/07/06/go-channel/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="meichaofan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/huany.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="huany">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/04/20/about-use-docker/" itemprop="url">
-              
-                <span itemprop="name">Docker运维相关</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">go channel 低层源码剖析</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-20T21:34:52+08:00" content="2019-04-20">
-          04-20
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T00:00:48+08:00">
+                2019-07-06
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/06/go-channel/" class="leancloud_visitors" data-flag-title="go channel 低层源码剖析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>channel是Golang在语言层面提供的goroutine间通信方式，比Unix管道更易用也更轻便。channel主要用于进程内各goroutine间通信，如果需要跨进程通信，建议使用分布式系统方法来解决。</p>
+<p>本章，从源码角度分析channel的实现机制，实际上这部分源码非常简单易读。</p>
+<h3 id="chan数据结构"><a href="#chan数据结构" class="headerlink" title="chan数据结构"></a>chan数据结构</h3><p><code>src/runtine/chan.go:hchan</code>定义了channel的数据结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">type hchan struct &#123;</span><br><span class="line">    qcount   uint           // 当前队列中剩余元素个数</span><br><span class="line">    dataqsiz uint           // 环形队列长度，即可以存放的元素个数</span><br><span class="line">    buf      unsafe.Pointer // 环形队列指针</span><br><span class="line">    elemsize uint16         // 每个元素的大小</span><br><span class="line">    closed   uint32         // 标识关闭状态</span><br><span class="line">    elemtype *_type // 元素类型</span><br><span class="line">    sendx    uint   // 队列下标，指示元素写入时存放到队列中的位置</span><br><span class="line">    recvx    uint   // 队列下标，指示元素从队列的该位置读出</span><br><span class="line">    recvq    waitq  // 等待读消息的goroutine队列</span><br><span class="line">    sendq    waitq  // 等待写消息的goroutine队列</span><br><span class="line">    lock mutex      // 互斥锁，chan不允许并发读写</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从数据结构可以看出channel由队列、类型信息、goroutine等待队列组成，下面分别说明其原理。</p>
+<h5 id="2-1-环形队列"><a href="#2-1-环形队列" class="headerlink" title="2.1 环形队列"></a>2.1 环形队列</h5><p>chan内部实现了一个环形队列作为其缓冲区，队列的长度是创建chan时指定的。</p>
+<p>下图展示了一个可缓存6个元素的channel示意图：</p>
+<p><img src="http://image.huany.top/hexo/go/chan-01-circle_queue.png" alt></p>
+<ul>
+<li>datasiz 指示了队列长度为6，即可缓存6个元素；</li>
+<li>buf指向队列的内存，队列中还剩余两个元素；</li>
+<li>qcount表示队列中还有两个元素；</li>
+<li>sendx指示后续写入的数据存储的位置，取值[0,6)</li>
+<li>recvx指示从该位置读取数据，取值[0,6)</li>
+</ul>
+<h4 id="2-2-等待队列"><a href="#2-2-等待队列" class="headerlink" title="2.2 等待队列"></a>2.2 等待队列</h4><p>从channel读数据，如果channel缓冲区为空或者没有缓冲区，当前goroutine会被阻塞。向channel写数据，如果channel缓冲区已满或者没有缓冲区，当前的goroutine会被阻塞。</p>
+<p>被阻塞的goroutine会被挂在channel的等待队列中；</p>
+<ul>
+<li>因读阻塞的goroutine会被向channel写入数据的goroutine唤醒；</li>
+<li>因写阻塞的goroutine会被从channel读数据的goroutine唤醒；</li>
+</ul>
+<p>下图展示了一个没有缓冲区的channel，有几个gouroutine阻塞等待读数据：</p>
+<p><img src="http://image.huany.top/hexo/go/chan-02-wait_queue.png" alt></p>
+<p><strong>注意</strong>，一般情况下recvq和sendq至少有一个为空。只有一个例外，那就是同一个goroutine使用select语句向channel一边写数据，一边读数据。</p>
+<h4 id="2-3-类型信息"><a href="#2-3-类型信息" class="headerlink" title="2.3 类型信息"></a>2.3 类型信息</h4><p>一个channel只能传递一种类型的值，类型信息存储在hchan数据结构中。</p>
+<ul>
+<li>elemtype代表类型，用于数据传递过程中的赋值；</li>
+<li>elemsize代表类型大小，用于在buf中定位元素位置。</li>
+</ul>
+<h4 id="2-4-锁"><a href="#2-4-锁" class="headerlink" title="2.4 锁"></a>2.4 锁</h4><p>一个channel同时仅允许被一个goroutine读写</p>
+<h3 id="3-channel读写"><a href="#3-channel读写" class="headerlink" title="3.channel读写"></a>3.channel读写</h3><h4 id="3-1-创建channel"><a href="#3-1-创建channel" class="headerlink" title="3.1 创建channel"></a>3.1 创建channel</h4><p>创建channel的过程实际上是初始化hchan结构，其中类型信息和缓冲区长度由<code>make</code>语句传入，buf的大小则与元素大小和缓冲区长度共同决定。</p>
+<p>创建channel的伪代码如下所示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func makechan(t *chantype, size int) *hchan&#123;</span><br><span class="line">    var c *hchan</span><br><span class="line">    c = new(hchan)</span><br><span class="line">    c.buf = malloc(元素类型*size)</span><br><span class="line">    c.elemsize = 元素类型大小</span><br><span class="line">    c.elemtype = 元素类型</span><br><span class="line">    c.dataqsiz size</span><br><span class="line">    </span><br><span class="line">    return c</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-向channel写数据"><a href="#3-2-向channel写数据" class="headerlink" title="3.2 向channel写数据"></a>3.2 向channel写数据</h4><p>向一个channel中写数据简单过程如下：</p>
+<ul>
+<li>1.如果等待接收队列recvq不为空，说明缓冲区中没有数据或者没有缓冲区，此时直接从recvq取出G，并把数据写入，最后把该G唤醒，结束发送过程</li>
+<li>2.如果缓冲区有空余位置，将数据写入缓冲区，结束发送过程；</li>
+<li>3.如果缓冲区没有空余位置，将待发数据写入G，将当前G加入sendq，进入睡眠，等待被读goroutine唤醒。.</li>
+</ul>
+<p>简单流程图如下：</p>
+<p><img src="http://image.huany.top/hexo/go/chan-03-send_data.png" alt></p>
+<h4 id="3-3-从channel读数据"><a href="#3-3-从channel读数据" class="headerlink" title="3.3 从channel读数据"></a>3.3 从channel读数据</h4><p>从一个channel读数据简单过程如下：</p>
+<ul>
+<li>1.如果等待发送队列sendq不为空，且没有缓冲区，直接从sendq中取出G，把G中数据读出，最后把G唤醒，结束读取过程；</li>
+<li>2.如果等待发送队列sendq不为空，缓冲区已满，从缓冲区首部读出数据，把G中数据写入缓冲区尾部，把G唤醒，结束读取过程；</li>
+<li>3.如果缓冲区有数据，则从缓冲区取出数据，结束读取过程；</li>
+<li>4.将当前的goroutine加入recvq，进入睡眠，等待被写goroutine唤醒。</li>
+</ul>
+<p><img src="http://image.huany.top/hexo/go/chan-04-recieve_data.png" alt></p>
+<h4 id="3-4-关闭channel"><a href="#3-4-关闭channel" class="headerlink" title="3.4 关闭channel"></a>3.4 关闭channel</h4><p>关闭channel时会把revq中的G全部唤醒，本该写入G的数据位置为nil。把sendq中的G全部唤醒，但是这些G会panic。</p>
+<p>除此之外，panic出现的常见场景还有：</p>
+<ul>
+<li>1.关闭值为nil的channel</li>
+<li>2.关闭已经被关闭的channel</li>
+<li>3.向已经关闭的channel写数据</li>
+</ul>
+<h3 id="4-常见用法"><a href="#4-常见用法" class="headerlink" title="4.常见用法"></a>4.常见用法</h3><h4 id="4-1-单向channel"><a href="#4-1-单向channel" class="headerlink" title="4.1 单向channel"></a>4.1 单向channel</h4><p>顾名思义，单向channel指只能用于发送或接收数据，实际上也没有单向channel。</p>
+<p>我们知道channel可以通过参数传递，所谓单向channel只是对channel的一种使用限制，这跟C语言使用const修饰函数参数为只读是一个道理。</p>
+<ul>
+<li>func readChan(chanName &lt;-chan int)：通过形参限定函数内部只能从channel中读取数据</li>
+<li>func writeChan(chanName chan&lt;- int)：通过形参限定函数内部只能往channel中写数据</li>
+</ul>
+<p>一个简单的示例程序如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">func readChan(chanName &lt;-chan int) &#123;</span><br><span class="line">    &lt;- chanName</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func writeChan(chanName chan&lt;- int) &#123;</span><br><span class="line">    chanName &lt;- 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    var mychan = make(chan int, 10)</span><br><span class="line"></span><br><span class="line">    writeChan(mychan)</span><br><span class="line">    readChan(mychan)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>mychan是个正常的channel，而readChan()参数限制了传入的channel只能用来读，writeChan()参数限制了传入的channel只能用来读。</p>
+<h4 id="4-2-select"><a href="#4-2-select" class="headerlink" title="4.2 select"></a>4.2 select</h4><p>使用select可以监控多个channel，比如监控多个channel，当其中某一个channel有数据的话，就从中读出数据。</p>
+<p>一个简单的示例程序如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;time&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func addNumberToChan(chanName chan int) &#123;</span><br><span class="line">    for &#123;</span><br><span class="line">        chanName &lt;- 1</span><br><span class="line">        time.Sleep(1 * time.Second)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    var chan1 = make(chan int, 10)</span><br><span class="line">    var chan2 = make(chan int, 10)</span><br><span class="line"></span><br><span class="line">    go addNumberToChan(chan1)</span><br><span class="line">    go addNumberToChan(chan2)</span><br><span class="line"></span><br><span class="line">    for &#123;</span><br><span class="line">        select &#123;</span><br><span class="line">        case e := &lt;- chan1 :</span><br><span class="line">            fmt.Printf(&quot;Get element from chan1: %d\n&quot;, e)</span><br><span class="line">        case e := &lt;- chan2 :</span><br><span class="line">            fmt.Printf(&quot;Get element from chan2: %d\n&quot;, e)</span><br><span class="line">        default:</span><br><span class="line">            fmt.Printf(&quot;No element in chan1 and chan2.\n&quot;)</span><br><span class="line">            time.Sleep(1 * time.Second)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序中创建两个channel： chan1和chan2。函数addNumberToChan()函数会向两个channel中周期性写入数据。通过select可以监控两个channel，任意一个可读时就从其中读出数据。</p>
+<p>程序输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">D:\SourceCode\GoExpert\src&gt;go run main.go</span><br><span class="line">Get element from chan1: 1</span><br><span class="line">Get element from chan2: 1</span><br><span class="line">No element in chan1 and chan2.</span><br><span class="line">Get element from chan2: 1</span><br><span class="line">Get element from chan1: 1</span><br><span class="line">No element in chan1 and chan2.</span><br><span class="line">Get element from chan2: 1</span><br><span class="line">Get element from chan1: 1</span><br><span class="line">No element in chan1 and chan2.</span><br></pre></td></tr></table></figure>
+<p>从输出可见，从channel中读出数据的顺序是随机的，事实上select语句的多个case执行顺序是随机的。</p>
+<p>通过这个示例想说的是：select的case语句读channel不会阻塞，尽管channel中没有数据。这是由于case语句编译后调用读channel时会明确传入不阻塞的参数，此时读不到数据时不会将当前goroutine加入到等待队列，而是直接返回。</p>
+<h4 id="4-3-range"><a href="#4-3-range" class="headerlink" title="4.3 range"></a>4.3 range</h4><p>通过range可以持续从channel中读出数据，好像在遍历一个数组一样，当channel中没有数据时会阻塞当前goroutine，与读channel时阻塞处理机制一样。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func chanRange(chanName chan int) &#123;</span><br><span class="line">    for e := range chanName &#123;</span><br><span class="line">        fmt.Printf(&quot;Get element from chan: %d\n&quot;, e)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：如果向此channel写数据的goroutine退出时，系统检测到这种情况后会panic，否则range将会永久阻塞。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/go/" rel="tag"># go</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/01/go-map/" rel="next" title="go map原理剖析">
+                <i class="fa fa-chevron-left"></i> go map原理剖析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -344,6 +537,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -364,8 +561,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -435,6 +641,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chan数据结构"><span class="nav-number">2.</span> <span class="nav-text">chan数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-环形队列"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 环形队列</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-等待队列"><span class="nav-number">2.1.</span> <span class="nav-text">2.2 等待队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-类型信息"><span class="nav-number">2.2.</span> <span class="nav-text">2.3 类型信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-锁"><span class="nav-number">2.3.</span> <span class="nav-text">2.4 锁</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#3-channel读写"><span class="nav-number">3.</span> <span class="nav-text">3.channel读写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-创建channel"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 创建channel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-向channel写数据"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 向channel写数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-从channel读数据"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 从channel读数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-关闭channel"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 关闭channel</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-常见用法"><span class="nav-number">4.</span> <span class="nav-text">4.常见用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-单向channel"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 单向channel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-select"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-range"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 range</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -588,6 +810,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
