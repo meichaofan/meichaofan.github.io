@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-07-05T16:01:30.816Z</updated>
+  <updated>2019-07-05T16:30:10.054Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>go iota</title>
+    <link href="https://meichaofan.github.io/2019/07/06/go-iota/"/>
+    <id>https://meichaofan.github.io/2019/07/06/go-iota/</id>
+    <published>2019-07-05T16:29:29.000Z</published>
+    <updated>2019-07-05T16:30:10.054Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>我们知道iota常用于const表达式中，我们还知道其值是从零开始的，const声明块中每增加一行iota值自增1。</p><p>使用iota可以简化常量定义，但其规则必须要牢牢掌握，否则在我们阅读别人源码时可能会造成误解或障碍。本节我们尝试全面的总结其使用场景，另外花一小部分时间看一下其实现原理，从原理上把握可以更深刻的记忆这些规则。</p><h3 id="2-热身"><a href="#2-热身" class="headerlink" title="2.热身"></a>2.热身</h3><h4 id="2-1-题目一"><a href="#2-1-题目一" class="headerlink" title="2.1 题目一"></a>2.1 题目一</h4><p>下面常量定义源于GO源码，下面每个常量的值是多少？</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">type Priority int</span><br><span class="line">const (</span><br><span class="line">    LOG_EMERG Priority = iota</span><br><span class="line">    LOG_ALERT</span><br><span class="line">    LOG_CRIT</span><br><span class="line">    LOG_ERR</span><br><span class="line">    LOG_WARNING</span><br><span class="line">    LOG_NOTICE</span><br><span class="line">    LOG_INFO</span><br><span class="line">    LOG_DEBUG</span><br><span class="line">)</span><br></pre></td></tr></table></figure><p>题目解释：</p><p>上面代码源于日志模块，定义了一组代表日志级别的常量，常量类型为Priority，实际为int类型。</p><p>参考答案：</p><p>iota初始值为0，也即LOG_EMERG值为0，下面每个常量递增1。</p><h4 id="2-2-题目二"><a href="#2-2-题目二" class="headerlink" title="2.2 题目二"></a>2.2 题目二</h4><p>下面代码取自Go源码，请问每个常量值是多少？</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">    mutexLocked = 1 &lt;&lt; iota // mutex is locked</span><br><span class="line">    mutexWoken</span><br><span class="line">    mutexStarving</span><br><span class="line">    mutexWaiterShift = iota</span><br><span class="line">    starvationThresholdNs = 1e6</span><br><span class="line">)</span><br></pre></td></tr></table></figure><p>题目解释：</p><p>以上代码取自Go互斥锁Mutex的实现，用于指示各种状态位的地址偏移。</p><p>参考答案：</p><p>mutexLocked == 1；mutexWoken == 2；mutexStarving == 4；mutexWaiterShift == 3；starvationThresholdNs == 1000000。</p><h4 id="2-3-题目三"><a href="#2-3-题目三" class="headerlink" title="2.3 题目三"></a>2.3 题目三</h4><p>请问每个常量值是多少？</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">    bit0, mask0 = 1 &lt;&lt; iota, 1&lt;&lt;iota - 1</span><br><span class="line">    bit1, mask1</span><br><span class="line">    _, _</span><br><span class="line">    bit3, mask3</span><br><span class="line">)</span><br></pre></td></tr></table></figure><p>题目解释：</p><p>以上代码取自Go官方文档。</p><p>参考答案：</p><p>bit0 == 1， mask0 == 0， bit1 == 2， mask1 == 1， bit3 == 8， mask3 == 7</p><h3 id="3-规则"><a href="#3-规则" class="headerlink" title="3.规则"></a>3.规则</h3><p>很多书上或博客描述的规则是这样的： </p><ol><li>iota在const关键字出现时被重置为0 </li><li>const声明块中每新增一行iota值自增1</li></ol><p>我曾经也这么理解，看过编译器代码后发现，其实规则只有一条：</p><ul><li><strong>iota代表了const声明块的行索引（下标从0开始）</strong></li></ul><p>这样理解更贴近编译器实现逻辑，也更准确。除此之外，const声明还有个特点，即第一个常量必须指定一个表达式，后续的常量如果没有表达式，则继承上面的表达式。</p><p>下面再来根据这个规则看下这段代码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const (</span><br><span class="line">    bit0, mask0 = 1 &lt;&lt; iota, 1&lt;&lt;iota - 1   //const声明第0行，即iota==0</span><br><span class="line">    bit1, mask1                            //const声明第1行，即iota==1, 表达式继承上面的语句</span><br><span class="line">    _, _                                   //const声明第2行，即iota==2</span><br><span class="line">    bit3, mask3                            //const声明第3行，即iota==3</span><br><span class="line">)</span><br></pre></td></tr></table></figure><ul><li>第0行的表达式展开即bit0, mask0 = 1 &lt;&lt; 0, 1&lt;&lt;0 - 1，所以bit0 == 1，mask0 == 0；</li><li>第1行没有指定表达式继承第一行，即bit1, mask1 = 1 &lt;&lt; 1, 1&lt;&lt;1 - 1，所以bit1 == 2，mask1 == 1；</li><li>第2行没有定义常量</li><li>第3行没有指定表达式继承第一行，即bit3, mask3 = 1 &lt;&lt; 3, 1&lt;&lt;3 - 1，所以bit0 == 8，mask0 == 7；</li></ul><h3 id="4-编译原理"><a href="#4-编译原理" class="headerlink" title="4.编译原理"></a>4.编译原理</h3><p>const块中每一行在GO中使用spec数据结构描述，spec声明如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// A ValueSpec node represents a constant or variable declaration</span><br><span class="line">// (ConstSpec or VarSpec production).</span><br><span class="line">//</span><br><span class="line">ValueSpec struct &#123;</span><br><span class="line">    Doc     *CommentGroup // associated documentation; or nil</span><br><span class="line">    Names   []*Ident      // value names (len(Names) &gt; 0)</span><br><span class="line">    Type    Expr          // value type; or nil</span><br><span class="line">    Values  []Expr        // initial values; or nil</span><br><span class="line">    Comment *CommentGroup // line comments; or nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这里我们只关注ValueSpec.Names， 这个切片中保存了一行中定义的常量，如果一行定义N个常量，那么ValueSpec.Names切片长度即为N。</p><p>const块实际上是spec类型的切片，用于表示const中的多行。</p><p>所以编译期间构造常量时的伪算法如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for iota, spec := range ValueSpecs &#123;</span><br><span class="line">    for i, name := range spec.Names &#123;</span><br><span class="line">        obj := NewConst(name, iota...) //此处将iota传入，用于构造常量</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>从上面可以更清晰的看出iota实际上是遍历const块的索引，每行中即便多次使用iota，其值也不会递增。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;1-前言&quot;&gt;&lt;a href=&quot;#1-前言&quot; class=&quot;headerlink&quot; title=&quot;1.前言&quot;&gt;&lt;/a&gt;1.前言&lt;/h3&gt;&lt;p&gt;我们知道iota常用于const表达式中，我们还知道其值是从零开始的，const声明块中每增加一行iota值自增1。&lt;/p&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="go" scheme="https://meichaofan.github.io/tags/go/"/>
+    
+  </entry>
   
   <entry>
     <title>go channel 低层源码剖析</title>
@@ -494,31 +517,6 @@
       <category term="go" scheme="https://meichaofan.github.io/tags/go/"/>
     
       <category term="cli" scheme="https://meichaofan.github.io/tags/cli/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>linix之间几种文件传输方式</title>
-    <link href="https://meichaofan.github.io/2019/04/22/tranfer-in-linux/"/>
-    <id>https://meichaofan.github.io/2019/04/22/tranfer-in-linux/</id>
-    <published>2019-04-22T10:43:23.000Z</published>
-    <updated>2019-04-22T11:26:03.134Z</updated>
-    
-    <content type="html"><![CDATA[<p>当我们需要在类UNIX主机间，互传文件，下面几个命令可以排上用场了</p><hr><ol><li><p>rsync</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz user@src_host:/path/to/file ./ --delete</span><br></pre></td></tr></table></figure></li><li><p>scp</p></li><li></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;当我们需要在类UNIX主机间，互传文件，下面几个命令可以排上用场了&lt;/p&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;rsync&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
-      
-    
-    </summary>
-    
     
   </entry>
   
