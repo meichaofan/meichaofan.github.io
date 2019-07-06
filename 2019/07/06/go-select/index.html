@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="go,">
 
 
 
@@ -81,16 +81,18 @@
 
 
 
-<meta name="description" content="一如当年">
-<meta property="og:type" content="website">
-<meta property="og:title" content="huany">
-<meta property="og:url" content="https://meichaofan.github.io/archives/2019/04/page/3/index.html">
+<meta name="description" content="1. 前言select是Golang在语言层面提供的多路IO复用的机制，其可以检测多个channel是否ready（即是否可读或可写），使用起来非常方便。 本章试图根据源码总结其实现原理，从而发现一些使用误区或解释一些不太常见的现象。 2. 热身环节2.1 题目1下面的程序输出是什么？ 1234567891011121314151617181920212223242526272829303132p">
+<meta name="keywords" content="go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go select">
+<meta property="og:url" content="https://meichaofan.github.io/2019/07/06/go-select/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="一如当年">
+<meta property="og:description" content="1. 前言select是Golang在语言层面提供的多路IO复用的机制，其可以检测多个channel是否ready（即是否可读或可写），使用起来非常方便。 本章试图根据源码总结其实现原理，从而发现一些使用误区或解释一些不太常见的现象。 2. 热身环节2.1 题目1下面的程序输出是什么？ 1234567891011121314151617181920212223242526272829303132p">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-06T06:36:50.783Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="huany">
-<meta name="twitter:description" content="一如当年">
+<meta name="twitter:title" content="go select">
+<meta name="twitter:description" content="1. 前言select是Golang在语言层面提供的多路IO复用的机制，其可以检测多个channel是否ready（即是否可读或可写），使用起来非常方便。 本章试图根据源码总结其实现原理，从而发现一些使用误区或解释一些不太常见的现象。 2. 热身环节2.1 题目1下面的程序输出是什么？ 1234567891011121314151617181920212223242526272829303132p">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/archives/2019/04/page/3/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/07/06/go-select/">
 
 
 
 
 
-  <title>归档 | huany</title>
+  <title>go select | huany</title>
   
 
 
@@ -145,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -291,215 +293,231 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 目前共计 44 篇日志。 继续努力。
-      </span>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/07/06/go-select/">
 
-      
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="meichaofan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/huany.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="huany">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">go select</h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T13:14:12+08:00">
+                2019-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2019/07/06/go-select/" class="leancloud_visitors" data-flag-title="go select">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/09/02-use-make/" itemprop="url">
-              
-                <span itemprop="name">使用make</span>
-              
-            </a>
-        
-      </h2>
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-09T02:12:59+08:00" content="2019-04-09">
-          04-09
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/09/01-dust-off-that-compiler/" itemprop="url">
-              
-                <span itemprop="name">启用编译器</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-09T01:39:05+08:00" content="2019-04-09">
-          04-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/09/learn-c-the-hard-way/" itemprop="url">
-              
-                <span itemprop="name">笨方法学C</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-09T00:55:42+08:00" content="2019-04-09">
-          04-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/03/Redis源码从哪里读起/" itemprop="url">
-              
-                <span itemprop="name">Redis源码从哪里读起?</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-03T23:52:12+08:00" content="2019-04-03">
-          04-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>select是Golang在语言层面提供的多路IO复用的机制，其可以检测多个channel是否ready（即是否可读或可写），使用起来非常方便。</p>
+<p>本章试图根据源码总结其实现原理，从而发现一些使用误区或解释一些不太常见的现象。</p>
+<h3 id="2-热身环节"><a href="#2-热身环节" class="headerlink" title="2. 热身环节"></a>2. 热身环节</h3><h4 id="2-1-题目1"><a href="#2-1-题目1" class="headerlink" title="2.1 题目1"></a>2.1 题目1</h4><p>下面的程序输出是什么？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;time&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    chan1 := make(chan int)</span><br><span class="line">    chan2 := make(chan int)</span><br><span class="line"></span><br><span class="line">    go func() &#123;</span><br><span class="line">        chan1 &lt;- 1</span><br><span class="line">        time.Sleep(5 * time.Second)</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    go func() &#123;</span><br><span class="line">        chan2 &lt;- 1</span><br><span class="line">        time.Sleep(5 * time.Second)</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    select &#123;</span><br><span class="line">    case &lt;-chan1:</span><br><span class="line">        fmt.Println(&quot;chan1 ready.&quot;)</span><br><span class="line">    case &lt;-chan2:</span><br><span class="line">        fmt.Println(&quot;chan2 ready.&quot;)</span><br><span class="line">    default:</span><br><span class="line">        fmt.Println(&quot;default&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fmt.Println(&quot;main exit.&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序中声明两个channel，分别为chan1和chan2，依次启动两个协程，分别向两个channel中写入一个数据就进入睡眠。select语句两个case分别检测chan1和chan2是否可读，如果都不可读则执行default语句。</p>
+<p>参考答案：</p>
+<p>select中各个case执行顺序是随机的，如果某个case中的channel已经ready，则执行相应的语句并退出select流程，如果所有case中的channel都未ready，则执行default中语句然后退出select流程。另外，由于启动的协程和select语句并不能保证执行顺序，所以也有可能select执行时协程还未向channel中写入数据，所以select直接执行default语句并退出，所以，以下三种输出都有可能：</p>
+<p>可能的输出一：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chan1 ready.</span><br><span class="line">main exit.</span><br></pre></td></tr></table></figure>
+<p>可能的输出二：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chan2 ready</span><br><span class="line">main exit.</span><br></pre></td></tr></table></figure>
+<p>可能的输出三：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">default</span><br><span class="line">main exit.</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-题目2"><a href="#2-2-题目2" class="headerlink" title="2.2 题目2"></a>2.2 题目2</h4><p>下面的程序执行到select时会发生什么？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;time&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    chan1 := make(chan int)</span><br><span class="line">    chan2 := make(chan int)</span><br><span class="line"></span><br><span class="line">    writeFlag := false</span><br><span class="line">    go func() &#123;</span><br><span class="line">        for &#123;</span><br><span class="line">            if writeFlag &#123;</span><br><span class="line">                chan1 &lt;- 1</span><br><span class="line">            &#125;</span><br><span class="line">            time.Sleep(time.Second)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    go func() &#123;</span><br><span class="line">        for &#123;</span><br><span class="line">            if writeFlag &#123;</span><br><span class="line">                chan2 &lt;- 1</span><br><span class="line">            &#125;</span><br><span class="line">            time.Sleep(time.Second)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    select &#123;</span><br><span class="line">    case &lt;-chan1:</span><br><span class="line">        fmt.Println(&quot;chan1 ready.&quot;)</span><br><span class="line">    case &lt;-chan2:</span><br><span class="line">        fmt.Println(&quot;chan2 ready.&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fmt.Println(&quot;main exit.&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序中声明两个channel，分别为chan1和chan2，依次启动两个协程，协程会判断一个bool类型的变量，writeFlag来决定是否要向channel中写入数据，由于writeFlag永远是false，所以实际上协程什么也没做。select语句两个case分别检测chan1和chan2是否可读，这个select语句不包含default语句。</p>
+<p>参考答案：</p>
+<p>select会按照随机的顺序检测各case语句中cahnnel是否ready，如果某个case中的channel已经ready则执行相应的case语句然后退出select流程，如果所有的channel都未ready且没有default的话，则会阻塞等待各个channel。所以上述程序会一直阻塞。</p>
+<h4 id="2-3-题目3"><a href="#2-3-题目3" class="headerlink" title="2.3 题目3"></a>2.3 题目3</h4><p>下面程序有什么问题？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    chan1 := make(chan int)</span><br><span class="line">    chan2 := make(chan int)</span><br><span class="line"></span><br><span class="line">    go func() &#123;</span><br><span class="line">        close(chan1)</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    go func() &#123;</span><br><span class="line">        close(chan2)</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    select &#123;</span><br><span class="line">    case &lt;-chan1:</span><br><span class="line">        fmt.Println(&quot;chan1 ready.&quot;)</span><br><span class="line">    case &lt;-chan2:</span><br><span class="line">        fmt.Println(&quot;chan2 ready.&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fmt.Println(&quot;main exit.&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序中声明两个channel，分别为chan1和chan2，依次启动两个协程，协程分别关闭两个channel。select语句两个case分别检测chan1和chan2是否可读，这个select语句不包含default语句。</p>
+<p>参考答案：</p>
+<p>select会按照随机的顺序检测各case语句中channel是否ready，考虑到已关闭的channel也是可读的，所以上述程序中select不会阻塞，具体执行哪个case语句具是随机的。</p>
+<h4 id="2-4-题目4"><a href="#2-4-题目4" class="headerlink" title="2.4 题目4"></a>2.4 题目4</h4><p>下面程序会发生什么？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    select &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面程序中只有一个空的select语句。</p>
+<p>参考答案：</p>
+<p>对于空的select语句，程序会阻塞，准确的说是当前协程会被阻塞，同时Golang自带死锁检测机制，当发现当前协程再也没有机会被唤醒时，则会panic。所以上述程序会panic。</p>
+<h3 id="3-实现原理"><a href="#3-实现原理" class="headerlink" title="3.实现原理"></a>3.实现原理</h3><p>Golang实现了select时，定义了一个数据结构表示每个case语句（含default，default实际上是一种特殊的case），select执行过程类比成一个函数，函数输入case数组，输出选中的case，然后程序流转到选中的case块。</p>
+<h4 id="3-1-case数据结构"><a href="#3-1-case数据结构" class="headerlink" title="3.1 case数据结构"></a>3.1 case数据结构</h4><p>源码包<code>src/runtime/select.go:scase</code>定义了表示case语句的数据结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type scase struct &#123;</span><br><span class="line">    c       *hchan      // chan</span><br><span class="line">    kind    uint16</span><br><span class="line">    elem    unsafe.Pointer  // data element</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>scase.c 为当前case语句所操作的channel指针，这也说明了一个case语句只能操作一个channel。scase.kind表示该case的类型，分为读channel、写channel和default，三种类型分别由常量定义：</p>
+<ul>
+<li>caseRecv：case语句中尝试读取scase.c中的数据；</li>
+<li>caseSend：case语句中尝试向scase.c中写入数据</li>
+<li>caseDefault：default语句</li>
+</ul>
+<p>scase.elem 表示缓冲区地址，根据scase.kind的不同，有不同用途：</p>
+<ul>
+<li>scase.kind == caseRecv：scase.elem表示读出channel的数据存放地址；</li>
+<li>scase.kind == caseSend：scase.elem表示将要写入channel的数据存放地址；</li>
+</ul>
+<h4 id="3-2-select实现逻辑"><a href="#3-2-select实现逻辑" class="headerlink" title="3.2 select实现逻辑"></a>3.2 select实现逻辑</h4><p>源码包<code>src/runtime/select.go:selectgo()</code>定义了select选择case的函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func selectgo(cas0 *scase,order0 *uint16,ncases int)(int,bool)</span><br></pre></td></tr></table></figure>
+<p>函数参数：</p>
+<ul>
+<li>cas为scase数组的首地址，selectgo()就是从这些scase中找出一个返回。</li>
+<li>order0为一个两倍cas0数组长度的buffer，保存scase随机序列pollorder和scase中channel地址序列lockorder<ul>
+<li>pollorder：每次selectgo执行都会把scase序列打乱，以达到随机检测case的目的。</li>
+<li>lockorder：所有case语句中channel序列，以达到去重防止对channel加锁时重复加锁的目的</li>
+</ul>
+</li>
+<li>ncase表示scase数据的长度</li>
+</ul>
+<p>函数返回值：</p>
+<ul>
+<li>1.int：选中case的编号，这个case编号和代码一致</li>
+<li>2.bool：是否成功从channel中读取了数据，如果选中的case是从channel中读数据，则该返回值表示是否读取成功。</li>
+</ul>
+<p>selectgo实现的伪代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func selectgo(cas0 *scase,order *uint16,ncase int) (int,bool)&#123;</span><br><span class="line">    //1.锁定scase语句中所有的channel</span><br><span class="line">    //2.按照随机顺序检测scase中的channel是否ready</span><br><span class="line">    //  2.1 如果case可读，则读取channel中数据，解锁所有的channel,然后返回(case index,true)</span><br><span class="line">    //  2.2 如果case可写，则将数据写入channel，解锁所有的channel，然后返回(case index,false)</span><br><span class="line">    //  2.3 所有case都未ready,则解锁所有的channel，然后返回(default index,false)</span><br><span class="line">    //3.所有case都未ready，且没有default语句</span><br><span class="line">    //  3.1将当前协程加入到所有channel的等待队列</span><br><span class="line">    //  3.2当前协程转入阻塞，等待被唤醒</span><br><span class="line">    //4.唤醒后返回channel对应case index</span><br><span class="line">    //  4.1 如果是读操作，解锁所有的channel，然后返回(case index,true)</span><br><span class="line">    //  4.2 如果是写操作，解锁所有的channel，然后返回(case index,false)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>特别说明：</p>
+<p>对于读channel的case来说，如<code>case elem,ok := &lt;- chan1：</code>，如果channel有可能被其它协程关闭的情况下，一定要检测是否读取成功，因为close的channel也有可能返回，此时ok==false。</p>
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h3><ul>
+<li>select语句中除default外，每个case操作一个channel，要么读要么写</li>
+<li>select语句中除default外，各case执行顺序是随机的</li>
+<li>select语句中如果没有default语句，则会阻塞等待任一case</li>
+<li>select语句中读操作要判断是否成功读取，关闭的channel也可以读取。</li>
+</ul>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/02/CSRF攻击与防御/" itemprop="url">
-              
-                <span itemprop="name">CSRF攻击与防御</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-02T00:15:59+08:00" content="2019-04-02">
-          04-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/go/" rel="tag"># go</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/06/go-defer/" rel="next" title="go defer">
+                <i class="fa fa-chevron-left"></i> go defer
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2019/04/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2019/04/">1</a><a class="page-number" href="/archives/2019/04/page/2/">2</a><span class="page-number current">3</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -507,6 +525,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -527,8 +549,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -598,6 +629,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-热身环节"><span class="nav-number">2.</span> <span class="nav-text">2. 热身环节</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-题目1"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 题目1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-题目2"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 题目2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-题目3"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 题目3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-题目4"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 题目4</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-实现原理"><span class="nav-number">3.</span> <span class="nav-text">3.实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-case数据结构"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 case数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-select实现逻辑"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 select实现逻辑</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-总结"><span class="nav-number">4.</span> <span class="nav-text">4.总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -751,6 +798,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
