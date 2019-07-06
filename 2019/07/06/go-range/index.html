@@ -81,21 +81,18 @@
 
 
 
-<meta name="description" content="string标准概念Go标准库builtin给出了所有内置类型的定义。源码位于src/builtin/builtin.go，其中关于string的描述如下： 1234// string is the set of all strings of 8-bit bytes, conventionally but not// necessarily representing UTF-8-encoded t">
+<meta name="description" content="1.前言range是Golang提供的一种迭代遍历手段，可操作的类型有数组、切片、Map和channel等，实际使用频率非常高。 探索range的实现机制是很有意思的事情，这可能会改变你使用range的习惯。 2.热身2.1 题目一：切片遍历下面函数通过遍历切片，打印切片的下标和元素值，请问性能上有没有可优化的空间 12345func RangeSlice(slice []int)&amp;#123;">
 <meta name="keywords" content="go">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go string低层原理">
-<meta property="og:url" content="https://meichaofan.github.io/2019/06/30/go-string/index.html">
+<meta property="og:title" content="go range">
+<meta property="og:url" content="https://meichaofan.github.io/2019/07/06/go-range/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="string标准概念Go标准库builtin给出了所有内置类型的定义。源码位于src/builtin/builtin.go，其中关于string的描述如下： 1234// string is the set of all strings of 8-bit bytes, conventionally but not// necessarily representing UTF-8-encoded t">
+<meta property="og:description" content="1.前言range是Golang提供的一种迭代遍历手段，可操作的类型有数组、切片、Map和channel等，实际使用频率非常高。 探索range的实现机制是很有意思的事情，这可能会改变你使用range的习惯。 2.热身2.1 题目一：切片遍历下面函数通过遍历切片，打印切片的下标和元素值，请问性能上有没有可优化的空间 12345func RangeSlice(slice []int)&amp;#123;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://image.huany.top/hexo/go/string-01-slice2string.png">
-<meta property="og:image" content="http://image.huany.top/hexo/go/string-02-string2slice.png">
-<meta property="og:updated_time" content="2019-06-30T15:09:45.487Z">
+<meta property="og:updated_time" content="2019-07-06T07:23:00.840Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go string低层原理">
-<meta name="twitter:description" content="string标准概念Go标准库builtin给出了所有内置类型的定义。源码位于src/builtin/builtin.go，其中关于string的描述如下： 1234// string is the set of all strings of 8-bit bytes, conventionally but not// necessarily representing UTF-8-encoded t">
-<meta name="twitter:image" content="http://image.huany.top/hexo/go/string-01-slice2string.png">
+<meta name="twitter:title" content="go range">
+<meta name="twitter:description" content="1.前言range是Golang提供的一种迭代遍历手段，可操作的类型有数组、切片、Map和channel等，实际使用频率非常高。 探索range的实现机制是很有意思的事情，这可能会改变你使用range的习惯。 2.热身2.1 题目一：切片遍历下面函数通过遍历切片，打印切片的下标和元素值，请问性能上有没有可优化的空间 12345func RangeSlice(slice []int)&amp;#123;">
 
 
 
@@ -125,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/2019/06/30/go-string/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/07/06/go-range/">
 
 
 
 
 
-  <title>Go string低层原理 | huany</title>
+  <title>go range | huany</title>
   
 
 
@@ -310,7 +307,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/06/30/go-string/">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/07/06/go-range/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="meichaofan">
@@ -327,7 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Go string低层原理</h1>
+          <h1 class="post-title" itemprop="name headline">go range</h1>
         
 
         <div class="post-meta">
@@ -339,8 +336,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T22:19:46+08:00">
-                2019-06-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T15:22:37+08:00">
+                2019-07-06
               </time>
             
 
@@ -357,7 +354,7 @@
 
           
           
-             <span id="/2019/06/30/go-string/" class="leancloud_visitors" data-flag-title="Go string低层原理">
+             <span id="/2019/07/06/go-range/" class="leancloud_visitors" data-flag-title="go range">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -393,77 +390,55 @@
       
 
       
-        <h3 id="string标准概念"><a href="#string标准概念" class="headerlink" title="string标准概念"></a>string标准概念</h3><p>Go标准库<code>builtin</code>给出了所有内置类型的定义。源码位于<code>src/builtin/builtin.go</code>，其中关于string的描述如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// string is the set of all strings of 8-bit bytes, conventionally but not</span><br><span class="line">// necessarily representing UTF-8-encoded text. A string may be empty, but</span><br><span class="line">// not nil. Values of string type are immutable.</span><br><span class="line">type string string</span><br></pre></td></tr></table></figure>
-<p>所以string是8比特字节的集合，通常但不一定是UTF-8编码的文本。</p>
-<p>另外还提到了两点，非常重要：</p>
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>range是Golang提供的一种迭代遍历手段，可操作的类型有数组、切片、Map和channel等，实际使用频率非常高。</p>
+<p>探索range的实现机制是很有意思的事情，这可能会改变你使用range的习惯。</p>
+<h3 id="2-热身"><a href="#2-热身" class="headerlink" title="2.热身"></a>2.热身</h3><h4 id="2-1-题目一：切片遍历"><a href="#2-1-题目一：切片遍历" class="headerlink" title="2.1 题目一：切片遍历"></a>2.1 题目一：切片遍历</h4><p>下面函数通过遍历切片，打印切片的下标和元素值，请问性能上有没有可优化的空间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func RangeSlice(slice []int)&#123;</span><br><span class="line">    for index,value := range slice &#123;</span><br><span class="line">        _,_ := index,value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序解释：</p>
+<p>函数中使用<code>for-range</code>对切片进行遍历，获取切片的下标和元素值，这里忽略函数的实际意义。</p>
+<p>参考答案：</p>
+<p>遍历过程中，每次迭代会对index和value进行赋值，如果数据量大或者value类型为string时，对value的赋值操作可能是多余的，可以在for-range中忽略value值，使用slice[index]引用value值。</p>
+<h4 id="2-2-题目二：Map遍历"><a href="#2-2-题目二：Map遍历" class="headerlink" title="2.2 题目二：Map遍历"></a>2.2 题目二：Map遍历</h4><p>下面函数通过遍历Map，打印Map的key和value，请问性能上有没有可以优化的空间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func RangeMap(myMap map[int]string) &#123;</span><br><span class="line">    for key, _ := range myMap &#123;</span><br><span class="line">        _, _ = key, myMap[key]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序解释：</p>
+<p>函数中使用for-range对map进行遍历，获取map的key值，并根据key值获取value值，这里忽略函数的实际意义。</p>
+<p>参考答案：</p>
+<p>函数中for-range语句中值获取key值，然后根据key值获取value值，虽然看似减少了一次赋值，但通过key值查找value值的性能可能高于赋值消耗。能否优化取决于map所存储数据结构特征、结合实际情况进行判断。</p>
+<h4 id="2-3-题目三：动态遍历"><a href="#2-3-题目三：动态遍历" class="headerlink" title="2.3 题目三：动态遍历"></a>2.3 题目三：动态遍历</h4><p>请问如下程序是否能正常结束？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    v := []int&#123;1, 2, 3&#125;</span><br><span class="line">    for i:= range v &#123;</span><br><span class="line">        v = append(v, i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序解释：</p>
+<p>main()函数中定义一个切片v，通过range遍历v，遍历过程中不断向v中添加新的元素。</p>
+<p>参考答案：</p>
+<p>能够正常结束。循环内改变切片的长度，不影响循环次数，循环次效在循环开始前就已经确定了。</p>
+<h3 id="3-实现原理"><a href="#3-实现原理" class="headerlink" title="3. 实现原理"></a>3. 实现原理</h3><p>对于for-range语句的实现，可以从编译器源码中找到答案。</p>
+<p>编译器源码 <code>gofrontend/go/statements.cc/For_range_statement::do_lower()</code> 方法中有如下注释。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// Arrange to do a loop appropriate for the type.  We will produce</span><br><span class="line">//   for INIT ; COND ; POST &#123;</span><br><span class="line">//           ITER_INIT</span><br><span class="line">//           INDEX = INDEX_TEMP</span><br><span class="line">//           VALUE = VALUE_TEMP // If there is a value</span><br><span class="line">//           original statements</span><br><span class="line">//   &#125;</span><br></pre></td></tr></table></figure>
+<p>可见range实际上是一个C风格的循环结构。range支持数组、数组指针、切片、map和channel类型，对于不同类型有些细节上的差异。</p>
+<h4 id="3-1-range-for-slice"><a href="#3-1-range-for-slice" class="headerlink" title="3.1 range for slice"></a>3.1 range for slice</h4><p>下面的注释解释了遍历slice的过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// The loop we generate:</span><br><span class="line">//   for_temp := range</span><br><span class="line">//   len_temp := len(for_temp)</span><br><span class="line">//   for index_temp = 0; index_temp &lt; len_temp; index_temp++ &#123;</span><br><span class="line">//           value_temp = for_temp[index_temp]</span><br><span class="line">//           index = index_temp</span><br><span class="line">//           value = value_temp</span><br><span class="line">//           original body</span><br><span class="line">//   &#125;</span><br></pre></td></tr></table></figure>
+<p>遍历slice前会先获以slice的长度len_temp作为循环次数，循环体中，每次循环会先获取元素值，如果for-range中接收index和value的话，则会对index和value进行一次赋值。</p>
+<p>由于循环开始前循环次数就已经确定了，所以循环过程中新添加的元素是没办法遍历到的。</p>
+<p>另外，数组与数组指针的遍历过程与slice基本一致，不再赘述。</p>
+<h4 id="3-2-range-for-map"><a href="#3-2-range-for-map" class="headerlink" title="3.2 range for map"></a>3.2 range for map</h4><p>下面的注释解释了遍历map的过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// The loop we generate:</span><br><span class="line">//   var hiter map_iteration_struct</span><br><span class="line">//   for mapiterinit(type, range, &amp;hiter); hiter.key != nil; mapiternext(&amp;hiter) &#123;</span><br><span class="line">//           index_temp = *hiter.key</span><br><span class="line">//           value_temp = *hiter.val</span><br><span class="line">//           index = index_temp</span><br><span class="line">//           value = value_temp</span><br><span class="line">//           original body</span><br><span class="line">//   &#125;</span><br></pre></td></tr></table></figure>
+<p>遍历map时没有指定循环次数，循环体与遍历slice类似。由于map底层实现与slice不同，map底层使用hash表实现，插入数据位置是随机的，所以遍历过程中新插入的数据不能保证遍历到。</p>
+<h4 id="3-3-range-for-channel"><a href="#3-3-range-for-channel" class="headerlink" title="3.3 range for channel"></a>3.3 range for channel</h4><p>遍历channel是最特殊的，这是由channel的实现机制决定的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// The loop we generate:</span><br><span class="line">//   for &#123;</span><br><span class="line">//           index_temp, ok_temp = &lt;-range</span><br><span class="line">//           if !ok_temp &#123;</span><br><span class="line">//                   break</span><br><span class="line">//           &#125;</span><br><span class="line">//           index = index_temp</span><br><span class="line">//           original body</span><br><span class="line">//   &#125;</span><br></pre></td></tr></table></figure>
+<p>channel遍历是依次从channel中读取数据,读取前是不知道里面有多少个元素的。如果channel中没有元素，则会阻塞等待，如果channel已被关闭，则会解除阻塞并退出循环。</p>
+<p><strong>注</strong></p>
 <ul>
-<li>string可以为空（长度为0），但不会是nil；</li>
-<li>string对象是不可修改的。</li>
+<li>上述注释中index_temp实际上描述是有误的，应该为value_temp，因为index对于channel是没有意义的。</li>
+<li>使用for-range遍历channel时只能获取一个返回值。</li>
 </ul>
-<h3 id="string-数据结构"><a href="#string-数据结构" class="headerlink" title="string 数据结构"></a>string 数据结构</h3><p>源码包<code>src/runtime/string.go:stringStruct</code>定义了string的数据结构：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">type stringStruct struct &#123;</span><br><span class="line">    str unsafe.Pointer</span><br><span class="line">    len int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其数据结构很简单：</p>
-<ul>
-<li>stringStruct.str: 字符串首字母地址；</li>
-<li>stringStruct.len：字符串的长度；</li>
+<h3 id="4-编程Tips"><a href="#4-编程Tips" class="headerlink" title="4.编程Tips"></a>4.编程Tips</h3><ul>
+<li>遍历过程中可以视情况放弃接收index或value，可以在一定程度上提升性能</li>
+<li>遍历channel时，避免channel没有数据，可能会阻塞</li>
+<li>尽量避免遍历过程中修改原数据</li>
 </ul>
-<p>string数据结构跟切片有些类似，只不过切片还有一个表示容量的成员，事实上string和切片，准确的说是byte切片经常发生转换。这个后面再详细介绍。</p>
-<h3 id="string操作"><a href="#string操作" class="headerlink" title="string操作"></a>string操作</h3><h4 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h4><p>如下代码所示，可以声明一个string变量并赋予初值：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var str string</span><br><span class="line">str = &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
-<p>字符串构建过程中先根据字符串构建stringStruct，再转换成string。转换的源码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func gostringnocopy(str *byte) string &#123; // 跟据字符串地址构建string</span><br><span class="line">    ss := stringStruct&#123;str: unsafe.Pointer(str), len: findnull(str)&#125; // 先构造stringStruct</span><br><span class="line">    s := *(*string)(unsafe.Pointer(&amp;ss))                             // 再将stringStruct转换成string</span><br><span class="line">    return s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>string在runtime包中就是stringStruct，对外呈现叫做string。</p>
-<h4 id="byte转string"><a href="#byte转string" class="headerlink" title="[]byte转string"></a>[]byte转string</h4><p>byte切片可以很方便的转换成string，如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func GetStringBySlice(s []byte) string &#123;</span><br><span class="line">    return string(s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>需要注意的是这种转换需要一次内存拷贝。</p>
-<p>转换过程如下： </p>
-<ol>
-<li>跟据切片的长度申请内存空间，假设内存地址为p，切片长度为len(b)；</li>
-<li>构建string（string.str = p；string.len = len；） </li>
-<li>拷贝数据(切片中数据拷贝到新申请的内存空间)</li>
-</ol>
-<p>转换示意图：<br><img src="http://image.huany.top/hexo/go/string-01-slice2string.png" alt></p>
-<h4 id="string转-byte"><a href="#string转-byte" class="headerlink" title="string转[]byte"></a>string转[]byte</h4><p>string也可以很方便的转成byte切片，如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func GetSliceByString(str string) []byte &#123;</span><br><span class="line">    return []byte(str)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>string转换成byte切片，也需要一次内存拷贝，其过程如下：</p>
-<ul>
-<li>申请切片内存空间</li>
-<li>将string拷贝到切片</li>
+<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5.总结"></a>5.总结</h3><ul>
+<li>for-range的实现实际上是C风格的for循环</li>
+<li>使用index、value接收range返回值会发生一次数据拷贝。</li>
 </ul>
-<p>转换示意图：<br><img src="http://image.huany.top/hexo/go/string-02-string2slice.png" alt></p>
-<h4 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h4><p>字符串可以很方便的拼接，像下面这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str := &quot;Str1&quot; + &quot;Str2&quot; + &quot;Str3&quot;</span><br></pre></td></tr></table></figure>
-<p>即便有非常多的字符串需要拼接，性能上也有比较好的保证，因为新字符串的内存空间是一次分配完成的，所以性能消耗主要在拷贝数据上。</p>
-<p>一个拼接语句的字符串编译时都会被存放到一个切片中，拼接过程需要遍历两次切片，第一次遍历获取总的字符串长度，据此申请内存，第二次遍历会把字符串逐个拷贝过去。</p>
-<p>字符串拼接伪代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">func concatstrings(a []string) string &#123; // 字符串拼接</span><br><span class="line">    length := 0        // 拼接后总的字符串长度</span><br><span class="line"></span><br><span class="line">    for _, str := range a &#123;</span><br><span class="line">        length += length(str)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    s, b := rawstring(length) // 生成指定大小的字符串，返回一个string和切片，二者共享内存空间</span><br><span class="line"></span><br><span class="line">    for _, str := range a &#123;</span><br><span class="line">        copy(b, str)    // string无法修改，只能通过切片修改</span><br><span class="line">        b = b[len(str):]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为string是无法直接修改的，所以这里使用rawstring()方法初始化一个指定大小的string，同时返回一个切片，二者共享同一块内存空间，后面向切片中拷贝数据，也就间接修改了string。</p>
-<p>rawstring()源代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func rawstring(size int) (s string, b []byte) &#123; // 生成一个新的string，返回的string和切片共享相同的空间</span><br><span class="line">    p := mallocgc(uintptr(size), nil, false)</span><br><span class="line"></span><br><span class="line">    stringStructOf(&amp;s).str = p</span><br><span class="line">    stringStructOf(&amp;s).len = size</span><br><span class="line"></span><br><span class="line">    *(*slice)(unsafe.Pointer(&amp;b)) = slice&#123;p, size, size&#125;</span><br><span class="line"></span><br><span class="line">    return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="为什么字符串不允许修改？"><a href="#为什么字符串不允许修改？" class="headerlink" title="为什么字符串不允许修改？"></a>为什么字符串不允许修改？</h4><p>像C++语言中的string，其本身拥有内存空间，修改string是支持的。但Go的实现中，string不包含内存空间，只有一个内存的指针，这样做的好处是string变得非常轻量，可以很方便的进行传递而不用担心内存拷贝。</p>
-<p>因为string通常指向字符串字面量，而字符串字面量存储位置是只读段，而不是堆或栈上，所以才有了string不可修改的约定。</p>
-<h4 id="byte转换成string一定会拷贝内存吗？"><a href="#byte转换成string一定会拷贝内存吗？" class="headerlink" title="[]byte转换成string一定会拷贝内存吗？"></a>[]byte转换成string一定会拷贝内存吗？</h4><p>byte切片转换成string的场景很多，为了性能上的考虑，有时候只是临时需要字符串的场景下，byte切片转换成string时并不会拷贝内存，而是直接返回一个string，这个string的指针(string.str)指向切片的内存。</p>
-<p>比如，编译器会识别如下临时场景：</p>
-<ul>
-<li>使用m[string(b)]来查找map（map是string为key，临时把切片b转成string）；</li>
-<li>字符串拼接，如”&lt;” + “string(b)” + “&gt;”；</li>
-<li>字符串比较：string(b) == “foo”</li>
-</ul>
-<p>因为是临时把byte切片转换成string，也就避免了因byte切片内容改变而导致string引用失败的情况，所以此时可以不必拷贝内存新建一个string。</p>
-<h4 id="string和-byte如何取舍？"><a href="#string和-byte如何取舍？" class="headerlink" title="string和[]byte如何取舍？"></a>string和[]byte如何取舍？</h4><p>string和[]byte都可以表示字符串，但因数据结构不同，其衍生出来的方法也不同，要跟据实际应用场景来选择。</p>
-<p>string 擅长的场景：</p>
-<ul>
-<li>需要字符串比较的场景；</li>
-<li>不需要nil字符串的场景；</li>
-</ul>
-<p>[]byte擅长的场景：</p>
-<ul>
-<li>修改字符串的场景，尤其是修改粒度为1个字节</li>
-<li>函数返回值，需要用nil表示含义的场景；</li>
-<li>需要切片操作的场景；</li>
-</ul>
-<p>虽然看起来string适用的场景不如[]byte多，但因为string直观，在实际应用中还是大量存在，在偏底层的实现中[]byte使用更多。</p>
 
       
     </div>
@@ -494,8 +469,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/30/go-slice/" rel="next" title="Go slice实现原理">
-                <i class="fa fa-chevron-left"></i> Go slice实现原理
+              <a href="/2019/07/06/go-select/" rel="next" title="go select">
+                <i class="fa fa-chevron-left"></i> go select
               </a>
             
           </div>
@@ -503,10 +478,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/01/go-map/" rel="prev" title="go map原理剖析">
-                go map原理剖析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -648,7 +619,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#string标准概念"><span class="nav-number">1.</span> <span class="nav-text">string标准概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string-数据结构"><span class="nav-number">2.</span> <span class="nav-text">string 数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string操作"><span class="nav-number">3.</span> <span class="nav-text">string操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明"><span class="nav-number">3.1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#byte转string"><span class="nav-number">3.2.</span> <span class="nav-text">[]byte转string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string转-byte"><span class="nav-number">3.3.</span> <span class="nav-text">string转[]byte</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串拼接"><span class="nav-number">3.4.</span> <span class="nav-text">字符串拼接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么字符串不允许修改？"><span class="nav-number">3.5.</span> <span class="nav-text">为什么字符串不允许修改？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#byte转换成string一定会拷贝内存吗？"><span class="nav-number">3.6.</span> <span class="nav-text">[]byte转换成string一定会拷贝内存吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string和-byte如何取舍？"><span class="nav-number">3.7.</span> <span class="nav-text">string和[]byte如何取舍？</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-热身"><span class="nav-number">2.</span> <span class="nav-text">2.热身</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-题目一：切片遍历"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 题目一：切片遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-题目二：Map遍历"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 题目二：Map遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-题目三：动态遍历"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 题目三：动态遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-实现原理"><span class="nav-number">3.</span> <span class="nav-text">3. 实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-range-for-slice"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 range for slice</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-range-for-map"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 range for map</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-range-for-channel"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 range for channel</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-编程Tips"><span class="nav-number">4.</span> <span class="nav-text">4.编程Tips</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-总结"><span class="nav-number">5.</span> <span class="nav-text">5.总结</span></a></li></ol></div>
             
 
           </div>

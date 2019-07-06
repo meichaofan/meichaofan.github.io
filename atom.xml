@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-07-06T06:36:50.783Z</updated>
+  <updated>2019-07-06T07:23:00.840Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>go range</title>
+    <link href="https://meichaofan.github.io/2019/07/06/go-range/"/>
+    <id>https://meichaofan.github.io/2019/07/06/go-range/</id>
+    <published>2019-07-06T07:22:37.000Z</published>
+    <updated>2019-07-06T07:23:00.840Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>range是Golang提供的一种迭代遍历手段，可操作的类型有数组、切片、Map和channel等，实际使用频率非常高。</p><p>探索range的实现机制是很有意思的事情，这可能会改变你使用range的习惯。</p><h3 id="2-热身"><a href="#2-热身" class="headerlink" title="2.热身"></a>2.热身</h3><h4 id="2-1-题目一：切片遍历"><a href="#2-1-题目一：切片遍历" class="headerlink" title="2.1 题目一：切片遍历"></a>2.1 题目一：切片遍历</h4><p>下面函数通过遍历切片，打印切片的下标和元素值，请问性能上有没有可优化的空间</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func RangeSlice(slice []int)&#123;</span><br><span class="line">    for index,value := range slice &#123;</span><br><span class="line">        _,_ := index,value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>程序解释：</p><p>函数中使用<code>for-range</code>对切片进行遍历，获取切片的下标和元素值，这里忽略函数的实际意义。</p><p>参考答案：</p><p>遍历过程中，每次迭代会对index和value进行赋值，如果数据量大或者value类型为string时，对value的赋值操作可能是多余的，可以在for-range中忽略value值，使用slice[index]引用value值。</p><h4 id="2-2-题目二：Map遍历"><a href="#2-2-题目二：Map遍历" class="headerlink" title="2.2 题目二：Map遍历"></a>2.2 题目二：Map遍历</h4><p>下面函数通过遍历Map，打印Map的key和value，请问性能上有没有可以优化的空间</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func RangeMap(myMap map[int]string) &#123;</span><br><span class="line">    for key, _ := range myMap &#123;</span><br><span class="line">        _, _ = key, myMap[key]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>程序解释：</p><p>函数中使用for-range对map进行遍历，获取map的key值，并根据key值获取value值，这里忽略函数的实际意义。</p><p>参考答案：</p><p>函数中for-range语句中值获取key值，然后根据key值获取value值，虽然看似减少了一次赋值，但通过key值查找value值的性能可能高于赋值消耗。能否优化取决于map所存储数据结构特征、结合实际情况进行判断。</p><h4 id="2-3-题目三：动态遍历"><a href="#2-3-题目三：动态遍历" class="headerlink" title="2.3 题目三：动态遍历"></a>2.3 题目三：动态遍历</h4><p>请问如下程序是否能正常结束？</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    v := []int&#123;1, 2, 3&#125;</span><br><span class="line">    for i:= range v &#123;</span><br><span class="line">        v = append(v, i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>程序解释：</p><p>main()函数中定义一个切片v，通过range遍历v，遍历过程中不断向v中添加新的元素。</p><p>参考答案：</p><p>能够正常结束。循环内改变切片的长度，不影响循环次数，循环次效在循环开始前就已经确定了。</p><h3 id="3-实现原理"><a href="#3-实现原理" class="headerlink" title="3. 实现原理"></a>3. 实现原理</h3><p>对于for-range语句的实现，可以从编译器源码中找到答案。</p><p>编译器源码 <code>gofrontend/go/statements.cc/For_range_statement::do_lower()</code> 方法中有如下注释。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// Arrange to do a loop appropriate for the type.  We will produce</span><br><span class="line">//   for INIT ; COND ; POST &#123;</span><br><span class="line">//           ITER_INIT</span><br><span class="line">//           INDEX = INDEX_TEMP</span><br><span class="line">//           VALUE = VALUE_TEMP // If there is a value</span><br><span class="line">//           original statements</span><br><span class="line">//   &#125;</span><br></pre></td></tr></table></figure><p>可见range实际上是一个C风格的循环结构。range支持数组、数组指针、切片、map和channel类型，对于不同类型有些细节上的差异。</p><h4 id="3-1-range-for-slice"><a href="#3-1-range-for-slice" class="headerlink" title="3.1 range for slice"></a>3.1 range for slice</h4><p>下面的注释解释了遍历slice的过程</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// The loop we generate:</span><br><span class="line">//   for_temp := range</span><br><span class="line">//   len_temp := len(for_temp)</span><br><span class="line">//   for index_temp = 0; index_temp &lt; len_temp; index_temp++ &#123;</span><br><span class="line">//           value_temp = for_temp[index_temp]</span><br><span class="line">//           index = index_temp</span><br><span class="line">//           value = value_temp</span><br><span class="line">//           original body</span><br><span class="line">//   &#125;</span><br></pre></td></tr></table></figure><p>遍历slice前会先获以slice的长度len_temp作为循环次数，循环体中，每次循环会先获取元素值，如果for-range中接收index和value的话，则会对index和value进行一次赋值。</p><p>由于循环开始前循环次数就已经确定了，所以循环过程中新添加的元素是没办法遍历到的。</p><p>另外，数组与数组指针的遍历过程与slice基本一致，不再赘述。</p><h4 id="3-2-range-for-map"><a href="#3-2-range-for-map" class="headerlink" title="3.2 range for map"></a>3.2 range for map</h4><p>下面的注释解释了遍历map的过程：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// The loop we generate:</span><br><span class="line">//   var hiter map_iteration_struct</span><br><span class="line">//   for mapiterinit(type, range, &amp;hiter); hiter.key != nil; mapiternext(&amp;hiter) &#123;</span><br><span class="line">//           index_temp = *hiter.key</span><br><span class="line">//           value_temp = *hiter.val</span><br><span class="line">//           index = index_temp</span><br><span class="line">//           value = value_temp</span><br><span class="line">//           original body</span><br><span class="line">//   &#125;</span><br></pre></td></tr></table></figure><p>遍历map时没有指定循环次数，循环体与遍历slice类似。由于map底层实现与slice不同，map底层使用hash表实现，插入数据位置是随机的，所以遍历过程中新插入的数据不能保证遍历到。</p><h4 id="3-3-range-for-channel"><a href="#3-3-range-for-channel" class="headerlink" title="3.3 range for channel"></a>3.3 range for channel</h4><p>遍历channel是最特殊的，这是由channel的实现机制决定的：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// The loop we generate:</span><br><span class="line">//   for &#123;</span><br><span class="line">//           index_temp, ok_temp = &lt;-range</span><br><span class="line">//           if !ok_temp &#123;</span><br><span class="line">//                   break</span><br><span class="line">//           &#125;</span><br><span class="line">//           index = index_temp</span><br><span class="line">//           original body</span><br><span class="line">//   &#125;</span><br></pre></td></tr></table></figure><p>channel遍历是依次从channel中读取数据,读取前是不知道里面有多少个元素的。如果channel中没有元素，则会阻塞等待，如果channel已被关闭，则会解除阻塞并退出循环。</p><p><strong>注</strong></p><ul><li>上述注释中index_temp实际上描述是有误的，应该为value_temp，因为index对于channel是没有意义的。</li><li>使用for-range遍历channel时只能获取一个返回值。</li></ul><h3 id="4-编程Tips"><a href="#4-编程Tips" class="headerlink" title="4.编程Tips"></a>4.编程Tips</h3><ul><li>遍历过程中可以视情况放弃接收index或value，可以在一定程度上提升性能</li><li>遍历channel时，避免channel没有数据，可能会阻塞</li><li>尽量避免遍历过程中修改原数据</li></ul><h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5.总结"></a>5.总结</h3><ul><li>for-range的实现实际上是C风格的for循环</li><li>使用index、value接收range返回值会发生一次数据拷贝。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;1-前言&quot;&gt;&lt;a href=&quot;#1-前言&quot; class=&quot;headerlink&quot; title=&quot;1.前言&quot;&gt;&lt;/a&gt;1.前言&lt;/h3&gt;&lt;p&gt;range是Golang提供的一种迭代遍历手段，可操作的类型有数组、切片、Map和channel等，实际使用频率非常高。&lt;/
+      
+    
+    </summary>
+    
+    
+      <category term="go" scheme="https://meichaofan.github.io/tags/go/"/>
+    
+  </entry>
   
   <entry>
     <title>go select</title>
@@ -481,34 +504,6 @@
       <category term="docker" scheme="https://meichaofan.github.io/tags/docker/"/>
     
       <category term="runC" scheme="https://meichaofan.github.io/tags/runC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux相关软件和命令</title>
-    <link href="https://meichaofan.github.io/2019/04/23/about-linux-software/"/>
-    <id>https://meichaofan.github.io/2019/04/23/about-linux-software/</id>
-    <published>2019-04-23T06:50:43.000Z</published>
-    <updated>2019-04-23T06:52:29.206Z</updated>
-    
-    <content type="html"><![CDATA[<p>这里主要介绍Linux相关软件安装和日常使用命令</p><hr><ul><li><a href="/2019/04/23/httpie-a-http-client/">HTTPie - 一款http客户端工具</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;这里主要介绍Linux相关软件安装和日常使用命令&lt;/p&gt;
-&lt;hr&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;/2019/04/23/httpie-a-http-client/&quot;&gt;HTTPie - 一款http客户端工具&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-      
-    
-    </summary>
-    
-    
-      <category term="linux" scheme="https://meichaofan.github.io/tags/linux/"/>
     
   </entry>
   
