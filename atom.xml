@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-07-12T17:45:07.719Z</updated>
+  <updated>2019-07-19T16:56:56.849Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>c语言 - 字符数组和字符串</title>
+    <link href="https://meichaofan.github.io/2019/07/20/c-char-array/"/>
+    <id>https://meichaofan.github.io/2019/07/20/c-char-array/</id>
+    <published>2019-07-19T16:56:02.000Z</published>
+    <updated>2019-07-19T16:56:56.849Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="字符数组定义"><a href="#字符数组定义" class="headerlink" title="字符数组定义"></a>字符数组定义</h4><p>用来存放字符的数组成为字符数组，例如：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char a[20] = &#123;&apos;c&apos;, &apos; &apos;, &apos;p&apos;, &apos;r&apos;, &apos;o&apos;, &apos;g&apos;, &apos;r&apos;, &apos;a&apos;,&apos;m&apos;&#125;; //给部分数组元素赋值</span><br><span class="line">char b[] = &#123;&apos;c&apos;, &apos; &apos;, &apos;p&apos;, &apos;r&apos;, &apos;o&apos;, &apos;g&apos;, &apos;r&apos;, &apos;a&apos;,&apos;m&apos;&#125;; //对全体元素赋值可以省去长度</span><br></pre></td></tr></table></figure><p>字符数组实际上是一些列字符的集合，也就是字符串（string）。在C语言中，没有专门的字符串变量，没有string类型，通常就用一个字符数组来存放一个字符串。</p><h4 id="字符数组和字符串赋值"><a href="#字符数组和字符串赋值" class="headerlink" title="字符数组和字符串赋值"></a>字符数组和字符串赋值</h4><p>C语言规定，可以将字符串直接赋值给字符数组，例如：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char str[30] = &#123;&quot;c.biancheng.net&quot;&#125;;</span><br><span class="line">char str[30] = &quot;c.biancheng.net&quot;; //这种形式更加简洁，实际开发中常用</span><br></pre></td></tr></table></figure><p>数组第0个元素为 ‘c’，第1个元素为 ‘.’，第2个元素为 ‘b’，后面的元素以此类推。也可以不指定数组长度，例如：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char str[] = &#123;&quot;c.biancheng.net&quot;&#125;;</span><br><span class="line">char str[] = &quot;c.biancheng.net&quot;; //这种形式更加简洁，实际开发中常用</span><br></pre></td></tr></table></figure><p>在C语言中，字符串总是以<code>&#39;\0&#39;</code>作为串的结束符。上面的两个字符串，编译器已经在末尾自动添加了<code>&#39;\0&#39;</code>。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;\0&apos;是ASCII码表中的第0个字符，用NUL表示，称为空字符。该字符既不能显示，也不是控制字符，输出该字符不会有任何效果，它在C语言中仅作为字符串的结束标志。</span><br></pre></td></tr></table></figure><p><code>puts</code>和<code>printf</code>函数在输出字符串时会逐个扫描字符，直到遇见<code>\0</code>才结束输出。请看下面的例子：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int i;</span><br><span class="line">    char str1[30] = &quot;http://c.biancheng.net&quot;;</span><br><span class="line">    char str2[] = &quot;C Language&quot;;</span><br><span class="line">    char str3[30] = &quot;You are a good\0 boy!&quot;;</span><br><span class="line">    printf(&quot;str1: %s\n&quot;, str1);</span><br><span class="line">    printf(&quot;str2: %s\n&quot;, str2);</span><br><span class="line">    printf(&quot;str3: %s\n&quot;, str3);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>运行结果</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str1: http://c.biancheng.net</span><br><span class="line">str2: C Language</span><br><span class="line">str3: You are a good</span><br></pre></td></tr></table></figure><p>str1 和 str2 很好理解，编译器会在字符串最后自动添加 ‘\0’，并且数组足够大，所以会输出整个字符串。对于 str3，由于字符串中间存在 ‘\0’，printf() 扫描到这里就认为字符串结束了，所以不会输出后面的内容。</p><h4 id="字符数组和字符串区别"><a href="#字符数组和字符串区别" class="headerlink" title="字符数组和字符串区别"></a>字符数组和字符串区别</h4><p>需要注意的是，用字符串给字符数组赋值时由于要添加结束符 ‘\0’，数组的长度要比字符串的长度（字符串长度不包括 ‘\0’）大1。例如：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">char str[] = &quot;C program&quot;;</span><br></pre></td></tr></table></figure><p>该数组在内存中实际存放情况为：</p><p><img src="http://image.huany.top/hexo/c/sfdsgfsge.png" alt></p><p><strong>字符串长度为 9，数组长度为 10。</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;字符数组定义&quot;&gt;&lt;a href=&quot;#字符数组定义&quot; class=&quot;headerlink&quot; title=&quot;字符数组定义&quot;&gt;&lt;/a&gt;字符数组定义&lt;/h4&gt;&lt;p&gt;用来存放字符的数组成为字符数组，例如：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain
+      
+    
+    </summary>
+    
+    
+      <category term="c" scheme="https://meichaofan.github.io/tags/c/"/>
+    
+  </entry>
   
   <entry>
     <title>php array</title>
@@ -471,36 +495,6 @@
     
     
       <category term="life" scheme="https://meichaofan.github.io/tags/life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux如何给应用程序创建一个桌面启动图标</title>
-    <link href="https://meichaofan.github.io/2019/04/29/linux-create-a-desktop-app/"/>
-    <id>https://meichaofan.github.io/2019/04/29/linux-create-a-desktop-app/</id>
-    <published>2019-04-29T02:04:29.000Z</published>
-    <updated>2019-04-29T02:07:22.952Z</updated>
-    
-    <content type="html"><![CDATA[<p>本文主要讲述的是linux中如何给应用程序创建一个快速启动图标，话不多说，我们来看实际的操作步骤：</p><p>本文的实例是给celipse创建一个启动图标</p><hr><ol><li><p>我们需要通过下列命令，来创建一个启动的脚本：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/share/applications/eclipse.desktop</span><br></pre></td></tr></table></figure></li><li><p>将下列内容复制到启动脚本中：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Encoding=UTF-8</span><br><span class="line">Name=Eclipse</span><br><span class="line">Comment=Eclipse IDE</span><br><span class="line">Exec=/usr/local/android/eclipse/eclipse      </span><br><span class="line">Icon=/usr/local/android/eclipse/icon.xpm</span><br><span class="line">Terminal=false</span><br><span class="line">StartupNotify=true</span><br><span class="line">Type=Application</span><br><span class="line">Categories=Application;Development;</span><br></pre></td></tr></table></figure></li></ol><blockquote><p>说明部分：<br>Exec ：这个是应用程序可执行文件的目录<br>Icon ：这个是图标的目录</p></blockquote><ol start="3"><li>然后在applications -&gt; programming 菜单中就可以找到你所创建的图标了，然后再右键创建一个桌面图标即可</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;本文主要讲述的是linux中如何给应用程序创建一个快速启动图标，话不多说，我们来看实际的操作步骤：&lt;/p&gt;
-&lt;p&gt;本文的实例是给celipse创建一个启动图标&lt;/p&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;我们需要通过下列命令，来创建一个启动的脚本：&lt;/p&gt;
-&lt;figure c
-      
-    
-    </summary>
-    
-    
-      <category term="Linux" scheme="https://meichaofan.github.io/tags/Linux/"/>
-    
-      <category term="Desktop" scheme="https://meichaofan.github.io/tags/Desktop/"/>
     
   </entry>
   
