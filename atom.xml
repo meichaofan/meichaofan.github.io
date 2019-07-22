@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-07-19T16:59:11.793Z</updated>
+  <updated>2019-07-22T15:23:01.504Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>go waitgroup</title>
+    <link href="https://meichaofan.github.io/2019/07/22/go-waitgroup/"/>
+    <id>https://meichaofan.github.io/2019/07/22/go-waitgroup/</id>
+    <published>2019-07-22T15:22:39.000Z</published>
+    <updated>2019-07-22T15:23:01.504Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>WaitGroup是Go应用开发过程中经常使用的并发控制技术。</p><p>WaitGroup，可理解为Wait-Groutine-Group，即等待一组goroutine结束。比如某个goroutine需要等待其他几个goroutine全部完成，那么使用WaitGroup可以轻松实现。</p><p>下面程序展示了一个goroutine等待另外两个goroutine结束的例子：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;time&quot;</span><br><span class="line">    &quot;sync&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    var wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line">    wg.Add(2) //设置计数器，数值即为goroutine的个数</span><br><span class="line">    go func() &#123;</span><br><span class="line">        //Do some work</span><br><span class="line">        time.Sleep(1*time.Second)</span><br><span class="line"></span><br><span class="line">        fmt.Println(&quot;Goroutine 1 finished!&quot;)</span><br><span class="line">        wg.Done() //goroutine执行结束后将计数器减1</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    go func() &#123;</span><br><span class="line">        //Do some work</span><br><span class="line">        time.Sleep(2*time.Second)</span><br><span class="line"></span><br><span class="line">        fmt.Println(&quot;Goroutine 2 finished!&quot;)</span><br><span class="line">        wg.Done() //goroutine执行结束后将计数器减1</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    wg.Wait() //主goroutine阻塞等待计数器变为0</span><br><span class="line">    fmt.Printf(&quot;All Goroutine finished!&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>简单的说，上面程序中wg内部维护了一个计数器：</p><ul><li><ol><li>启动goroutine前将计数器通过Add(2)将计数器设置为待启动的goroutine个数。</li></ol></li><li><ol start="2"><li>启动goroutine后，使用Wait()方法阻塞自己，等待计数器变为0。 </li></ol></li><li><ol start="3"><li>每个goroutine执行结束通过Done()方法将计数器减1。</li></ol></li><li><ol start="4"><li>计数器变为0后，阻塞的goroutine被唤醒。</li></ol></li></ul><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><h4 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h4><p>信号量是Unix系统提供的一种保护共享资源的机制，用于防止多个线程同时访问某个资源。</p><p>可简单理解为信号量为一个数值：</p><ul><li>当信号量&gt;0时，表示资源可用，获取信号量时系统自动将信号量减1；</li><li>当信号量==0时，表示资源暂不可用，获取信号量时，当前线程会进入睡眠，当信号量为正时被唤醒；</li></ul><p>WaitGroup视线中也使用了信号量</p><h3 id="WaitGroup"><a href="#WaitGroup" class="headerlink" title="WaitGroup"></a>WaitGroup</h3><h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><p>源码包中<code>src/sync/waitgroup.go:WaitGroup</code>定义了其数据结构：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type WaitGroup struct &#123;</span><br><span class="line">    state1 [3]uint32</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>state1是个长度为3的数组，其中包含了state和一个信号量，而state实际上是两个计数器：</p><ul><li>counter：当前还未执行结束的goroutine计数器</li><li>waiter count：等待goroutine-group结束的goroutine数量，即有多少个等候者</li><li>semaphore：信号量</li></ul><p>考虑到字节是否对齐，三者出现的位置不同，为简单起见，依照字节已对齐情况下，三者在内存中的位置如下所示：</p><p><img src="http://image.huany.top/hexo/go/wg-01-layout.png" alt></p><p>WaitGroup对外提供了3个接口：</p><ul><li>Add(delta int): 将delta值加到counter中</li><li>Wait()： waiter递增1，并阻塞等待信号量semaphore</li><li>Done()： counter递减1，当counter=0时按照waiter数值释放相应次数信号量</li></ul><p>下面分别介绍这三个函数的实现细节。</p><h4 id="Add-delta-int"><a href="#Add-delta-int" class="headerlink" title="Add(delta int)"></a>Add(delta int)</h4><p>Add()做了两件事，一是把delta值累加到counter中，因为delta可以为负值，也就是说counter有可能变成0或负值，所以第二件事就是当counter值变为0时，跟据waiter数值释放等量的信号量，把等待的goroutine全部唤醒，如果counter变为负值，则panic.</p><p>Add()伪代码如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">func (wg *WaitGroup) Add(delta int) &#123;</span><br><span class="line">    statep, semap := wg.state() //获取state和semaphore地址指针</span><br><span class="line"></span><br><span class="line">    state := atomic.AddUint64(statep, uint64(delta)&lt;&lt;32) //把delta左移32位累加到state，即累加到counter中</span><br><span class="line">    v := int32(state &gt;&gt; 32) //获取counter值</span><br><span class="line">    w := uint32(state)      //获取waiter值</span><br><span class="line"></span><br><span class="line">    if v &lt; 0 &#123;              //经过累加后counter值变为负值，panic</span><br><span class="line">        panic(&quot;sync: negative WaitGroup counter&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //经过累加后，此时，counter &gt;= 0</span><br><span class="line">    //如果counter为正，说明不需要释放信号量，直接退出</span><br><span class="line">    //如果waiter为零，说明没有等待者，也不需要释放信号量，直接退出</span><br><span class="line">    if v &gt; 0 || w == 0 &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //此时，counter一定等于0，而waiter一定大于0（内部维护waiter，不会出现小于0的情况），</span><br><span class="line">    //先把counter置为0，再释放waiter个数的信号量</span><br><span class="line">    *statep = 0</span><br><span class="line">    for ; w != 0; w-- &#123;</span><br><span class="line">        runtime_Semrelease(semap, false) //释放信号量，执行一次释放一个，唤醒一个等待者</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="Wait"><a href="#Wait" class="headerlink" title="Wait()"></a>Wait()</h4><p>Wait()方法也做了两件事，一是累加waiter, 二是阻塞等待信号量</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">func (wg *WaitGroup) Wait() &#123;</span><br><span class="line">    statep, semap := wg.state() //获取state和semaphore地址指针</span><br><span class="line">    for &#123;</span><br><span class="line">        state := atomic.LoadUint64(statep) //获取state值</span><br><span class="line">        v := int32(state &gt;&gt; 32)            //获取counter值</span><br><span class="line">        w := uint32(state)                 //获取waiter值</span><br><span class="line">        if v == 0 &#123;                        //如果counter值为0，说明所有goroutine都退出了，不需要待待，直接返回</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 使用CAS（比较交换算法）累加waiter，累加可能会失败，失败后通过for loop下次重试</span><br><span class="line">        if atomic.CompareAndSwapUint64(statep, state, state+1) &#123;</span><br><span class="line">            runtime_Semacquire(semap) //累加成功后，等待信号量唤醒自己</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这里用到了CAS算法保证有多个goroutine同时执行Wait()时也能正确累加waiter。</p><h4 id="Done"><a href="#Done" class="headerlink" title="Done()"></a>Done()</h4><p>Done()只做一件事，即把counter减1，我们知道Add()可以接受负值，所以Done实际上只是调用了Add(-1)。</p><p>源码如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func (wg *WaitGroup) Done() &#123;</span><br><span class="line">    wg.Add(-1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Done()的执行逻辑就转到了Add()，实际上也正是最后一个完成的goroutine把等待者唤醒的。</p><h3 id="编程Tips"><a href="#编程Tips" class="headerlink" title="编程Tips"></a>编程Tips</h3><ul><li>Add() 操作必须早于Wait，否则会panic</li><li>Add()设置的值必须与实际等待的goroutine个数一致，否则会panic</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;WaitGroup是Go应用开发过程中经常使用的并发控制技术。&lt;/p&gt;
+&lt;p&gt;WaitGroup，可理解为Wait-Groutine-Gro
+      
+    
+    </summary>
+    
+    
+      <category term="Go" scheme="https://meichaofan.github.io/tags/Go/"/>
+    
+  </entry>
   
   <entry>
     <title>c语言 - 字符数组和字符串</title>
@@ -465,30 +489,6 @@
 &lt;p&gt;&lt;em&gt;微微笑 小时候的梦我知道&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;不要哭 让萤火虫带着你逃跑&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;乡间的歌谣 永远的依靠&lt;/em&gt;&lt;
-      
-    
-    </summary>
-    
-    
-      <category term="life" scheme="https://meichaofan.github.io/tags/life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>毕业在即，云乎不喜</title>
-    <link href="https://meichaofan.github.io/2019/05/28/graduation-finally/"/>
-    <id>https://meichaofan.github.io/2019/05/28/graduation-finally/</id>
-    <published>2019-05-28T08:51:23.000Z</published>
-    <updated>2019-05-28T13:32:25.535Z</updated>
-    
-    <content type="html"><![CDATA[<p>终于要换一种身份开启人生新一段旅程。</p><p> <img src="https://huany-image.oss-cn-beijing.aliyuncs.com/hexo/d909af140ea14cb3f8ce3385d22b0d6.jpg" alt="没有电的实验室"></p><p><img src="https://huany-image.oss-cn-beijing.aliyuncs.com/hexo/380a3be32413d25df630dfe3b83b976.jpg" alt="第一次看见北京早上5点钟的天空"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;终于要换一种身份开启人生新一段旅程。&lt;/p&gt;
-&lt;p&gt; &lt;img src=&quot;https://huany-image.oss-cn-beijing.aliyuncs.com/hexo/d909af140ea14cb3f8ce3385d22b0d6.jpg&quot; alt=&quot;没有电的实
       
     
     </summary>
