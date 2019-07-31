@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-07-28T15:26:51.722Z</updated>
+  <updated>2019-07-31T15:43:32.952Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>clion建立多级工作目录</title>
+    <link href="https://meichaofan.github.io/2019/07/31/clion-create-multi-project/"/>
+    <id>https://meichaofan.github.io/2019/07/31/clion-create-multi-project/</id>
+    <published>2019-07-31T15:42:39.000Z</published>
+    <updated>2019-07-31T15:43:32.952Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前对Clion不熟悉，每次写项目都在主目录下，导致一个主目录只能写一个main函数，下面学习如何在CLion建立多级工程目录</p><hr><h3 id="操作："><a href="#操作：" class="headerlink" title="操作："></a>操作：</h3><p>在主工作目录下，有一个CMakeList.txt文件，内容如下：</p><p><img src="http://image.huany.top/hexo/c/clion-main-cmakelist.png" alt></p><p>其中，<code>ADD_SUBDIRECTORY(function-point)</code>，这个是代表包含子目录的意思。</p><p>对于子目录<code>function-point</code>,也必须有一个CMakeList.txt文件，指定子目录中的可执行文件。</p><p><img src="http://image.huany.top/hexo/c/clion-sub-makelist.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;之前对Clion不熟悉，每次写项目都在主目录下，导致一个主目录只能写一个main函数，下面学习如何在CLion建立多级工程目录&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;操作：&quot;&gt;&lt;a href=&quot;#操作：&quot; class=&quot;headerlink&quot; title=&quot;操作：&quot;&gt;&lt;/a&gt;操
+      
+    
+    </summary>
+    
+    
+      <category term="c" scheme="https://meichaofan.github.io/tags/c/"/>
+    
+  </entry>
   
   <entry>
     <title>剑指Offer - 3.1 - 数组中重复的数字</title>
@@ -457,35 +482,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>全方位解读PHP7低层源码</title>
-    <link href="https://meichaofan.github.io/2019/06/15/php7-source-code/"/>
-    <id>https://meichaofan.github.io/2019/06/15/php7-source-code/</id>
-    <published>2019-06-15T14:43:03.000Z</published>
-    <updated>2019-06-15T14:50:10.369Z</updated>
-    
-    <content type="html"><![CDATA[<p>本栏从源码的角度，解析PHP7。对掌握PHP有重大帮助，望坚持更新。</p><ul><li>PHP7的新特性</li><li>基础变量与内存管理</li><li>PHP运行的生命周期</li><li>PHP代码的编译与执行</li><li>基础语法实现的细节</li><li>PHP扩展编写</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;本栏从源码的角度，解析PHP7。对掌握PHP有重大帮助，望坚持更新。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;PHP7的新特性&lt;/li&gt;
-&lt;li&gt;基础变量与内存管理&lt;/li&gt;
-&lt;li&gt;PHP运行的生命周期&lt;/li&gt;
-&lt;li&gt;PHP代码的编译与执行&lt;/li&gt;
-&lt;li&gt;基础语法实现的细节&lt;/
-      
-    
-    </summary>
-    
-    
-      <category term="PHP" scheme="https://meichaofan.github.io/tags/PHP/"/>
     
   </entry>
   
