@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
-  <updated>2019-07-31T15:43:32.952Z</updated>
+  <updated>2019-08-01T14:28:42.225Z</updated>
   <id>https://meichaofan.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>设定printf在终端输出字体的颜色</title>
+    <link href="https://meichaofan.github.io/2019/08/01/printf-console-color/"/>
+    <id>https://meichaofan.github.io/2019/08/01/printf-console-color/</id>
+    <published>2019-08-01T14:27:36.000Z</published>
+    <updated>2019-08-01T14:28:42.225Z</updated>
+    
+    <content type="html"><![CDATA[<p>终端字符的颜色是用转义序列进行控制，是文本模式下的系统显示功能，和具体的语言无关。转义序列是以 ESC 开头,可以用 \033 完成相同的工作（ESC 的 ASCII 码用十进制表示就是 27， = 用八进制表示的 33）。</p><h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\033[显示方式；前景色；背景色m</span><br></pre></td></tr></table></figure><p>1) 显示方式：0（默认值）、1（高亮）、22（非粗体）、4（下划线）、24（非下划线）、5（闪烁）、25（非闪烁）、7（反显）、27（非反显）</p><p>2) 前景色：30（黑色）、31（红色）、32（绿色）、 33（黄色）、34（蓝色）、35（洋红）、36（青色）、37（白色）</p><p>3) 背景色：40（黑色）、41（红色）、42（绿色）、 43（黄色）、44（蓝色）、45（洋红）、46（青色）、47（白色）</p><h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>1）默认颜色：\033[0m，也是关闭所有属性<br>　<br>2）绿色：\033[1;32;40m<br>　<br>3）红色：\033[1;31;40m</p><p>4）printf( “\033[1;31;40m 输出红色字符 \033[0m” )</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;终端字符的颜色是用转义序列进行控制，是文本模式下的系统显示功能，和具体的语言无关。转义序列是以 ESC 开头,可以用 \033 完成相同的工作（ESC 的 ASCII 码用十进制表示就是 27， = 用八进制表示的 33）。&lt;/p&gt;
+&lt;h3 id=&quot;格式&quot;&gt;&lt;a href=
+      
+    
+    </summary>
+    
+    
+      <category term="printf" scheme="https://meichaofan.github.io/tags/printf/"/>
+    
+  </entry>
   
   <entry>
     <title>clion建立多级工作目录</title>
@@ -461,27 +485,6 @@
     
     
       <category term="go" scheme="https://meichaofan.github.io/tags/go/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>go 初始化顺序</title>
-    <link href="https://meichaofan.github.io/2019/06/30/go-initialization-sequence/"/>
-    <id>https://meichaofan.github.io/2019/06/30/go-initialization-sequence/</id>
-    <published>2019-06-30T07:00:59.000Z</published>
-    <updated>2019-06-30T07:09:28.191Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h3><p>先执行import包的每个文件的<strong>常量</strong>和<strong>变量</strong>，然后是<strong>init</strong>函数，最后执行<strong>main</strong>函数，当<strong>main</strong>函数执行结束程序退出。</p><p><img src="http://image.huany.top/hexo/go/go-initialization-sequence.png" alt="go 初始化顺序"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;初始化顺序&quot;&gt;&lt;a href=&quot;#初始化顺序&quot; class=&quot;headerlink&quot; title=&quot;初始化顺序&quot;&gt;&lt;/a&gt;初始化顺序&lt;/h3&gt;&lt;p&gt;先执行import包的每个文件的&lt;strong&gt;常量&lt;/strong&gt;和&lt;strong&gt;变量&lt;/strong&gt;，然后
-      
-    
-    </summary>
-    
     
   </entry>
   
