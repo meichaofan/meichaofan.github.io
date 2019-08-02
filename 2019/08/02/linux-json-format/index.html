@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="C,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -81,18 +81,17 @@
 
 
 
-<meta name="description" content="这几年，我一直在学习编程语言，从JAVA、PHP、JS到Go，其实我一直想学好的是C语言，C即是基础。这个《笨方法学C》的读书系列，希望自己一定要坚持下来，好好学习，好好总结。 这本书的目的是让你足够熟悉C语言，并能够使用它编写自己的软件，或者修改其他人的代码。你需要学习下面这些东西来达到这一阶段：  C的基本语法和编写习惯; 编译,make文件和链接; 寻找和预防bug; 防御性编程实战; 使C">
-<meta name="keywords" content="C">
+<meta name="description" content="jq12345678910111213141516171819202122232425jq - commandline JSON processor [version 1.6]Usage:  jq [options] &amp;lt;jq filter&amp;gt; [file...]    jq [options] --args &amp;lt;jq filter&amp;gt; [strings...]    jq [op">
 <meta property="og:type" content="article">
-<meta property="og:title" content="笨方法学C">
-<meta property="og:url" content="https://meichaofan.github.io/2019/04/09/learn-c-the-hard-way/index.html">
+<meta property="og:title" content="linux下json解析神器 - jq">
+<meta property="og:url" content="https://meichaofan.github.io/2019/08/02/linux-json-format/index.html">
 <meta property="og:site_name" content="huany">
-<meta property="og:description" content="这几年，我一直在学习编程语言，从JAVA、PHP、JS到Go，其实我一直想学好的是C语言，C即是基础。这个《笨方法学C》的读书系列，希望自己一定要坚持下来，好好学习，好好总结。 这本书的目的是让你足够熟悉C语言，并能够使用它编写自己的软件，或者修改其他人的代码。你需要学习下面这些东西来达到这一阶段：  C的基本语法和编写习惯; 编译,make文件和链接; 寻找和预防bug; 防御性编程实战; 使C">
+<meta property="og:description" content="jq12345678910111213141516171819202122232425jq - commandline JSON processor [version 1.6]Usage:  jq [options] &amp;lt;jq filter&amp;gt; [file...]    jq [options] --args &amp;lt;jq filter&amp;gt; [strings...]    jq [op">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-08T17:22:47.803Z">
+<meta property="og:updated_time" content="2019-08-02T15:43:48.149Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="笨方法学C">
-<meta name="twitter:description" content="这几年，我一直在学习编程语言，从JAVA、PHP、JS到Go，其实我一直想学好的是C语言，C即是基础。这个《笨方法学C》的读书系列，希望自己一定要坚持下来，好好学习，好好总结。 这本书的目的是让你足够熟悉C语言，并能够使用它编写自己的软件，或者修改其他人的代码。你需要学习下面这些东西来达到这一阶段：  C的基本语法和编写习惯; 编译,make文件和链接; 寻找和预防bug; 防御性编程实战; 使C">
+<meta name="twitter:title" content="linux下json解析神器 - jq">
+<meta name="twitter:description" content="jq12345678910111213141516171819202122232425jq - commandline JSON processor [version 1.6]Usage:  jq [options] &amp;lt;jq filter&amp;gt; [file...]    jq [options] --args &amp;lt;jq filter&amp;gt; [strings...]    jq [op">
 
 
 
@@ -122,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://meichaofan.github.io/2019/04/09/learn-c-the-hard-way/">
+  <link rel="canonical" href="https://meichaofan.github.io/2019/08/02/linux-json-format/">
 
 
 
 
 
-  <title>笨方法学C | huany</title>
+  <title>linux下json解析神器 - jq | huany</title>
   
 
 
@@ -307,7 +306,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/04/09/learn-c-the-hard-way/">
+    <link itemprop="mainEntityOfPage" href="https://meichaofan.github.io/2019/08/02/linux-json-format/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="meichaofan">
@@ -324,7 +323,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">笨方法学C</h1>
+          <h1 class="post-title" itemprop="name headline">linux下json解析神器 - jq</h1>
         
 
         <div class="post-meta">
@@ -336,8 +335,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-09T00:55:42+08:00">
-                2019-04-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-02T23:42:12+08:00">
+                2019-08-02
               </time>
             
 
@@ -354,7 +353,7 @@
 
           
           
-             <span id="/2019/04/09/learn-c-the-hard-way/" class="leancloud_visitors" data-flag-title="笨方法学C">
+             <span id="/2019/08/02/linux-json-format/" class="leancloud_visitors" data-flag-title="linux下json解析神器 - jq">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -390,16 +389,9 @@
       
 
       
-        <p>这几年，我一直在学习编程语言，从JAVA、PHP、JS到Go，其实我一直想学好的是C语言，C即是基础。这个《笨方法学C》的读书系列，希望自己一定要坚持下来，好好学习，好好总结。</p>
-<p>这本书的目的是让你足够熟悉C语言，并能够使用它编写自己的软件，或者修改其他人的代码。你需要学习下面这些东西来达到这一阶段：</p>
-<ul>
-<li>C的基本语法和编写习惯;</li>
-<li>编译,make文件和链接;</li>
-<li>寻找和预防bug;</li>
-<li>防御性编程实战;</li>
-<li>使C的代码崩溃;</li>
-<li>编写基本的Unix系统软件。</li>
-</ul>
+        <h3 id="jq"><a href="#jq" class="headerlink" title="jq"></a>jq</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">jq - commandline JSON processor [version 1.6]</span><br><span class="line"></span><br><span class="line">Usage:  jq [options] &lt;jq filter&gt; [file...]</span><br><span class="line">    jq [options] --args &lt;jq filter&gt; [strings...]</span><br><span class="line">    jq [options] --jsonargs &lt;jq filter&gt; [JSON_TEXTS...]</span><br><span class="line"></span><br><span class="line">jq is a tool for processing JSON inputs, applying the given filter to</span><br><span class="line">its JSON text inputs and producing the filter&apos;s results as JSON on</span><br><span class="line">standard output.</span><br><span class="line"></span><br><span class="line">The simplest filter is ., which copies jq&apos;s input to its output</span><br><span class="line">unmodified (except for formatting, but note that IEEE754 is used</span><br><span class="line">for number representation internally, with all that that implies).</span><br><span class="line"></span><br><span class="line">For more advanced filters see the jq(1) manpage (&quot;man jq&quot;)</span><br><span class="line">and/or https://stedolan.github.io/jq</span><br><span class="line"></span><br><span class="line">Example:</span><br><span class="line"></span><br><span class="line">    $ echo &apos;&#123;&quot;foo&quot;: 0&#125;&apos; | jq .</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;foo&quot;: 0</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">For a listing of options, use jq --help.</span><br></pre></td></tr></table></figure>
+<h3 id="jf"><a href="#jf" class="headerlink" title="jf"></a>jf</h3><p>改写成 shell 脚本执行模式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">argsCount=$#</span><br><span class="line">if [ $argsCount -ne 1 ];then</span><br><span class="line">    echo &quot;Usage : jf json_str&quot;</span><br><span class="line">    exit 2</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">jsonStr=$1</span><br><span class="line"></span><br><span class="line">echo $&#123;jsonStr&#125; | /usr/local/bin/jq .</span><br></pre></td></tr></table></figure></p>
+<p>执行方法是：<code>jf &#39;{&quot;name&quot;:&quot;meichaofan&quot;}&#39;</code></p>
 
       
     </div>
@@ -415,12 +407,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/C/" rel="tag"># C</a>
-          
-        </div>
-      
 
       
       
@@ -430,8 +416,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/03/Redis源码从哪里读起/" rel="next" title="Redis源码从哪里读起?">
-                <i class="fa fa-chevron-left"></i> Redis源码从哪里读起?
+              <a href="/2019/08/01/printf-console-color/" rel="next" title="设定printf在终端输出字体的颜色">
+                <i class="fa fa-chevron-left"></i> 设定printf在终端输出字体的颜色
               </a>
             
           </div>
@@ -439,10 +425,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/09/01-dust-off-that-compiler/" rel="prev" title="启用编译器">
-                启用编译器 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -494,8 +476,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -565,6 +556,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#jq"><span class="nav-number">1.</span> <span class="nav-text">jq</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jf"><span class="nav-number">2.</span> <span class="nav-text">jf</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

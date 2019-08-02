@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[linux下json解析神器 - jq]]></title>
+    <url>%2F2019%2F08%2F02%2Flinux-json-format%2F</url>
+    <content type="text"><![CDATA[jq12345678910111213141516171819202122232425jq - commandline JSON processor [version 1.6]Usage: jq [options] &lt;jq filter&gt; [file...] jq [options] --args &lt;jq filter&gt; [strings...] jq [options] --jsonargs &lt;jq filter&gt; [JSON_TEXTS...]jq is a tool for processing JSON inputs, applying the given filter toits JSON text inputs and producing the filter&apos;s results as JSON onstandard output.The simplest filter is ., which copies jq&apos;s input to its outputunmodified (except for formatting, but note that IEEE754 is usedfor number representation internally, with all that that implies).For more advanced filters see the jq(1) manpage (&quot;man jq&quot;)and/or https://stedolan.github.io/jqExample: $ echo &apos;&#123;&quot;foo&quot;: 0&#125;&apos; | jq . &#123; &quot;foo&quot;: 0 &#125;For a listing of options, use jq --help. jf改写成 shell 脚本执行模式1234567891011#!/bin/bashargsCount=$#if [ $argsCount -ne 1 ];then echo &quot;Usage : jf json_str&quot; exit 2fijsonStr=$1echo $&#123;jsonStr&#125; | /usr/local/bin/jq . 执行方法是：jf &#39;{&quot;name&quot;:&quot;meichaofan&quot;}&#39;]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[设定printf在终端输出字体的颜色]]></title>
     <url>%2F2019%2F08%2F01%2Fprintf-console-color%2F</url>
     <content type="text"><![CDATA[终端字符的颜色是用转义序列进行控制，是文本模式下的系统显示功能，和具体的语言无关。转义序列是以 ESC 开头,可以用 \033 完成相同的工作（ESC 的 ASCII 码用十进制表示就是 27， = 用八进制表示的 33）。 格式1\033[显示方式；前景色；背景色m 1) 显示方式：0（默认值）、1（高亮）、22（非粗体）、4（下划线）、24（非下划线）、5（闪烁）、25（非闪烁）、7（反显）、27（非反显） 2) 前景色：30（黑色）、31（红色）、32（绿色）、 33（黄色）、34（蓝色）、35（洋红）、36（青色）、37（白色） 3) 背景色：40（黑色）、41（红色）、42（绿色）、 43（黄色）、44（蓝色）、45（洋红）、46（青色）、47（白色） 例子1）默认颜色：\033[0m，也是关闭所有属性 2）绿色：\033[1;32;40m 3）红色：\033[1;31;40m 4）printf( “\033[1;31;40m 输出红色字符 \033[0m” )]]></content>
