@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="huany">
 <meta property="og:description" content="环境主机配置和角色分配   ip host 角色 配置     192.168.136.130 master.huany.com master CentOS 7.6   192.168.136.131 node1.huany.com node1 CentOS 7.6   192.168.136.132 node2.huany.com node2 CentOS 7.6    预先设置关闭swap 临">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-26T12:48:04.211Z">
+<meta property="og:updated_time" content="2019-08-29T11:47:11.473Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用kubeadm安装k8s">
 <meta name="twitter:description" content="环境主机配置和角色分配   ip host 角色 配置     192.168.136.130 master.huany.com master CentOS 7.6   192.168.136.131 node1.huany.com node1 CentOS 7.6   192.168.136.132 node2.huany.com node2 CentOS 7.6    预先设置关闭swap 临">
@@ -464,7 +464,7 @@
 <ul>
 <li>初始化</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubeadm init --config kubeadm.yml -ignore-preflight-errors all</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubeadm init --config kubeadm.yml --pod-network-cidr 10.244.0.0/16 -ignore-preflight-errors all</span><br></pre></td></tr></table></figure>
 <p>执行成功后可以看到如下内容：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Your Kubernetes control-plane has initialized successfully!</span><br><span class="line"></span><br><span class="line">To start using your cluster, you need to run the following as a regular user:</span><br><span class="line"></span><br><span class="line">  mkdir -p $HOME/.kube</span><br><span class="line">  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line">  sudo chown $(id -u):$(id -g) $HOME/.kube/config</span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:</span><br><span class="line">  https://kubernetes.io/docs/concepts/cluster-administration/addons/</span><br><span class="line"></span><br><span class="line">Then you can join any number of worker nodes by running the following on each as root:</span><br><span class="line"></span><br><span class="line">kubeadm join 192.168.136.130:6443 --token 32ozhx.8xneb9rzjukjc3au \</span><br><span class="line">    --discovery-token-ca-cert-hash sha256:00c3d4e272d3736c0edcfcdda38f255c9fb75118a7d640a3e98542829f4bb3ec</span><br></pre></td></tr></table></figure>
 <ul>
