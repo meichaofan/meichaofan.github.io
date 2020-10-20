@@ -3,7 +3,7 @@
   <title>huany</title>
   
   
-  <link href="/usr/local/openresty/nginx/html/blog/atom.xml" rel="self"/>
+  <link href="/atom.xml" rel="self"/>
   
   <link href="https://meichaofan.github.io/"/>
   <updated>2019-08-29T11:47:11.000Z</updated>
